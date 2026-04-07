@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commissionerate Dashboard</title>
+  <style>
+    :root {
+      --navy: #0f1f3d;
+      --navy-mid: #1a3260;
+      --gold: #c8a84b;
+      --gold-light: #ecd596;
+      --cream: #f7f3ea;
+      --paper: #ffffff;
+      --ink: #192133;
+      --muted: #64748b;
+      --border: #d9ceb5;
+      --success: #166534;
+      --danger: #b91c1c;
+      --shadow: 0 18px 45px rgba(15, 31, 61, 0.12);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(200,168,75,0.18), transparent 24%),
+        linear-gradient(180deg, #fdfbf7 0%, #f4efe5 100%);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    .shell {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 32px 22px 48px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #172f59 55%, #21417a 100%);
+      color: white;
+      padding: 28px;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: 0.4px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255,255,255,0.78);
+      max-width: 760px;
+      line-height: 1.6;
+    }
+
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .login-panel {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+
+    .panel p {
+      margin-top: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: #fcfaf6;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--navy-mid);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(26, 50, 96, 0.08);
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #eef2f7;
+      color: var(--navy);
+    }
+
+    .status {
+      min-height: 22px;
+      margin-top: 6px;
+      color: var(--danger);
+      font-size: 14px;
+    }
+
+    .dashboard {
+      display: none;
+      gap: 20px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+
+    .toolbar strong {
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .toolbar span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      padding: 22px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card small {
+      display: block;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .stat-card strong {
+      font-size: 30px;
+      color: var(--navy);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      background: #f6f1e4;
+      color: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .table-panel {
+      padding: 22px;
+    }
+
+    .table-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .table-head input {
+      max-width: 320px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th, td {
+      padding: 13px 12px;
+      border-bottom: 1px solid #ebe5d7;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      color: var(--navy-mid);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid #ebe5d7;
+      border-radius: 14px;
+    }
+
+    .empty {
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <h1>Commissionerate Sub Dashboard</h1>
+      <p>Login with one of the four commissionerate credentials. Each user only sees complaints routed to their own commissionerate.</p>
+    </section>
+
+    <section id="loginPanel" class="panel login-panel">
+      <h2>Commissionerate Login</h2>
+      <p>Use the username and password assigned to Hyderabad, Cyberabad, Malkajgiri, or Future City.</p>
+
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" type="text" placeholder="Enter username">
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="Enter password">
+      </div>
+
+      <button class="btn btn-primary" id="loginBtn" type="button">Login</button>
+      <div class="status" id="loginStatus"></div>
+    </section>
+
+    <section id="dashboard" class="dashboard">
+      <div class="panel toolbar">
+        <div>
+          <strong id="welcomeTitle">Commissionerate Dashboard</strong>
+          <span id="welcomeMeta">Protected complaint stream</span>
+        </div>
+        <div class="toolbar-actions">
+          <button class="btn btn-secondary" id="refreshBtn" type="button">Refresh</button>
+          <button class="btn btn-secondary" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="stat-card">
+          <small>Total Complaints</small>
+          <strong id="totalCount">0</strong>
+          <span>Only complaints assigned to your commissionerate are shown.</span>
+        </div>
+        <div class="stat-card">
+          <small>Commissionerate</small>
+          <strong id="commissionerateName">-</strong>
+          <span>Dashboard visibility is isolated on the backend.</span>
+        </div>
+        <div class="stat-card">
+          <small>Complaint Types</small>
+          <div class="chips" id="typeChips"></div>
+        </div>
+      </div>
+
+      <div class="panel table-panel">
+        <div class="table-head">
+          <div>
+            <h2 style="margin-bottom: 4px;">Incoming Reports</h2>
+            <p style="margin: 0;">Most recent reports routed to your commissionerate.</p>
+          </div>
+          <input id="searchInput" type="text" placeholder="Search by application no, complainant, type...">
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Application No</th>
+                <th>Complainant</th>
+                <th>Mobile</th>
+                <th>Type</th>
+                <th>Nature</th>
+                <th>Offence Location</th>
+                <th>Submitted</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="complaintTableBody"></tbody>
+          </table>
+          <div id="emptyState" class="empty" style="display:none;">No complaints found for this commissionerate yet.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
+    const STORAGE_KEY = 'wsw-sub-session';
+    let allComplaints = [];
+
+    function getSession() {
+      try {
+        return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+      } catch {
+        return null;
+      }
+    }
+
+    function setSession(session) {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+    }
+
+    function clearSession() {
+      sessionStorage.removeItem(STORAGE_KEY);
+    }
+
+    function formatDate(value) {
+      if (!value) return '-';
+      return new Date(value).toLocaleString('en-IN', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function showLoginError(message) {
+      document.getElementById('loginStatus').textContent = message || '';
+    }
+
+    function renderTypeChips(items) {
+      const container = document.getElementById('typeChips');
+      if (!items.length) {
+        container.innerHTML = '<span class="chip">No data yet</span>';
+        return;
+      }
+
+      container.innerHTML = items
+        .map(item => `<span class="chip">${escapeHtml(item.label)}: ${item.count}</span>`)
+        .join('');
+    }
+
+    function renderTableRows(complaints) {
+      const body = document.getElementById('complaintTableBody');
+      const emptyState = document.getElementById('emptyState');
+
+      if (!complaints.length) {
+        body.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      body.innerHTML = complaints.map(item => `
+        <tr>
+          <td>${escapeHtml(item.complaint.applicationNumber || '-')}</td>
+          <td>${escapeHtml(`${item.complainant.firstName || ''} ${item.complainant.surname || ''}`.trim() || '-')}</td>
+          <td>${escapeHtml(item.complainant.mobile || '-')}</td>
+          <td>${escapeHtml(item.complaint.complaintType || '-')}</td>
+          <td>${escapeHtml(item.complaint.naturePetition || '-')}</td>
+          <td>${escapeHtml(item.complaint.offenceLocation || '-')}</td>
+          <td>${escapeHtml(formatDate(item.createdAt))}</td>
+          <td>${escapeHtml(item.complaint.status || 'Submitted')}</td>
+        </tr>
+      `).join('');
+    }
+
+    function filterTable() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      if (!query) {
+        renderTableRows(allComplaints);
+        return;
+      }
+
+      const filtered = allComplaints.filter(item => {
+        const haystack = [
+          item.complaint.applicationNumber,
+          item.complainant.firstName,
+          item.complainant.surname,
+          item.complainant.mobile,
+          item.complaint.complaintType,
+          item.complaint.naturePetition,
+          item.complaint.offenceLocation
+        ].join(' ').toLowerCase();
+
+        return haystack.includes(query);
+      });
+
+      renderTableRows(filtered);
+    }
+
+    async function fetchDashboard() {
+      const session = getSession();
+      if (!session?.token) {
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/dashboard/complaints`, {
+        headers: {
+          Authorization: `Bearer ${session.token}`
+        }
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message || 'Unable to load dashboard');
+      }
+
+      const { user, summary, complaints } = result.data;
+      allComplaints = complaints;
+      document.getElementById('totalCount').textContent = summary.total;
+      document.getElementById('commissionerateName').textContent = user.commissionerate || '-';
+      document.getElementById('welcomeTitle').textContent = `${user.commissionerate || 'Commissionerate'} Dashboard`;
+      document.getElementById('welcomeMeta').textContent = `Logged in as ${user.username}`;
+      renderTypeChips(summary.byType);
+      renderTableRows(complaints);
+    }
+
+    async function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const button = document.getElementById('loginBtn');
+
+      if (!username || !password) {
+        showLoginError('Enter both username and password.');
+        return;
+      }
+
+      showLoginError('');
+      button.disabled = true;
+      button.textContent = 'Logging in...';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password, portal: 'sub' })
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.message || 'Login failed');
+        }
+
+        setSession(result.data);
+        document.getElementById('loginPanel').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        await fetchDashboard();
+      } catch (error) {
+        showLoginError(error.message);
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Login';
+      }
+    }
+
+    function logout() {
+      clearSession();
+      allComplaints = [];
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('loginPanel').style.display = 'block';
+      document.getElementById('password').value = '';
+      showLoginError('');
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', login);
+    document.getElementById('refreshBtn').addEventListener('click', fetchDashboard);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('searchInput').addEventListener('input', filterTable);
+
+    window.addEventListener('load', async () => {
+      const session = getSession();
+      if (!session?.token) {
+        return;
+      }
+
+      document.getElementById('loginPanel').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+
+      try {
+        await fetchDashboard();
+      } catch {
+        logout();
+      }
+    });
+  </script>
+</body>
+</html>
