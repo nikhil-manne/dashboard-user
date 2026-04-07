@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -210,7 +211,7 @@
         </div>
 
         <div class="field"><label>Caste</label>
-            <select id="rcaste"><option value="">— Select —</option><option>SC</option><option>ST</option><option>BC</option><option>OC</option><option>Minority</option><option>Other</option></select>
+            <select id="rrcaste"><option value="">— Select —</option><option>SC</option><option>ST</option><option>BC</option><option>OC</option><option>Minority</option><option>Other</option></select>
           </div>
         <div class="field"><label>Religion</label><input id="religion" placeholder="e.g. Hindu, Muslim"></div>
         <div class="field"><label>Nationality</label><input id="nationality" value="Indian"></div>
@@ -440,7 +441,7 @@
     <div class="actions-note">Fields marked <span>*</span> are required</div>
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <button class="btn-reset" onclick="resetForm()">↺ Reset Form</button>
-      <button class="btn btn-primary" onclick="submitForm()">✔ Submit &amp; Print Application →</button>
+      <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">✔ Submit &amp; Print Application →</button>
     </div>
   </div>
 
@@ -466,96 +467,242 @@
 <div id="toast">✅ <span id="toastMsg">Done</span></div>
 
 <script>
+  const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
+  const g = id => (document.getElementById(id)?.value || '').trim();
+  const asNumber = id => {
+    const value = g(id);
+    return value ? Number(value) : null;
+  };
+  const escapeHtml = value => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
   function selectType(el, val) {
-    document.querySelectorAll('.type-chip').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.type-chip').forEach(card => card.classList.remove('selected'));
     el.classList.add('selected');
     document.getElementById('complaintType').value = val;
   }
 
   function selectComm(el, val) {
-    document.querySelectorAll('.comm-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.comm-card').forEach(card => card.classList.remove('selected'));
     el.classList.add('selected');
     document.getElementById('commissionerate').value = val;
   }
 
   function toggleRespondent() {
-    const known = document.getElementById('respYes').checked;
-    document.getElementById('respondentFields').style.display = known ? 'block' : 'none';
+    document.getElementById('respondentFields').style.display =
+      document.getElementById('respYes').checked ? 'block' : 'none';
   }
 
   function validateMobile(inputId, hintId) {
-    const val = document.getElementById(inputId).value.replace(/\D/g,'');
+    const val = document.getElementById(inputId).value.replace(/\D/g, '');
     const hint = document.getElementById(hintId);
     if (!val) { hint.textContent = ''; hint.className = 'field-hint'; return true; }
     if (val.length < 10) { hint.textContent = 'Must be exactly 10 digits'; hint.className = 'field-hint'; return false; }
     if (!/^[6-9]/.test(val)) { hint.textContent = 'Must start with 6, 7, 8, or 9'; hint.className = 'field-hint'; return false; }
-    hint.textContent = '✓ Valid Indian mobile number'; hint.className = 'field-hint ok'; return true;
+    hint.textContent = 'Valid Indian mobile number';
+    hint.className = 'field-hint ok';
+    return true;
   }
+
   document.getElementById('mobile').addEventListener('input', () => validateMobile('mobile', 'mobileHint'));
   document.getElementById('altmobile').addEventListener('input', () => validateMobile('altmobile', 'altmobileHint'));
 
-  let recognition = null, listening = false, finalTranscript = '';
+  let recognition = null;
+  let listening = false;
+  let finalTranscript = '';
+
   function toggleMic() {
-    const btn = document.getElementById('micBtn'), status = document.getElementById('micStatus'), label = document.getElementById('micLabel'), box = document.getElementById('voiceText');
-    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) { showToast('Voice recognition not supported. Please use Chrome.', true); return; }
-    if (listening) { recognition.stop(); listening = false; btn.classList.remove('listening'); btn.innerHTML = '🎤'; status.classList.remove('active'); label.textContent = 'Recording stopped'; setTimeout(() => label.textContent = 'Click microphone to record your complaint', 3000); return; }
+    const btn = document.getElementById('micBtn');
+    const status = document.getElementById('micStatus');
+    const label = document.getElementById('micLabel');
+    const box = document.getElementById('voiceText');
+
+    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+      showToast('Voice recognition not supported. Please use Chrome.', true);
+      return;
+    }
+
+    if (listening) {
+      recognition.stop();
+      listening = false;
+      btn.classList.remove('listening');
+      btn.innerHTML = '??';
+      status.classList.remove('active');
+      label.textContent = 'Recording stopped';
+      setTimeout(() => {
+        label.textContent = 'Click microphone to record your complaint';
+      }, 3000);
+      return;
+    }
+
     finalTranscript = box.value;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
-    recognition.continuous = true; recognition.interimResults = true; recognition.lang = 'en-IN'; recognition.maxAlternatives = 1;
-    recognition.onstart = () => { listening = true; btn.classList.add('listening'); btn.innerHTML = '⏹'; status.classList.add('active'); label.textContent = 'Recording… speak clearly'; };
-    recognition.onresult = (e) => { let interim = ''; for (let i = e.resultIndex; i < e.results.length; i++) { const t = e.results[i][0].transcript; if (e.results[i].isFinal) finalTranscript += t + ' '; else interim += t; } box.value = finalTranscript + interim; };
-    recognition.onerror = (err) => { if (err.error === 'not-allowed') showToast('Microphone access denied.', true); else showToast('Mic error: ' + err.error, true); stopMicUI(); };
-    recognition.onend = () => { if (listening) { try { recognition.start(); } catch(e) { stopMicUI(); } } };
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-IN';
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      listening = true;
+      btn.classList.add('listening');
+      btn.innerHTML = '?';
+      status.classList.add('active');
+      label.textContent = 'Recording... speak clearly';
+    };
+
+    recognition.onresult = event => {
+      let interim = '';
+      for (let i = event.resultIndex; i < event.results.length; i += 1) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += `${transcript} `;
+        } else {
+          interim += transcript;
+        }
+      }
+      box.value = finalTranscript + interim;
+    };
+
+    recognition.onerror = error => {
+      if (error.error === 'not-allowed') {
+        showToast('Microphone access denied.', true);
+      } else {
+        showToast(`Mic error: ${error.error}`, true);
+      }
+      stopMicUI();
+    };
+
+    recognition.onend = () => {
+      if (listening) {
+        try {
+          recognition.start();
+        } catch (err) {
+          stopMicUI();
+        }
+      }
+    };
+
     recognition.start();
   }
-  function stopMicUI() { const btn = document.getElementById('micBtn'), status = document.getElementById('micStatus'), label = document.getElementById('micLabel'); listening = false; btn.classList.remove('listening'); btn.innerHTML = '🎤'; status.classList.remove('active'); label.textContent = 'Click microphone to record your complaint'; }
+
+  function stopMicUI() {
+    const btn = document.getElementById('micBtn');
+    const status = document.getElementById('micStatus');
+    const label = document.getElementById('micLabel');
+    listening = false;
+    btn.classList.remove('listening');
+    btn.innerHTML = '??';
+    status.classList.remove('active');
+    label.textContent = 'Click microphone to record your complaint';
+  }
 
   function generateID() {
     const now = new Date();
     const yy = now.getFullYear().toString().slice(-2);
-    const mm = String(now.getMonth()+1).padStart(2,'0');
-    const dd = String(now.getDate()).padStart(2,'0');
-    const hh = String(now.getHours()).padStart(2,'0');
-    const mi = String(now.getMinutes()).padStart(2,'0');
-    const rand = Math.random().toString(36).substring(2,6).toUpperCase();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mi = String(now.getMinutes()).padStart(2, '0');
+    const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
     return `TG-${yy}${mm}${dd}-${hh}${mi}-${rand}`;
   }
 
-  const g = id => (document.getElementById(id)?.value || '').trim();
-
   function showToast(msg, isError) {
-    const t = document.getElementById('toast'), m = document.getElementById('toastMsg');
-    t.style.borderLeftColor = isError ? '#dc2626' : 'var(--gold)';
-    t.children[0].textContent = isError ? '⚠️' : '✅';
-    m.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 4500);
+    const toast = document.getElementById('toast');
+    const message = document.getElementById('toastMsg');
+    toast.style.borderLeftColor = isError ? '#dc2626' : 'var(--gold)';
+    toast.children[0].textContent = isError ? '??' : '?';
+    message.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4500);
   }
 
-  function submitForm() {
-    if (!g('fname'))          { showToast('Please enter your first name', true); return; }
-    const mob = g('mobile');
-    if (!mob)                 { showToast('Please enter a mobile number', true); return; }
-    if (mob.length !== 10)    { showToast('Mobile number must be exactly 10 digits', true); return; }
-    if (!/^[6-9]/.test(mob)) { showToast('Mobile number must start with 6, 7, 8 or 9', true); return; }
-    if (!g('complaintType'))  { showToast('Please select a complaint type', true); return; }
-    if (!g('naturePetition')) { showToast('Please choose the nature of petition', true); return; }
-    if (!g('description') && !g('voiceText')) { showToast('Please provide a complaint description or voice input', true); return; }
-    if (!g('commissionerate')) { showToast('Please select a Commissionerate', true); return; }
-    if (!document.getElementById('declare').checked) { showToast('Please agree to the declaration', true); return; }
+  function buildPayload(applicationNumber) {
+    const offenceLocation = g('offence');
 
-    if (listening) { recognition.stop(); stopMicUI(); }
+    return {
+      complainant: {
+        firstName: g('fname'),
+        surname: g('surname'),
+        dateOfBirth: g('dob'),
+        guardian: g('guardian'),
+        relationType: g('relation'),
+        age: asNumber('age'),
+        occupation: g('occupation'),
+        education: g('education'),
+        maritalStatus: g('marital'),
+        caste: g('rcaste'),
+        religion: g('religion'),
+        nationality: g('nationality'),
+        mobile: g('mobile'),
+        alternateMobile: g('altmobile'),
+        gender: g('gender')
+      },
+      address: {
+        houseNumber: g('hno'),
+        street: g('street'),
+        locality: g('locality'),
+        landmark: g('landmark'),
+        ward: g('ward'),
+        mandal: g('mandal'),
+        residency: g('residency'),
+        state: g('state'),
+        district: g('district'),
+        station: g('station'),
+        city: g('city'),
+        pincode: g('pincode'),
+        offenceDate: g('offenceDate'),
+        offenceLocation
+      },
+      respondent: {
+        isKnown: document.getElementById('respYes').checked,
+        name: g('rname'),
+        surname: g('rsurname'),
+        gender: g('rgender'),
+        guardian: g('rguardian'),
+        relationType: g('rrelation'),
+        age: asNumber('rage'),
+        dateOfBirth: g('rdob'),
+        occupation: g('roccupation'),
+        education: g('reducation'),
+        caste: g('rrcaste'),
+        religion: g('rreligion'),
+        maritalStatus: g('rmarital'),
+        nationality: g('rnationality')
+      },
+      complaint: {
+        applicationNumber,
+        complaintType: g('complaintType'),
+        naturePetition: g('naturePetition'),
+        description: g('description'),
+        voiceText: g('voiceText'),
+        offenceDate: g('offenceDate'),
+        offenceLocation,
+        commissionerate: g('commissionerate'),
+        declarationAccepted: document.getElementById('declare').checked
+      },
+      officer: {
+        name: g('officerName'),
+        mobile: g('officerMobile')
+      }
+    };
+  }
 
-    const id = generateID();
-    const now = new Date();
-    const dateStr = now.toLocaleString('en-IN', { dateStyle: 'long', timeStyle: 'short' });
+  function row(label, value) {
+    if (!value) {
+      return '';
+    }
 
-    document.getElementById('appNoDisplay').textContent = id;
-    document.getElementById('receiptDate').textContent = dateStr;
+    return `<div class="receipt-field"><div class="rf-label">${escapeHtml(label)}</div><div class="rf-val">${escapeHtml(value)}</div></div>`;
+  }
 
+  function renderReceipt(applicationNumber, dateStr) {
     const respKnown = document.getElementById('respYes').checked;
-    const row = (lbl, val) => val ? `<div class="receipt-field"><div class="rf-label">${lbl}</div><div class="rf-val">${val}</div></div>` : '';
 
     let respondentHTML = '';
     if (respKnown) {
@@ -565,13 +712,12 @@
           <div class="receipt-grid">
             ${row('Full Name', g('rname') + (g('rsurname') ? ' ' + g('rsurname') : ''))}
             ${row('Gender', g('rgender'))}
-            ${row('Age', g('rage') ? g('rage') + ' years' : '')}
-            ${row('Guardian', g('rguardian') + (g('rrelation') ? ' (' + g('rrelation') + ')' : ''))}
+            ${row('Age', g('rage') ? `${g('rage')} years` : '')}
+            ${row('Guardian', g('rguardian') + (g('rrelation') ? ` (${g('rrelation')})` : ''))}
             ${row('Date of Birth', g('rdob'))}
             ${row('Occupation', g('roccupation'))}
             ${row('Education', g('reducation'))}
-            ${row('Caste', g('rcaste'))}
-            ${row('Sub Caste', g('rsubcaste'))}
+            ${row('Caste', g('rrcaste'))}
             ${row('Religion', g('rreligion'))}
             ${row('Marital Status', g('rmarital'))}
             ${row('Nationality', g('rnationality'))}
@@ -579,23 +725,25 @@
         </div>`;
     }
 
+    document.getElementById('appNoDisplay').textContent = applicationNumber;
+    document.getElementById('receiptDate').textContent = dateStr;
     document.getElementById('receiptBody').innerHTML = `
       <div class="receipt-section">
         <h3>Personal Information</h3>
         <div class="receipt-grid">
-          ${row('Full Name', g('fname') + ' ' + g('surname'))}
+          ${row('Full Name', `${g('fname')} ${g('surname')}`.trim())}
           ${row('Date of Birth', g('dob'))}
-          ${row('Age', g('age') ? g('age') + ' years' : '')}
+          ${row('Age', g('age') ? `${g('age')} years` : '')}
           ${row('Gender', g('gender'))}
-          ${row('Guardian', g('guardian') + (g('relation') ? ' (' + g('relation') + ')' : ''))}
+          ${row('Guardian', g('guardian') + (g('relation') ? ` (${g('relation')})` : ''))}
           ${row('Occupation', g('occupation'))}
           ${row('Education', g('education'))}
-          ${row('Caste', g('caste'))}
+          ${row('Caste', g('rcaste'))}
           ${row('Religion', g('religion'))}
           ${row('Nationality', g('nationality'))}
           ${row('Marital Status', g('marital'))}
-          ${row('Mobile', '+91 ' + g('mobile'))}
-          ${row('Alternate Mobile', g('altmobile') ? '+91 ' + g('altmobile') : '')}
+          ${row('Mobile', `+91 ${g('mobile')}`)}
+          ${row('Alternate Mobile', g('altmobile') ? `+91 ${g('altmobile')}` : '')}
         </div>
       </div>
       <div class="receipt-section">
@@ -623,15 +771,16 @@
         <div class="receipt-grid">
           ${row('Complaint Type', g('complaintType'))}
           ${row('Nature of Petition', g('naturePetition'))}
+          ${row('Assigned Commissionerate', g('commissionerate'))}
         </div>
-        ${g('description') ? `<div style="margin-top:14px;"><div class="rf-label">Written Description</div><div class="rf-val" style="line-height:1.7;margin-top:4px;font-size:13.5px;">${g('description')}</div></div>` : ''}
-        ${g('voiceText') ? `<div style="margin-top:14px;"><div class="rf-label">Voice Complaint Transcription</div><div class="rf-val" style="line-height:1.7;margin-top:4px;font-size:13.5px;">${g('voiceText')}</div></div>` : ''}
+        ${g('description') ? `<div style="margin-top:14px;"><div class="rf-label">Written Description</div><div class="rf-val" style="line-height:1.7;margin-top:4px;font-size:13.5px;">${escapeHtml(g('description'))}</div></div>` : ''}
+        ${g('voiceText') ? `<div style="margin-top:14px;"><div class="rf-label">Voice Complaint Transcription</div><div class="rf-val" style="line-height:1.7;margin-top:4px;font-size:13.5px;">${escapeHtml(g('voiceText'))}</div></div>` : ''}
       </div>
       <div class="receipt-section">
         <h3>Forwarded To</h3>
         <div style="margin-top:4px;">
           <div class="rf-label">Commissionerate</div>
-          <div><span class="comm-badge">🏛️ ${g('commissionerate')} Police Commissionerate</span></div>
+          <div><span class="comm-badge">${escapeHtml(g('commissionerate'))} Police Commissionerate</span></div>
         </div>
       </div>
     `;
@@ -639,35 +788,97 @@
     const receipt = document.getElementById('receipt');
     receipt.style.display = 'block';
     receipt.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    showToast('Submitted! Application No: ' + id + ' — Printing…');
+  }
 
-    // Auto-print after a short delay to allow receipt to render
+  async function submitForm() {
+    if (!g('fname')) { showToast('Please enter your first name', true); return; }
+    if (!g('district')) { showToast('Please enter the district', true); return; }
+    if (!g('offence')) { showToast('Please enter the offence location', true); return; }
+
+    const mob = g('mobile');
+    if (!mob) { showToast('Please enter a mobile number', true); return; }
+    if (mob.length !== 10) { showToast('Mobile number must be exactly 10 digits', true); return; }
+    if (!/^[6-9]/.test(mob)) { showToast('Mobile number must start with 6, 7, 8 or 9', true); return; }
+    if (g('altmobile') && !validateMobile('altmobile', 'altmobileHint')) { showToast('Please enter a valid alternate mobile number', true); return; }
+    if (g('officerMobile') && !/^[6-9]\d{9}$/.test(g('officerMobile'))) { showToast('Officer mobile number must be valid', true); return; }
+    if (!g('complaintType')) { showToast('Please select a complaint type', true); return; }
+    if (!g('naturePetition')) { showToast('Please choose the nature of petition', true); return; }
+    if (document.getElementById('respYes').checked && !g('rname')) { showToast('Please enter respondent name', true); return; }
+    if (document.getElementById('respYes').checked && !g('rgender')) { showToast('Please select respondent gender', true); return; }
+    if (!g('description') && !g('voiceText')) { showToast('Please provide a complaint description or voice input', true); return; }
+    if (!g('commissionerate')) { showToast('Please select a Commissionerate', true); return; }
+    if (!document.getElementById('declare').checked) { showToast('Please agree to the declaration', true); return; }
+
+    if (listening) {
+      recognition.stop();
+      stopMicUI();
+    }
+
+    const id = generateID();
+    const payload = buildPayload(id);
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.75';
+    submitBtn.textContent = 'Saving complaint...';
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/complaints`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(result.message || 'Unable to save complaint');
+      }
+    } catch (error) {
+      showToast(error.message || 'Unable to connect to backend server', true);
+      return;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.innerHTML = 'Submit &amp; Print Application';
+    }
+
+    const now = new Date();
+    const dateStr = now.toLocaleString('en-IN', { dateStyle: 'long', timeStyle: 'short' });
+    renderReceipt(id, dateStr);
+    showToast(`Submitted! Application No: ${id} - Printing...`);
     setTimeout(() => window.print(), 1200);
   }
 
   function resetForm() {
     if (!confirm('Reset all fields? This cannot be undone.')) return;
-    document.querySelectorAll('input:not([type=checkbox]):not([type=radio])').forEach(i => {
-      if (i.id === 'nationality') i.value = 'Indian';
-      else if (i.id === 'state') i.value = 'Telangana';
-      else i.value = '';
+
+    document.querySelectorAll('input:not([type=checkbox]):not([type=radio])').forEach(input => {
+      if (input.id === 'nationality') input.value = 'Indian';
+      else if (input.id === 'state') input.value = 'Telangana';
+      else input.value = '';
     });
-    document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    document.querySelectorAll('select').forEach(select => { select.selectedIndex = 0; });
+    document.querySelectorAll('textarea').forEach(textarea => { textarea.value = ''; });
     document.getElementById('declare').checked = false;
     document.getElementById('respNo').checked = true;
     document.getElementById('respondentFields').style.display = 'none';
-    document.querySelectorAll('.type-chip').forEach(c => c.classList.remove('selected'));
-    document.querySelectorAll('.comm-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.type-chip').forEach(card => card.classList.remove('selected'));
+    document.querySelectorAll('.comm-card').forEach(card => card.classList.remove('selected'));
     document.getElementById('complaintType').value = '';
     document.getElementById('commissionerate').value = '';
     document.getElementById('mobileHint').textContent = '';
     document.getElementById('altmobileHint').textContent = '';
     document.getElementById('receipt').style.display = 'none';
     finalTranscript = '';
-    if (listening) { recognition.stop(); stopMicUI(); }
+
+    if (listening) {
+      recognition.stop();
+      stopMicUI();
+    }
+
     showToast('Form has been reset');
   }
 </script>
 </body>
 </html>
+
+
