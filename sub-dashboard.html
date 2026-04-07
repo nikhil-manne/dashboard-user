@@ -60,6 +60,30 @@
       line-height: 1.6;
     }
 
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.12);
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
     .panel {
       background: var(--paper);
       border: 1px solid var(--border);
@@ -281,7 +305,10 @@
 <body>
   <div class="shell">
     <section class="hero">
-      <h1>Commissionerate Sub Dashboard</h1>
+      <div class="hero-top">
+        <h1>Commissionerate Sub Dashboard</h1>
+        <a class="home-link" href="index.html">Back to Homepage</a>
+      </div>
       <p>Login with one of the four commissionerate credentials. Each user only sees complaints routed to their own commissionerate.</p>
     </section>
 
