@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complaint View</title>
+<style>
+  :root {
+    --navy: #0f1f3d;
+    --navy-mid: #1a3260;
+    --gold: #c8a84b;
+    --cream: #f8f5ef;
+    --cream-dark: #ede9e0;
+    --ink: #1c1c2e;
+    --muted: #6b7280;
+    --border: #d4c9b0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .page-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 20px 40px;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  .page-title {
+    font-size: 28px;
+    color: var(--navy);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .page-subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .page-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .btn.primary {
+    background: var(--navy);
+    color: #ffffff;
+    border-color: var(--navy);
+  }
+
+  .receipt {
+    background: #ffffff;
+    border: 2px solid var(--navy);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(15, 31, 61, 0.08);
+  }
+
+  .receipt-header {
+    background: var(--navy);
+    color: #ffffff;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .receipt-kicker {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.58);
+    margin-bottom: 4px;
+  }
+
+  .receipt-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .app-no {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .receipt-body {
+    padding: 24px;
+  }
+
+  .receipt-section {
+    margin-bottom: 24px;
+  }
+
+  .receipt-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .receipt-section h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--navy-mid);
+    font-size: 20px;
+    border-bottom: 1px solid var(--cream-dark);
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+  }
+
+  .receipt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px 20px;
+  }
+
+  .receipt-field {
+    min-width: 0;
+  }
+
+  .rf-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .rf-val {
+    font-size: 15px;
+    color: var(--ink);
+    font-weight: 500;
+    line-height: 1.55;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+
+  .receipt-text {
+    margin-top: 14px;
+  }
+
+  .comm-badge {
+    display: inline-block;
+    background: var(--navy);
+    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .receipt-footer {
+    background: var(--cream);
+    padding: 14px 24px;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .empty-state {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  @media (max-width: 760px) {
+    .receipt-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body {
+      background: #ffffff;
+    }
+
+    .page-header {
+      display: none;
+    }
+
+    .page-shell {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .receipt {
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page-shell">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Complaint Details</div>
+      <div class="page-subtitle" id="pageSubtitle">Structured complaint view</div>
+    </div>
+    <div class="page-actions">
+      <a class="btn" href="admin-dashboard.html">Back To Dashboard</a>
+      <button class="btn primary" id="printBtn" type="button">Print</button>
+    </div>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'wsw-selected-complaint';
+
+  function esc(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function safeDisplayValue(v) {
+    if (v === undefined || v === null || v === '') return 'N/A';
+    if (typeof v === 'boolean') return v ? 'Yes' : 'No';
+    return String(v);
+  }
+
+  function joinParts(parts, separator = ' ') {
+    return parts.map(part => safeDisplayValue(part)).filter(part => part !== 'N/A').join(separator);
+  }
+
+  function receiptField(label, value) {
+    const finalValue = safeDisplayValue(value);
+    if (finalValue === 'N/A') return '';
+    return `<div class="receipt-field"><div class="rf-label">${esc(label)}</div><div class="rf-val">${esc(finalValue)}</div></div>`;
+  }
+
+  function fmtDate(value) {
+    if (!value) return 'N/A';
+    return new Date(value).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+
+  function getComplaint() {
+    try {
+      return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+    } catch {
+      return null;
+    }
+  }
+
+  function renderComplaint(item) {
+    const complainant = item.complainant || {};
+    const address = item.address || {};
+    const respondent = item.respondent || {};
+    const complaint = item.complaint || {};
+    const officer = item.officer || {};
+    const complainantName = joinParts([complainant.firstName, complainant.surname]);
+    const complainantGuardian = joinParts([complainant.guardian, complainant.relationType ? `(${complainant.relationType})` : '']);
+    const respondentName = joinParts([respondent.name, respondent.surname]);
+    const respondentGuardian = joinParts([respondent.guardian, respondent.relationType ? `(${respondent.relationType})` : '']);
+    const commissionerateLabel = safeDisplayValue(complaint.commissionerate);
+    const respondentVisible = respondent.isKnown || respondentName !== '';
+    let respondentSection = '';
+
+    if (respondentVisible) {
+      respondentSection = `
+        <div class="receipt-section">
+          <h3>Respondent Information</h3>
+          <div class="receipt-grid">
+            ${receiptField('Full Name', respondentName)}
+            ${receiptField('Gender', respondent.gender)}
+            ${receiptField('Age', respondent.age ? `${respondent.age} years` : '')}
+            ${receiptField('Guardian', respondentGuardian)}
+            ${receiptField('Date of Birth', respondent.dateOfBirth)}
+            ${receiptField('Occupation', respondent.occupation)}
+            ${receiptField('Education', respondent.education)}
+            ${receiptField('Caste', respondent.caste)}
+            ${receiptField('Religion', respondent.religion)}
+            ${receiptField('Marital Status', respondent.maritalStatus)}
+            ${receiptField('Nationality', respondent.nationality)}
+          </div>
+        </div>`;
+    }
+
+    document.getElementById('pageSubtitle').textContent = `${safeDisplayValue(complaint.applicationNumber)} | ${commissionerateLabel}`;
+    document.title = `${safeDisplayValue(complaint.applicationNumber)} - Complaint View`;
+    document.getElementById('content').innerHTML = `
+      <div class="receipt">
+        <div class="receipt-header">
+          <div>
+            <div class="receipt-kicker">Acknowledgement Receipt</div>
+            <div class="receipt-title">Telangana State Police | Complaint Registration</div>
+          </div>
+          <div class="app-no">${esc(safeDisplayValue(complaint.applicationNumber))}</div>
+        </div>
+        <div class="receipt-body">
+          <div class="receipt-section">
+            <h3>Personal Information</h3>
+            <div class="receipt-grid">
+              ${receiptField('Full Name', complainantName)}
+              ${receiptField('Date of Birth', complainant.dateOfBirth)}
+              ${receiptField('Age', complainant.age ? `${complainant.age} years` : '')}
+              ${receiptField('Gender', complainant.gender)}
+              ${receiptField('Guardian', complainantGuardian)}
+              ${receiptField('Occupation', complainant.occupation)}
+              ${receiptField('Education', complainant.education)}
+              ${receiptField('Caste', complainant.caste)}
+              ${receiptField('Religion', complainant.religion)}
+              ${receiptField('Nationality', complainant.nationality)}
+              ${receiptField('Marital Status', complainant.maritalStatus)}
+              ${receiptField('Mobile', complainant.mobile ? `+91 ${complainant.mobile}` : '')}
+              ${receiptField('Alternate Mobile', complainant.alternateMobile ? `+91 ${complainant.alternateMobile}` : '')}
+            </div>
+          </div>
+          <div class="receipt-section">
+            <h3>Address Information</h3>
+            <div class="receipt-grid">
+              ${receiptField('House / Flat No.', address.houseNumber)}
+              ${receiptField('Street / Road', address.street)}
+              ${receiptField('Locality', address.locality)}
+              ${receiptField('Landmark', address.landmark)}
+              ${receiptField('Ward / Colony', address.ward)}
+              ${receiptField('Area / Mandal', address.mandal)}
+              ${receiptField('Residency Type', address.residency)}
+              ${receiptField('State', address.state)}
+              ${receiptField('District', address.district)}
+              ${receiptField('Nearest Police Station', address.station)}
+              ${receiptField('City / Village', address.city)}
+              ${receiptField('Pincode', address.pincode)}
+              ${receiptField('Offence Location', complaint.offenceLocation)}
+              ${receiptField('Date of Offence', complaint.offenceDate)}
+            </div>
+          </div>
+          ${respondentSection}
+          <div class="receipt-section">
+            <h3>Complaint Information</h3>
+            <div class="receipt-grid">
+              ${receiptField('Complaint Type', complaint.complaintType)}
+              ${receiptField('Nature of Petition', complaint.naturePetition)}
+              ${receiptField('Assigned Commissionerate', complaint.commissionerate)}
+              ${receiptField('Status', complaint.status)}
+              ${receiptField('Declaration Accepted', complaint.declarationAccepted)}
+              ${receiptField('Submitted At', fmtDate(item.createdAt))}
+              ${receiptField('Last Updated', fmtDate(item.updatedAt))}
+              ${receiptField('Officer Name', officer.name)}
+              ${receiptField('Officer Mobile', officer.mobile ? `+91 ${officer.mobile}` : '')}
+            </div>
+            ${safeDisplayValue(complaint.description) !== 'N/A' ? `<div class="receipt-text"><div class="rf-label">Written Description</div><div class="rf-val">${esc(safeDisplayValue(complaint.description))}</div></div>` : ''}
+            ${safeDisplayValue(complaint.voiceText) !== 'N/A' ? `<div class="receipt-text"><div class="rf-label">Voice Complaint Transcription</div><div class="rf-val">${esc(safeDisplayValue(complaint.voiceText))}</div></div>` : ''}
+          </div>
+          <div class="receipt-section">
+            <h3>Forwarded To</h3>
+            <div class="rf-label">Commissionerate</div>
+            <div><span class="comm-badge">${esc(commissionerateLabel)} Police Commissionerate</span></div>
+          </div>
+        </div>
+        <div class="receipt-footer">
+          <span>Generated: ${esc(fmtDate(item.createdAt))}</span>
+          <span>Portal: Telangana Police Complaint System</span>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderEmptyState() {
+    document.getElementById('content').innerHTML = `
+      <div class="empty-state">
+        No complaint details were found for this page.
+      </div>
+    `;
+    document.getElementById('printBtn').style.display = 'none';
+  }
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+  const complaint = getComplaint();
+  if (complaint) {
+    renderComplaint(complaint);
+  } else {
+    renderEmptyState();
+  }
+</script>
+</body>
+</html>
