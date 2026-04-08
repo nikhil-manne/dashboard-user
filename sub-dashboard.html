@@ -749,7 +749,6 @@
       const { user, summary, complaints } = result.data;
       allComplaints = complaints;
       document.getElementById('welcomeTitle').textContent = `${user.commissionerate || 'Commissionerate'} Dashboard`;
-      document.getElementById('welcomeMeta').textContent = `Login key: ${user.commissionerateKey || user.username}`;
       document.getElementById('totalCount').textContent = summary.total;
       document.getElementById('commissionerateName').textContent = user.commissionerate || '-';
       renderTypeChips(summary.byType);
