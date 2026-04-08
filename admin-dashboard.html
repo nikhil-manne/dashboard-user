@@ -1,589 +1,1495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <style>
-    :root {
-      --navy: #10213f;
-      --blue: #17345f;
-      --gold: #c6a249;
-      --gold-soft: #f4ead2;
-      --paper: #ffffff;
-      --background: #f6f3ea;
-      --ink: #1b2234;
-      --muted: #667085;
-      --border: #ddd1b9;
-      --shadow: 0 20px 48px rgba(16, 33, 63, 0.12);
-      --radius: 18px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); font-size: 18px; }
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(198,162,73,0.18), transparent 22%),
-        linear-gradient(180deg, #fcfbf8 0%, #f3efe5 100%);
-      color: var(--ink);
-      min-height: 100vh;
-    }
+  .gov-shell {
+    background: var(--color-background-tertiary);
+    min-height: 100vh;
+    font-family: var(--font-sans);
+  }
 
-    .shell {
-      max-width: 1320px;
-      margin: 0 auto;
-      padding: 32px 22px 48px;
-    }
+  .gov-topbar {
+    background: #1a3a5c;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    min-height: 64px;
+    border-bottom: 3px solid #c8a84b;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
 
-    .hero {
-      background: linear-gradient(140deg, var(--navy) 0%, var(--blue) 52%, #264b87 100%);
-      color: white;
-      padding: 30px;
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      margin-bottom: 26px;
-    }
+  .gov-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
 
-    .hero h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
-    }
+  .gov-emblem {
+    width: 36px;
+    height: 36px;
+    background: #c8a84b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #1a3a5c;
+    flex-shrink: 0;
+  }
 
-    .hero p {
-      margin: 0;
-      max-width: 780px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.78);
-    }
+  .gov-topbar-title {
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
 
-    .panel {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
+  .gov-topbar-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.3px;
+  }
 
-    .login-panel {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 28px;
-    }
+  .gov-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
 
-    h2 {
-      margin: 0 0 10px;
-      color: var(--navy);
-    }
+  .gov-badge {
+    background: rgba(255,255,255,0.12);
+    border: 0.5px solid rgba(255,255,255,0.25);
+    color: white;
+    font-size: 15px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
 
-    p {
-      color: var(--muted);
-      line-height: 1.6;
-    }
+  .gov-badge.online { background: rgba(16,185,129,0.25); border-color: rgba(16,185,129,0.5); color: #6ee7b7; }
 
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
+  .gov-subbar {
+    background: #0f2540;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 40px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.1);
+  }
 
-    label {
-      font-size: 13px;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.7px;
-      color: var(--blue);
-    }
+  .gov-nav-item {
+    padding: 0 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s;
+  }
 
-    input, select {
-      width: 100%;
-      padding: 13px 14px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
-      background: #fdfbf6;
-      font-size: 15px;
-      outline: none;
-    }
+  .gov-nav-item.active {
+    color: #c8a84b;
+    border-bottom-color: #c8a84b;
+  }
 
-    .btn {
-      border: none;
-      border-radius: 12px;
-      padding: 13px 18px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+  .gov-nav-item:hover { color: rgba(255,255,255,0.9); }
 
-    .btn-primary {
-      background: var(--navy);
-      color: white;
-    }
+  .gov-main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 24px 40px;
+  }
 
-    .btn-secondary {
-      background: #eef3f8;
-      color: var(--navy);
-    }
+  .gov-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
 
-    .status {
-      min-height: 22px;
-      margin-top: 8px;
-      color: #b42318;
-      font-size: 14px;
-    }
+  .gov-page-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    letter-spacing: 0.3px;
+  }
 
-    .dashboard {
-      display: none;
-    }
+  .gov-page-meta {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+  }
 
-    .toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 22px 24px;
-      margin-bottom: 18px;
-    }
+  .gov-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-    .toolbar strong {
-      display: block;
-      font-size: 20px;
-      color: var(--navy);
-    }
+  .gov-btn {
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 0.5px solid var(--color-border-secondary);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    letter-spacing: 0.3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-    .toolbar span {
-      color: var(--muted);
-      font-size: 14px;
-    }
+  .gov-btn:hover { background: var(--color-background-secondary); }
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+  .gov-btn.primary {
+    background: #1a3a5c;
+    color: white;
+    border-color: #1a3a5c;
+  }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-      margin-bottom: 18px;
-    }
+  .gov-btn.primary:hover { background: #0f2540; }
 
-    .card {
-      padding: 22px;
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
+  .gov-btn.danger {
+    background: white;
+    color: #991b1b;
+    border-color: #fca5a5;
+  }
 
-    .card small {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 700;
-    }
+  .gov-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
 
-    .card strong {
-      display: block;
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: var(--navy);
-    }
+  .gov-stat {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 4px;
+    padding: 14px 16px;
+    border-top: 3px solid #1a3a5c;
+  }
 
-    .chips {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+  .gov-stat.amber { border-top-color: #c8a84b; }
+  .gov-stat.green { border-top-color: #15803d; }
+  .gov-stat.red { border-top-color: #b91c1c; }
 
-    .chip {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: var(--gold-soft);
-      border: 1px solid var(--border);
-      color: var(--blue);
-      font-size: 13px;
-      font-weight: 700;
-    }
+  .gov-stat-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-secondary);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
 
-    .table-panel {
-      padding: 22px;
-    }
+  .gov-stat-value {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
 
-    .filters {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
+  .gov-stat-sub {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+  }
 
-    .filter-group {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
+  .gov-panel {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
 
-    .filter-group input,
-    .filter-group select {
-      min-width: 220px;
-    }
+  .gov-panel-header {
+    padding: 12px 16px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
 
-    .table-wrap {
-      overflow: auto;
-      border: 1px solid #ede3d0;
-      border-radius: 14px;
-    }
+  .gov-panel-title {
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--color-text-secondary);
+  }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 1080px;
-    }
+  .gov-filter-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-    th, td {
-      padding: 13px 12px;
-      text-align: left;
-      border-bottom: 1px solid #eee4d3;
-      font-size: 14px;
-      vertical-align: top;
-    }
+  .gov-filter-row input,
+  .gov-filter-row select {
+    height: 30px;
+    border-radius: 4px;
+    border: 0.5px solid var(--color-border-secondary);
+    background: var(--color-background-secondary);
+    font-size: 16px;
+    padding: 0 10px;
+    color: var(--color-text-primary);
+    outline: none;
+    min-width: 160px;
+  }
 
-    th {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--blue);
-    }
+  .gov-table-wrap {
+    overflow-x: auto;
+  }
 
-    .empty {
-      display: none;
-      padding: 28px;
-      text-align: center;
-      color: var(--muted);
-    }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 960px;
+  }
 
-    @media (max-width: 1080px) {
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
+  thead tr {
+    background: var(--color-background-secondary);
+  }
 
-    @media (max-width: 680px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  th {
+    padding: 9px 14px;
+    text-align: left;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    color: var(--color-text-primary);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: var(--color-background-secondary); }
+
+  .status-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  .status-submitted { background: #dbeafe; color: #1e40af; }
+  .status-pending { background: #fef3c7; color: #92400e; }
+  .status-closed { background: #dcfce7; color: #14532d; }
+  .status-rejected { background: #fee2e2; color: #991b1b; }
+
+  .comm-tag {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 2px;
+    background: #f0f4f8;
+    border: 0.5px solid #cbd5e0;
+    color: #2d3748;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .gov-login-wrap {
+    max-width: 440px;
+    margin: 40px auto;
+  }
+
+  .gov-login-panel {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 4px;
+    border-top: 4px solid #1a3a5c;
+    overflow: hidden;
+  }
+
+  .gov-login-header {
+    background: var(--color-background-secondary);
+    padding: 16px 20px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .gov-login-header h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    letter-spacing: 0.3px;
+  }
+
+  .gov-login-header p {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    margin-top: 2px;
+  }
+
+  .gov-login-body {
+    padding: 20px;
+  }
+
+  .gov-field {
+    margin-bottom: 14px;
+  }
+
+  .gov-field label {
+    display: block;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 5px;
+  }
+
+  .gov-field input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 4px;
+    border: 0.5px solid var(--color-border-secondary);
+    background: var(--color-background-primary);
+    font-size: 17px;
+    color: var(--color-text-primary);
+    outline: none;
+  }
+
+  .gov-field input:focus {
+    border-color: #1a3a5c;
+    box-shadow: 0 0 0 2px rgba(26,58,92,0.15);
+  }
+
+  .gov-login-footer {
+    padding: 0 20px 20px;
+  }
+
+  .gov-login-submit {
+    width: 100%;
+    height: 36px;
+    background: #1a3a5c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+  }
+
+  .gov-login-submit:hover { background: #0f2540; }
+
+  .gov-error { font-size: 15px; color: #b91c1c; margin-top: 8px; }
+
+  .gov-sidebar-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .gov-sidebar {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 4px;
+  }
+
+  .gov-sidebar-header {
+    padding: 10px 14px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  .gov-sidebar-item {
+    padding: 10px 14px;
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .gov-sidebar-item:last-child { border-bottom: none; }
+  .gov-sidebar-item:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
+  .gov-sidebar-item.active { background: #eef3f8; color: #1a3a5c; font-weight: 500; }
+
+  .gov-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .gov-chip {
+    padding: 3px 9px;
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 2px;
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.3px;
+  }
+
+  .gov-chip strong { color: var(--color-text-primary); }
+
+  .gov-divider {
+    border: none;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    margin: 0;
+  }
+
+  .ref-num { font-family: var(--font-mono); font-size: 15px; color: var(--color-text-secondary); }
+
+  .view-link { color: #1a3a5c; text-decoration: none; font-size: 15px; font-weight: 500; }
+
+  .menu-wrap { position: relative; }
+  .menu-btn { min-width: 36px; padding: 0 10px; }
+  .menu-panel {
+    position: relative;
+    width: 100%;
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 4px;
+    box-shadow: 0 14px 40px rgba(15, 37, 64, 0.18);
+    display: none;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .menu-panel.open { display: block; }
+  .credentials-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0;
+    min-height: 160px;
+  }
+  .credentials-pane {
+    padding: 16px;
+    min-width: 0;
+  }
+  .credentials-pane + .credentials-pane {
+    border-left: 0.5px solid var(--color-border-tertiary);
+  }
+  .view-link:hover { text-decoration: underline; }
+  .detail-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 37, 64, 0.58);
+    display: none;
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 0;
+    z-index: 5000;
+  }
+  .detail-modal.open { display: flex; }
+  .detail-dialog {
+    width: min(720px, 100vw);
+    height: 100vh;
+    max-height: none;
+    overflow: hidden;
+    background: #ffffff;
+    border-left: 1px solid var(--color-border-tertiary);
+    border-radius: 0;
+    box-shadow: -18px 0 42px rgba(15, 37, 64, 0.26);
+    display: flex;
+    flex-direction: column;
+    isolation: isolate;
+  }
+  .detail-grid {
+    display: block;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #f5f7fb;
+  }
+  .detail-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 6px;
+    padding: 16px 18px;
+    min-width: 0;
+  }
+  .detail-card.full {
+    grid-column: 1 / -1;
+  }
+  .detail-card-title {
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--color-text-secondary);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .detail-list {
+    display: grid;
+    gap: 10px;
+  }
+  .detail-row {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+  .detail-row:last-child { padding-bottom: 0; border-bottom: none; }
+  .detail-label {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .detail-value {
+    color: var(--color-text-primary);
+    font-size: 16px;
+    word-break: break-word;
+    line-height: 1.55;
+  }
+  .detail-text {
+    white-space: pre-wrap;
+    line-height: 1.7;
+    background: #ffffff;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .admin-receipt {
+    background: #ffffff;
+    border: 2px solid #0f1f3d;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 37, 64, 0.08);
+  }
+  .admin-receipt-header {
+    background: #0f1f3d;
+    color: #ffffff;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .admin-receipt-kicker {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 4px;
+  }
+  .admin-receipt-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .admin-app-no {
+    background: #c8a84b;
+    color: #0f1f3d;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .admin-receipt-body {
+    padding: 24px;
+    background: #ffffff;
+  }
+  .admin-receipt-section {
+    margin-bottom: 24px;
+  }
+  .admin-receipt-section:last-child {
+    margin-bottom: 0;
+  }
+  .admin-receipt-section h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: #1a3260;
+    font-size: 20px;
+    border-bottom: 1px solid #ede9e0;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+  }
+  .admin-receipt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px 20px;
+  }
+  .admin-receipt-field {
+    min-width: 0;
+  }
+  .admin-rf-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .admin-rf-val {
+    font-size: 15px;
+    color: #1c1c2e;
+    font-weight: 500;
+    line-height: 1.55;
+    word-break: break-word;
+  }
+  .admin-receipt-text {
+    margin-top: 14px;
+  }
+  .admin-comm-badge {
+    display: inline-block;
+    background: #0f1f3d;
+    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+  .admin-receipt-footer {
+    background: #f8f5ef;
+    padding: 14px 24px;
+    font-size: 13px;
+    color: #6b7280;
+    border-top: 1px solid #d4c9b0;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 700px) {
+    .gov-stats { grid-template-columns: repeat(2, 1fr); }
+    .gov-sidebar-layout { grid-template-columns: 1fr; }
+    .gov-topbar { padding: 10px 16px; }
+    .gov-topbar-right { width: 100%; justify-content: flex-start; }
+  }
+  @media (max-width: 900px) {
+    .credentials-grid { grid-template-columns: 1fr; }
+    .credentials-pane + .credentials-pane { border-left: none; border-top: 0.5px solid var(--color-border-tertiary); }
+    .detail-row { grid-template-columns: 1fr; gap: 4px; }
+    .admin-receipt-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-  <div class="shell">
-    <section class="hero">
-      <h1>Admin Dashboard</h1>
-      <p>Admin login sees every complaint across all commissionerates, with a single live view of routing, complaint volume, and reporting details.</p>
-    </section>
 
-    <section id="loginPanel" class="panel login-panel">
-      <h2>Admin Login</h2>
-      <p>Use the admin credentials to login</p>
+<div class="gov-shell">
 
-      <div class="field">
-        <label for="username">Username</label>
-        <input id="username" type="text" placeholder="Enter admin username">
+  <div class="gov-topbar">
+    <div class="gov-topbar-left">
+      <div class="gov-emblem">TS</div>
+      <div>
+        <div class="gov-topbar-title">Telangana State Police — Complaint Management System</div>
+        <div class="gov-topbar-subtitle">Commissionerate Administration Portal &nbsp;|&nbsp; Restricted Access</div>
       </div>
+    </div>
+    <div class="gov-topbar-right">
+      <span class="gov-badge online">● System Online</span>
+      <span class="gov-badge" id="currentTime"></span>
+    </div>
+  </div>
 
-      <div class="field">
-        <label for="password">Password</label>
-        <input id="password" type="password" placeholder="Enter admin password">
-      </div>
+  <div class="gov-subbar">
+    <a class="gov-nav-item" href="index.html" style="color: rgba(255,255,255,0.6); text-decoration: none;">Return to Home</a>
+    <a class="gov-nav-item" href="sub-dashboard.html" style="color: rgba(255,255,255,0.6); text-decoration: none;">Commissionerates</a>
+    <div class="gov-nav-item">Audit Log</div>
+  </div>
 
-      <button class="btn btn-primary" id="loginBtn" type="button">Login</button>
-      <div class="status" id="loginStatus"></div>
-    </section>
-
-    <section id="dashboard" class="dashboard">
-      <div class="panel toolbar">
-        <div>
-          <strong id="welcomeTitle">Admin Dashboard</strong>
-          <span id="welcomeMeta">All commissionerates</span>
+  <div id="loginView">
+    <div class="gov-main">
+      <div class="gov-login-wrap">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-secondary);">Telangana Police — Admin Portal</div>
+          <div style="font-size: 14px; color: var(--color-text-secondary); margin-top: 4px;">Authorised personnel only. All access is logged.</div>
         </div>
-        <div class="actions">
-          <button class="btn btn-secondary" id="refreshBtn" type="button">Refresh</button>
-          <button class="btn btn-secondary" id="logoutBtn" type="button">Logout</button>
-        </div>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <small>Total Complaints</small>
-          <strong id="totalCount">0</strong>
-          <span>Complete system-wide complaint volume.</span>
-        </div>
-        <div class="card">
-          <small>Visible Commissionerates</small>
-          <strong id="commissionerateCount">0</strong>
-          <span>Commissionerates currently represented in complaint data.</span>
-        </div>
-        <div class="card">
-          <small>By Commissionerate</small>
-          <div class="chips" id="commissionerateChips"></div>
-        </div>
-        <div class="card">
-          <small>By Complaint Type</small>
-          <div class="chips" id="typeChips"></div>
-        </div>
-      </div>
-
-      <div class="panel table-panel">
-        <div class="filters">
-          <div>
-            <h2 style="margin-bottom: 4px;">All Reports</h2>
-            <p style="margin: 0;">Central admin view across every commissionerate.</p>
+        <div class="gov-login-panel">
+          <div class="gov-login-header">
+            <h2>Administrator Login</h2>
+            <p>Enter credentials issued by the system administrator.</p>
           </div>
-          <div class="filter-group">
+          <div class="gov-login-body">
+            <div class="gov-field">
+              <label for="username">Username</label>
+              <input id="username" type="text" placeholder="Admin username" autocomplete="username">
+            </div>
+            <div class="gov-field">
+              <label for="password">Password</label>
+              <input id="password" type="password" placeholder="Admin password" autocomplete="current-password">
+            </div>
+          </div>
+          <div class="gov-login-footer">
+            <button class="gov-login-submit" id="loginBtn">Login to Dashboard</button>
+            <div class="gov-error" id="loginStatus"></div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 14px; font-size: 13px; color: var(--color-text-secondary);">
+          For credential issues, contact the system administrator.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="setupView" style="display:none">
+    <div class="gov-main">
+      <div class="gov-login-wrap">
+        <div class="gov-login-panel">
+          <div class="gov-login-header">
+            <h2>Initial System Setup</h2>
+            <p>No administrator account found. Create the first admin user.</p>
+          </div>
+          <div class="gov-login-body">
+            <div class="gov-field">
+              <label for="setupUsername">Admin username</label>
+              <input id="setupUsername" type="text" placeholder="Min. 3 characters">
+            </div>
+            <div class="gov-field">
+              <label for="setupPassword">Password</label>
+              <input id="setupPassword" type="password" placeholder="Min. 8 characters">
+            </div>
+            <div class="gov-field">
+              <label for="setupConfirmPassword">Confirm password</label>
+              <input id="setupConfirmPassword" type="password" placeholder="Re-enter password">
+            </div>
+          </div>
+          <div class="gov-login-footer">
+            <button class="gov-login-submit" id="setupBtn">Create Administrator Account</button>
+            <div class="gov-error" id="setupStatus"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboardView" style="display:none">
+    <div class="gov-main">
+
+      <div class="gov-page-header">
+        <div>
+          <div class="gov-page-title">Complaint Management — System Overview</div>
+          <div class="gov-page-meta" id="welcomeMeta">All commissionerates &nbsp;·&nbsp; Admin view</div>
+        </div>
+        <div class="gov-actions">
+          <button class="gov-btn" id="refreshBtn">&#x21bb; Refresh</button>
+          <div class="menu-wrap">
+            <button class="gov-btn menu-btn" id="credentialsBtn" aria-expanded="false">&#8942;</button>
+          </div>
+          <button class="gov-btn danger" id="logoutBtn">Sign Out</button>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="credentialsPanel">
+        <div class="gov-panel-header">
+          <span class="gov-panel-title">Manage Commissionerate Credentials</span>
+          <button class="gov-btn" id="closeCredentialsBtn">Close</button>
+        </div>
+        <div class="credentials-grid">
+          <div class="credentials-pane">
+            <div style="font-size:15px; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-text-secondary); margin-bottom:10px; font-weight:500;">Existing Accounts</div>
+            <div id="credentialList" style="display:grid; gap:6px;"></div>
+          </div>
+          <div class="credentials-pane">
+            <div style="font-size:15px; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-text-secondary); margin-bottom:10px; font-weight:500;">Create / Update Account</div>
+            <div class="gov-field">
+              <label for="credentialSelect">Commissionerate</label>
+              <select id="credentialSelect" style="width:100%; height:32px; border-radius:4px; border:0.5px solid var(--color-border-secondary); background:var(--color-background-primary); font-size:16px; padding:0 8px; color:var(--color-text-primary);">
+                <option value="">Select commissionerate</option>
+                <option value="HYDERABAD">Hyderabad</option>
+                <option value="CYBERABAD">Cyberabad</option>
+                <option value="MALKAJGIRI">Malkajgiri</option>
+                <option value="FUTURE_CITY">Future City</option>
+              </select>
+            </div>
+            <div class="gov-field">
+              <label for="newCredentialPassword">New password</label>
+              <input id="newCredentialPassword" type="password" placeholder="Min. 8 characters">
+            </div>
+            <div class="gov-field">
+              <label for="confirmCredentialPassword">Confirm password</label>
+              <input id="confirmCredentialPassword" type="password" placeholder="Re-enter">
+            </div>
+            <button class="gov-btn primary" id="savePasswordBtn" style="width:100%;">Save Account</button>
+            <div style="font-size:15px; margin-top:8px;" id="credentialStatus"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gov-stats">
+        <div class="gov-stat">
+          <div class="gov-stat-label">Total Complaints</div>
+          <div class="gov-stat-value" id="totalCount">—</div>
+          <div class="gov-stat-sub">All commissionerates</div>
+        </div>
+        <div class="gov-stat amber">
+          <div class="gov-stat-label">Commissionerates</div>
+          <div class="gov-stat-value" id="commissionerateCount">—</div>
+          <div class="gov-stat-sub">Active in system</div>
+        </div>
+        <div class="gov-stat green">
+          <div class="gov-stat-label">By Commissionerate</div>
+          <div class="gov-chip-row" id="commissionerateChips" style="margin-top:4px;"></div>
+        </div>
+        <div class="gov-stat red">
+          <div class="gov-stat-label">By Complaint Type</div>
+          <div class="gov-chip-row" id="typeChips" style="margin-top:4px;"></div>
+        </div>
+      </div>
+
+      <div class="gov-panel">
+        <div class="gov-panel-header">
+          <span class="gov-panel-title">All Complaint Records</span>
+          <div class="gov-filter-row">
             <select id="commissionerateFilter">
               <option value="">All commissionerates</option>
             </select>
-            <input id="searchInput" type="text" placeholder="Search complaints...">
+            <input id="searchInput" type="text" placeholder="Search by name, ref. no., type..." style="min-width:220px; height:30px; border-radius:4px; border:0.5px solid var(--color-border-secondary); background:var(--color-background-secondary); font-size:14px; padding:0 10px; color:var(--color-text-primary);">
           </div>
         </div>
-
-        <div class="table-wrap">
+        <div class="gov-table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Application No</th>
+                <th>Ref. Number</th>
                 <th>Commissionerate</th>
                 <th>Complainant</th>
                 <th>Mobile</th>
                 <th>Type</th>
                 <th>Nature</th>
                 <th>Offence Location</th>
-                <th>Submitted</th>
+                <th>Date Submitted</th>
                 <th>Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody id="complaintTableBody"></tbody>
           </table>
-          <div id="emptyState" class="empty">No complaints match the current filters.</div>
+          <div id="emptyState" style="padding:32px; text-align:center; font-size:14px; color:var(--color-text-secondary); display:none;">No records match the current filters.</div>
         </div>
+        <div style="padding:10px 16px; border-top:0.5px solid var(--color-border-tertiary); font-size:13px; color:var(--color-text-secondary);" id="tableFooter">Showing all records</div>
       </div>
-    </section>
+
+    </div>
   </div>
 
-  <script>
-    const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
-    const STORAGE_KEY = 'wsw-admin-session';
-    let allComplaints = [];
+  <div class="detail-modal" id="detailModal" aria-hidden="true">
+    <div class="detail-dialog">
+      <div class="gov-panel-header">
+        <div>
+          <div class="gov-panel-title">Complaint Details</div>
+          <div class="gov-page-meta" id="detailSubtitle">Full complaint record</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button class="gov-btn" id="closeDetailBtn">Close</button>
+        </div>
+      </div>
+      <div class="detail-grid" id="detailContent"></div>
+    </div>
+  </div>
 
-    function getSession() {
-      try {
-        return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
-      } catch {
-        return null;
-      }
+</div>
+
+<script>
+  const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
+  const STORAGE_KEY = 'wsw-admin-session';
+  const COMPLAINT_VIEW_KEY = 'wsw-selected-complaint';
+  let allComplaints = [];
+  let commissionerateCredentials = [];
+  let isCredentialsMenuOpen = false;
+  let activeComplaintIndex = null;
+
+  function updateClock() {
+    const el = document.getElementById('currentTime');
+    if (el) el.textContent = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  function getSession() {
+    try {
+      return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+    } catch (error) {
+      return null;
     }
+  }
+  function setSession(s) { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+  function clearSession() { sessionStorage.removeItem(STORAGE_KEY); }
 
-    function setSession(session) {
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
-    }
+  function esc(v) {
+    return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
 
-    function clearSession() {
-      sessionStorage.removeItem(STORAGE_KEY);
-    }
+  function fmtDate(v) {
+    if (!v) return '—';
+    return new Date(v).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  }
 
-    function escapeHtml(value) {
-      return String(value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
+  function statusClass(s) {
+    s = (s || '').toLowerCase();
+    if (s === 'submitted') return 'status-submitted';
+    if (s === 'pending') return 'status-pending';
+    if (s === 'closed') return 'status-closed';
+    if (s === 'rejected') return 'status-rejected';
+    return 'status-submitted';
+  }
 
-    function formatDate(value) {
-      if (!value) return '-';
-      return new Date(value).toLocaleString('en-IN', {
-        dateStyle: 'medium',
-        timeStyle: 'short'
-      });
-    }
-
-    function renderChips(targetId, items, emptyLabel) {
-      const container = document.getElementById(targetId);
-      if (!items.length) {
-        container.innerHTML = `<span class="chip">${emptyLabel}</span>`;
-        return;
-      }
-
-      container.innerHTML = items
-        .map(item => `<span class="chip">${escapeHtml(item.label)}: ${item.count}</span>`)
-        .join('');
-    }
-
-    function populateCommissionerateFilter(items) {
-      const select = document.getElementById('commissionerateFilter');
-      const currentValue = select.value;
-      const options = ['<option value=\"\">All commissionerates</option>']
-        .concat(items.map(item => `<option value="${escapeHtml(item.label)}">${escapeHtml(item.label)}</option>`));
-      select.innerHTML = options.join('');
-      select.value = currentValue;
-    }
-
-    function applyFilters() {
-      const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
-      const commissionerate = document.getElementById('commissionerateFilter').value;
-
-      const filtered = allComplaints.filter(item => {
-        const matchesCommissionerate =
-          !commissionerate || item.complaint.commissionerate === commissionerate;
-
-        const haystack = [
-          item.complaint.applicationNumber,
-          item.complaint.commissionerate,
-          item.complainant.firstName,
-          item.complainant.surname,
-          item.complainant.mobile,
-          item.complaint.complaintType,
-          item.complaint.naturePetition,
-          item.complaint.offenceLocation
-        ].join(' ').toLowerCase();
-
-        const matchesSearch = !searchQuery || haystack.includes(searchQuery);
-        return matchesCommissionerate && matchesSearch;
-      });
-
-      renderTable(filtered);
-    }
-
-    function renderTable(complaints) {
-      const body = document.getElementById('complaintTableBody');
-      const empty = document.getElementById('emptyState');
-
-      if (!complaints.length) {
-        body.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-      }
-
-      empty.style.display = 'none';
-      body.innerHTML = complaints.map(item => `
-        <tr>
-          <td>${escapeHtml(item.complaint.applicationNumber || '-')}</td>
-          <td>${escapeHtml(item.complaint.commissionerate || '-')}</td>
-          <td>${escapeHtml(`${item.complainant.firstName || ''} ${item.complainant.surname || ''}`.trim() || '-')}</td>
-          <td>${escapeHtml(item.complainant.mobile || '-')}</td>
-          <td>${escapeHtml(item.complaint.complaintType || '-')}</td>
-          <td>${escapeHtml(item.complaint.naturePetition || '-')}</td>
-          <td>${escapeHtml(item.complaint.offenceLocation || '-')}</td>
-          <td>${escapeHtml(formatDate(item.createdAt))}</td>
-          <td>${escapeHtml(item.complaint.status || 'Submitted')}</td>
-        </tr>
-      `).join('');
-    }
-
-    async function fetchDashboard() {
-      const session = getSession();
-      if (!session?.token) {
-        return;
-      }
-
-      const response = await fetch(`${API_BASE_URL}/dashboard/complaints`, {
-        headers: {
-          Authorization: `Bearer ${session.token}`
-        }
-      });
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.message || 'Unable to load dashboard');
-      }
-
-      const { user, summary, complaints } = result.data;
-      allComplaints = complaints;
-      document.getElementById('welcomeMeta').textContent = `Logged in as ${user.username}`;
-      document.getElementById('totalCount').textContent = summary.total;
-      document.getElementById('commissionerateCount').textContent = summary.byCommissionerate.length;
-      renderChips('commissionerateChips', summary.byCommissionerate, 'No data yet');
-      renderChips('typeChips', summary.byType, 'No data yet');
-      populateCommissionerateFilter(summary.byCommissionerate);
-      applyFilters();
-    }
-
-    async function login() {
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value;
-      const button = document.getElementById('loginBtn');
-      const status = document.getElementById('loginStatus');
-
-      if (!username || !password) {
-        status.textContent = 'Enter both username and password.';
-        return;
-      }
-
-      status.textContent = '';
-      button.disabled = true;
-      button.textContent = 'Logging in...';
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password, portal: 'admin' })
-        });
-
-        const result = await response.json();
-        if (!response.ok) {
-          throw new Error(result.message || 'Login failed');
-        }
-
-        setSession(result.data);
-        document.getElementById('loginPanel').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
-        await fetchDashboard();
-      } catch (error) {
-        status.textContent = error.message;
-      } finally {
-        button.disabled = false;
-        button.textContent = 'Login';
-      }
-    }
-
-    function logout() {
-      clearSession();
-      allComplaints = [];
-      document.getElementById('dashboard').style.display = 'none';
-      document.getElementById('loginPanel').style.display = 'block';
-      document.getElementById('password').value = '';
-      document.getElementById('loginStatus').textContent = '';
-    }
-
-    document.getElementById('loginBtn').addEventListener('click', login);
-    document.getElementById('refreshBtn').addEventListener('click', fetchDashboard);
-    document.getElementById('logoutBtn').addEventListener('click', logout);
-    document.getElementById('searchInput').addEventListener('input', applyFilters);
-    document.getElementById('commissionerateFilter').addEventListener('change', applyFilters);
-
-    window.addEventListener('load', async () => {
-      const session = getSession();
-      if (!session?.token) {
-        return;
-      }
-
-      document.getElementById('loginPanel').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-
-      try {
-        await fetchDashboard();
-      } catch {
-        logout();
-      }
+  function showView(name) {
+    ['loginView','setupView','dashboardView'].forEach(id => {
+      document.getElementById(id).style.display = id === name ? '' : 'none';
     });
-  </script>
+  }
+
+  function renderChips(id, items, empty) {
+    const el = document.getElementById(id);
+    if (!items.length) { el.innerHTML = `<span class="gov-chip">${esc(empty)}</span>`; return; }
+    el.innerHTML = items.map(i => `<span class="gov-chip"><strong>${esc(i.label)}</strong>: ${i.count}</span>`).join('');
+  }
+
+  function renderCredentialList(items) {
+    const el = document.getElementById('credentialList');
+    if (!items.length) { el.innerHTML = '<div style="font-size:16px;color:var(--color-text-secondary);">No accounts found.</div>'; return; }
+    el.innerHTML = items.map(i => `
+      <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:4px;padding:8px 10px;">
+        <div style="font-size:16px;font-weight:500;color:var(--color-text-primary);">${esc(i.commissionerate)}</div>
+        <div style="font-size:14px;color:var(--color-text-secondary);">Updated: ${esc(fmtDate(i.updatedAt))}</div>
+      </div>
+    `).join('');
+  }
+
+  function setCredentialsMenuState(isOpen) {
+    isCredentialsMenuOpen = isOpen;
+    const panel = document.getElementById('credentialsPanel');
+    const button = document.getElementById('credentialsBtn');
+    panel.classList.toggle('open', isOpen);
+    button.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  function displayValue(v) {
+   if (v === undefined || v === null || v === '') return '-';
+    if (typeof v === 'boolean') return v ? 'Yes' : 'No';
+    return String(v);
+  }
+
+  function safeDisplayValue(v) {
+    if (v === undefined || v === null || v === '') return 'N/A';
+    if (typeof v === 'boolean') return v ? 'Yes' : 'No';
+    return String(v);
+  }
+
+  function joinParts(parts, separator = ' ') {
+    return parts.map(part => safeDisplayValue(part)).filter(part => part !== 'N/A').join(separator);
+  }
+
+  function receiptField(label, value) {
+    const finalValue = safeDisplayValue(value);
+    if (finalValue === 'N/A') return '';
+    return `<div class="admin-receipt-field"><div class="admin-rf-label">${esc(label)}</div><div class="admin-rf-val">${esc(finalValue)}</div></div>`;
+  }
+
+  function openComplaintPage(index) {
+    const item = allComplaints[index];
+    if (!item) return;
+    sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(item));
+    window.open('complaint-view.html', '_blank');
+  }
+
+  function setDetailModalState(isOpen) {
+    const modal = document.getElementById('detailModal');
+    modal.classList.toggle('open', isOpen);
+    modal.setAttribute('aria-hidden', String(!isOpen));
+    if (!isOpen) activeComplaintIndex = null;
+  }
+
+  function detailRows(rows) {
+    return rows.map(([label, value]) => {
+      const finalValue = safeDisplayValue(value);
+      if (finalValue === 'N/A') return '';
+      return `
+        <div class="detail-row">
+          <div class="detail-label">${esc(label)}</div>
+          <div class="detail-value">${esc(finalValue)}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openComplaintDetail(index) {
+    const item = allComplaints[index];
+    if (!item) return;
+    activeComplaintIndex = index;
+    const complainant = item.complainant || {};
+    const address = item.address || {};
+    const respondent = item.respondent || {};
+    const complaint = item.complaint || {};
+    const officer = item.officer || {};
+    document.getElementById('detailSubtitle').textContent = `${displayValue(complaint.applicationNumber)} · ${displayValue(complaint.commissionerate)}`;
+    document.getElementById('detailSubtitle').textContent = `${safeDisplayValue(complaint.applicationNumber)} | ${safeDisplayValue(complaint.commissionerate)}`;
+    document.getElementById('detailContent').innerHTML = `
+      <div class="detail-card">
+        <div class="detail-card-title">Complainant</div>
+        <div class="detail-list">${detailRows([
+          ['First Name', complainant.firstName],
+          ['Surname', complainant.surname],
+          ['Mobile', complainant.mobile],
+          ['Alternate Mobile', complainant.alternateMobile],
+          ['Gender', complainant.gender],
+          ['Date of Birth', complainant.dateOfBirth],
+          ['Age', complainant.age],
+          ['Guardian', complainant.guardian],
+          ['Relation Type', complainant.relationType],
+          ['Occupation', complainant.occupation],
+          ['Education', complainant.education],
+          ['Marital Status', complainant.maritalStatus],
+          ['Caste', complainant.caste],
+          ['Religion', complainant.religion],
+          ['Nationality', complainant.nationality]
+        ])}</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card-title">Address</div>
+        <div class="detail-list">${detailRows([
+          ['House Number', address.houseNumber],
+          ['Street', address.street],
+          ['Locality', address.locality],
+          ['Landmark', address.landmark],
+          ['Ward', address.ward],
+          ['Mandal', address.mandal],
+          ['Residency', address.residency],
+          ['City', address.city],
+          ['District', address.district],
+          ['State', address.state],
+          ['Police Station', address.station],
+          ['Pincode', address.pincode]
+        ])}</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card-title">Respondent</div>
+        <div class="detail-list">${detailRows([
+          ['Known Respondent', respondent.isKnown],
+          ['First Name', respondent.name],
+          ['Surname', respondent.surname],
+          ['Gender', respondent.gender],
+          ['Date of Birth', respondent.dateOfBirth],
+          ['Age', respondent.age],
+          ['Guardian', respondent.guardian],
+          ['Relation Type', respondent.relationType],
+          ['Occupation', respondent.occupation],
+          ['Education', respondent.education],
+          ['Marital Status', respondent.maritalStatus],
+          ['Caste', respondent.caste],
+          ['Religion', respondent.religion],
+          ['Nationality', respondent.nationality]
+        ])}</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card-title">Complaint</div>
+        <div class="detail-list">${detailRows([
+          ['Application Number', complaint.applicationNumber],
+          ['Commissionerate', complaint.commissionerate],
+          ['Complaint Type', complaint.complaintType],
+          ['Nature of Petition', complaint.naturePetition],
+          ['Offence Date', complaint.offenceDate],
+          ['Offence Location', complaint.offenceLocation],
+          ['Status', complaint.status],
+          ['Declaration Accepted', complaint.declarationAccepted],
+          ['Submitted At', fmtDate(item.createdAt)],
+          ['Last Updated', fmtDate(item.updatedAt)]
+        ])}</div>
+      </div>
+      <div class="detail-card full">
+        <div class="detail-card-title">Description</div>
+        <div class="detail-value detail-text">${esc(safeDisplayValue(complaint.description))}</div>
+      </div>
+      <div class="detail-card full">
+        <div class="detail-card-title">Voice Transcript</div>
+        <div class="detail-value detail-text">${esc(safeDisplayValue(complaint.voiceText))}</div>
+      </div>
+      <div class="detail-card full">
+        <div class="detail-card-title">Assigned Officer</div>
+        <div class="detail-list">${detailRows([
+          ['Officer Name', officer.name],
+          ['Officer Mobile', officer.mobile]
+        ])}</div>
+      </div>
+    `;
+    setDetailModalState(true);
+  }
+
+  function openComplaintReceipt(index) {
+    const item = allComplaints[index];
+    if (!item) return;
+    activeComplaintIndex = index;
+    const complainant = item.complainant || {};
+    const address = item.address || {};
+    const respondent = item.respondent || {};
+    const complaint = item.complaint || {};
+    const officer = item.officer || {};
+    const complainantName = joinParts([complainant.firstName, complainant.surname]);
+    const complainantGuardian = joinParts([complainant.guardian, complainant.relationType ? `(${complainant.relationType})` : '']);
+    const respondentName = joinParts([respondent.name, respondent.surname]);
+    const respondentGuardian = joinParts([respondent.guardian, respondent.relationType ? `(${respondent.relationType})` : '']);
+    const commissionerateLabel = safeDisplayValue(complaint.commissionerate);
+    const respondentVisible = respondent.isKnown || respondentName !== '';
+    let respondentSection = '';
+
+    if (respondentVisible) {
+      respondentSection = `
+        <div class="admin-receipt-section">
+          <h3>Respondent Information</h3>
+          <div class="admin-receipt-grid">
+            ${receiptField('Full Name', respondentName)}
+            ${receiptField('Gender', respondent.gender)}
+            ${receiptField('Age', respondent.age ? `${respondent.age} years` : '')}
+            ${receiptField('Guardian', respondentGuardian)}
+            ${receiptField('Date of Birth', respondent.dateOfBirth)}
+            ${receiptField('Occupation', respondent.occupation)}
+            ${receiptField('Education', respondent.education)}
+            ${receiptField('Caste', respondent.caste)}
+            ${receiptField('Religion', respondent.religion)}
+            ${receiptField('Marital Status', respondent.maritalStatus)}
+            ${receiptField('Nationality', respondent.nationality)}
+          </div>
+        </div>`;
+    }
+
+    document.getElementById('detailSubtitle').textContent = `${safeDisplayValue(complaint.applicationNumber)} | ${commissionerateLabel}`;
+    document.getElementById('detailContent').innerHTML = `
+      <div class="admin-receipt">
+        <div class="admin-receipt-header">
+          <div>
+            <div class="admin-receipt-kicker">Acknowledgement Receipt</div>
+            <div class="admin-receipt-title">Telangana State Police | Complaint Registration</div>
+          </div>
+          <div class="admin-app-no">${esc(safeDisplayValue(complaint.applicationNumber))}</div>
+        </div>
+        <div class="admin-receipt-body">
+          <div class="admin-receipt-section">
+            <h3>Personal Information</h3>
+            <div class="admin-receipt-grid">
+              ${receiptField('Full Name', complainantName)}
+              ${receiptField('Date of Birth', complainant.dateOfBirth)}
+              ${receiptField('Age', complainant.age ? `${complainant.age} years` : '')}
+              ${receiptField('Gender', complainant.gender)}
+              ${receiptField('Guardian', complainantGuardian)}
+              ${receiptField('Occupation', complainant.occupation)}
+              ${receiptField('Education', complainant.education)}
+              ${receiptField('Caste', complainant.caste)}
+              ${receiptField('Religion', complainant.religion)}
+              ${receiptField('Nationality', complainant.nationality)}
+              ${receiptField('Marital Status', complainant.maritalStatus)}
+              ${receiptField('Mobile', complainant.mobile ? `+91 ${complainant.mobile}` : '')}
+              ${receiptField('Alternate Mobile', complainant.alternateMobile ? `+91 ${complainant.alternateMobile}` : '')}
+            </div>
+          </div>
+          <div class="admin-receipt-section">
+            <h3>Address Information</h3>
+            <div class="admin-receipt-grid">
+              ${receiptField('House / Flat No.', address.houseNumber)}
+              ${receiptField('Street / Road', address.street)}
+              ${receiptField('Locality', address.locality)}
+              ${receiptField('Landmark', address.landmark)}
+              ${receiptField('Ward / Colony', address.ward)}
+              ${receiptField('Area / Mandal', address.mandal)}
+              ${receiptField('Residency Type', address.residency)}
+              ${receiptField('State', address.state)}
+              ${receiptField('District', address.district)}
+              ${receiptField('Nearest Police Station', address.station)}
+              ${receiptField('City / Village', address.city)}
+              ${receiptField('Pincode', address.pincode)}
+              ${receiptField('Offence Location', complaint.offenceLocation)}
+              ${receiptField('Date of Offence', complaint.offenceDate)}
+            </div>
+          </div>
+          ${respondentSection}
+          <div class="admin-receipt-section">
+            <h3>Complaint Information</h3>
+            <div class="admin-receipt-grid">
+              ${receiptField('Complaint Type', complaint.complaintType)}
+              ${receiptField('Nature of Petition', complaint.naturePetition)}
+              ${receiptField('Assigned Commissionerate', complaint.commissionerate)}
+              ${receiptField('Status', complaint.status)}
+              ${receiptField('Declaration Accepted', complaint.declarationAccepted)}
+              ${receiptField('Submitted At', fmtDate(item.createdAt))}
+              ${receiptField('Last Updated', fmtDate(item.updatedAt))}
+              ${receiptField('Officer Name', officer.name)}
+              ${receiptField('Officer Mobile', officer.mobile ? `+91 ${officer.mobile}` : '')}
+            </div>
+            ${safeDisplayValue(complaint.description) !== 'N/A' ? `<div class="admin-receipt-text"><div class="admin-rf-label">Written Description</div><div class="admin-rf-val">${esc(safeDisplayValue(complaint.description))}</div></div>` : ''}
+            ${safeDisplayValue(complaint.voiceText) !== 'N/A' ? `<div class="admin-receipt-text"><div class="admin-rf-label">Voice Complaint Transcription</div><div class="admin-rf-val">${esc(safeDisplayValue(complaint.voiceText))}</div></div>` : ''}
+          </div>
+          <div class="admin-receipt-section">
+            <h3>Forwarded To</h3>
+            <div class="admin-rf-label">Commissionerate</div>
+            <div><span class="admin-comm-badge">${esc(commissionerateLabel)} Police Commissionerate</span></div>
+          </div>
+        </div>
+        <div class="admin-receipt-footer">
+          <span>Generated: ${esc(fmtDate(item.createdAt))}</span>
+          <span>Portal: Telangana Police Complaint System</span>
+        </div>
+      </div>
+    `;
+    setDetailModalState(true);
+  }
+
+  function populateFilter(items) {
+    const sel = document.getElementById('commissionerateFilter');
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">All commissionerates</option>' +
+      items.map(i => `<option value="${esc(i.label)}">${esc(i.label)}</option>`).join('');
+    sel.value = cur;
+  }
+
+  function applyFilters() {
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    const comm = document.getElementById('commissionerateFilter').value;
+    const filtered = allComplaints.filter(item => {
+      const mc = !comm || item.complaint.commissionerate === comm;
+      const hay = [
+        item.complaint.applicationNumber, item.complaint.commissionerate,
+        item.complainant.firstName, item.complainant.surname,
+        item.complainant.mobile, item.complaint.complaintType,
+        item.complaint.naturePetition, item.complaint.offenceLocation
+      ].join(' ').toLowerCase();
+      return mc && (!q || hay.includes(q));
+    });
+    renderTable(filtered);
+    document.getElementById('tableFooter').textContent =
+      filtered.length === allComplaints.length
+        ? `Showing all ${allComplaints.length} records`
+        : `Showing ${filtered.length} of ${allComplaints.length} records`;
+  }
+
+  function renderTable(complaints) {
+    const body = document.getElementById('complaintTableBody');
+    const empty = document.getElementById('emptyState');
+    if (!complaints.length) { body.innerHTML = ''; empty.style.display = ''; return; }
+    empty.style.display = 'none';
+    body.innerHTML = complaints.map(item => {
+      const itemIndex = allComplaints.indexOf(item);
+      const name = `${item.complainant.firstName || ''} ${item.complainant.surname || ''}`.trim() || '—';
+      const status = item.complaint.status || 'Submitted';
+      return `<tr>
+        <td><span class="ref-num">${esc(item.complaint.applicationNumber || '—')}</span></td>
+        <td><span class="comm-tag">${esc(item.complaint.commissionerate || '—')}</span></td>
+        <td>${esc(name)}</td>
+        <td style="font-family:var(--font-mono);font-size:13px;">${esc(item.complainant.mobile || '—')}</td>
+        <td>${esc(item.complaint.complaintType || '—')}</td>
+        <td>${esc(item.complaint.naturePetition || '—')}</td>
+        <td>${esc(item.complaint.offenceLocation || '—')}</td>
+        <td style="white-space:nowrap;">${esc(fmtDate(item.createdAt))}</td>
+        <td><span class="status-pill ${statusClass(status)}">${esc(status)}</span></td>
+        <td><a class="view-link" href="#" data-index="${itemIndex}">View</a></td>
+      </tr>`;
+    }).join('');
+  }
+
+  async function fetchCredentials() {
+    const sess = getSession();
+    if (!sess || !sess.token) return;
+    const r = await fetch(`${API_BASE_URL}/admin/commissionerate`, { headers: { Authorization: `Bearer ${sess.token}` } });
+    const res = await r.json();
+    if (!r.ok) throw new Error(res.message || 'Unable to load credentials');
+    commissionerateCredentials = res.data || [];
+    renderCredentialList(commissionerateCredentials);
+  }
+
+  async function fetchDashboard() {
+    const sess = getSession();
+    if (!sess || !sess.token) return;
+    const r = await fetch(`${API_BASE_URL}/dashboard/complaints`, { headers: { Authorization: `Bearer ${sess.token}` } });
+    const res = await r.json();
+    if (!r.ok) throw new Error(res.message || 'Unable to load dashboard');
+    const { user, summary, complaints } = res.data;
+    allComplaints = complaints;
+    document.getElementById('welcomeMeta').textContent = `Signed in as ${user.username} · All commissionerates`;
+    document.getElementById('totalCount').textContent = summary.total;
+    document.getElementById('commissionerateCount').textContent = summary.byCommissionerate.length;
+    renderChips('commissionerateChips', summary.byCommissionerate, 'No data');
+    renderChips('typeChips', summary.byType, 'No data');
+    populateFilter(summary.byCommissionerate);
+    applyFilters();
+    await fetchCredentials();
+  }
+
+  async function login() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const btn = document.getElementById('loginBtn');
+    const status = document.getElementById('loginStatus');
+    if (!username || !password) { status.textContent = 'Enter both username and password.'; return; }
+    status.textContent = '';
+    btn.disabled = true; btn.textContent = 'Authenticating...';
+    try {
+      const r = await fetch(`${API_BASE_URL}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
+      const res = await r.json();
+      if (!r.ok) throw new Error(res.message || 'Login failed');
+      setSession(res.data);
+      status.textContent = 'Loading dashboard...';
+      await fetchDashboard();
+      showView('dashboardView');
+      status.textContent = '';
+    } catch (e) {
+      clearSession();
+      showView('loginView');
+      status.textContent = e.message || 'Unable to load dashboard.';
+    } finally { btn.disabled = false; btn.textContent = 'Login to Dashboard'; }
+  }
+
+  function logout() {
+    clearSession(); allComplaints = []; commissionerateCredentials = [];
+    document.getElementById('password').value = '';
+    document.getElementById('loginStatus').textContent = '';
+    setCredentialsMenuState(false);
+    showView('loginView');
+  }
+
+  async function createAdmin() {
+    const username = document.getElementById('setupUsername').value.trim();
+    const password = document.getElementById('setupPassword').value;
+    const confirm = document.getElementById('setupConfirmPassword').value;
+    const btn = document.getElementById('setupBtn');
+    const status = document.getElementById('setupStatus');
+    if (!username || username.length < 3) { status.textContent = 'Username must be at least 3 characters.'; return; }
+    if (!password || password.length < 8) { status.textContent = 'Password must be at least 8 characters.'; return; }
+    if (password !== confirm) { status.textContent = 'Passwords do not match.'; return; }
+    btn.disabled = true; btn.textContent = 'Creating...'; status.textContent = '';
+    try {
+      const r = await fetch(`${API_BASE_URL}/auth/bootstrap-admin`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
+      const res = await r.json();
+      if (!r.ok) throw new Error(res.message || 'Unable to create admin');
+      status.style.color = '#15803d';
+      status.textContent = 'Account created. Proceed to login.';
+      document.getElementById('username').value = username;
+      setTimeout(() => { showView('loginView'); }, 1200);
+    } catch (e) { status.style.color = '#b91c1c'; status.textContent = e.message; }
+    finally { btn.disabled = false; btn.textContent = 'Create Administrator Account'; }
+  }
+
+  async function saveCommissionerate(e) {
+    e.preventDefault();
+    const sess = getSession();
+    const commissionerateKey = document.getElementById('credentialSelect').value;
+    const password = document.getElementById('newCredentialPassword').value;
+    const confirm = document.getElementById('confirmCredentialPassword').value;
+    const btn = document.getElementById('savePasswordBtn');
+    const status = document.getElementById('credentialStatus');
+    if (!commissionerateKey) { status.style.color='#b91c1c'; status.textContent = 'Select a commissionerate.'; return; }
+    if (!password || password.length < 8) { status.style.color='#b91c1c'; status.textContent = 'Password must be at least 8 characters.'; return; }
+    if (password !== confirm) { status.style.color='#b91c1c'; status.textContent = 'Passwords do not match.'; return; }
+    btn.disabled = true; btn.textContent = 'Saving...'; status.textContent = '';
+    try {
+      const r = await fetch(`${API_BASE_URL}/admin/commissionerate`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sess.token}` }, body: JSON.stringify({ commissionerateKey, password }) });
+      const res = await r.json();
+      if (!r.ok) throw new Error(res.message || 'Unable to save');
+      document.getElementById('newCredentialPassword').value = '';
+      document.getElementById('confirmCredentialPassword').value = '';
+      status.style.color = '#15803d'; status.textContent = 'Account saved successfully.';
+      await fetchCredentials();
+    } catch (e) { status.style.color='#b91c1c'; status.textContent = e.message; }
+    finally { btn.disabled = false; btn.textContent = 'Save Account'; }
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', login);
+  document.getElementById('setupBtn').addEventListener('click', createAdmin);
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+  document.getElementById('refreshBtn').addEventListener('click', fetchDashboard);
+  document.getElementById('credentialsBtn').addEventListener('click', () => {
+    setCredentialsMenuState(!isCredentialsMenuOpen);
+  });
+  document.getElementById('closeCredentialsBtn').addEventListener('click', () => {
+    setCredentialsMenuState(false);
+  });
+  document.getElementById('savePasswordBtn').addEventListener('click', saveCommissionerate);
+  document.getElementById('searchInput').addEventListener('input', applyFilters);
+  document.getElementById('commissionerateFilter').addEventListener('change', applyFilters);
+  document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+  document.getElementById('closeDetailBtn').addEventListener('click', () => setDetailModalState(false));
+  document.getElementById('complaintTableBody').addEventListener('click', e => {
+    const link = e.target.closest('a[data-index]');
+    if (!link) return;
+    e.preventDefault();
+    openComplaintPage(Number(link.dataset.index));
+  });
+  document.addEventListener('click', e => {
+    const panel = document.getElementById('credentialsPanel');
+    const button = document.getElementById('credentialsBtn');
+    if (!isCredentialsMenuOpen) return;
+    if (panel.contains(e.target) || button.contains(e.target)) return;
+    setCredentialsMenuState(false);
+  });
+  document.getElementById('detailModal').addEventListener('click', e => {
+    if (e.target.id === 'detailModal') setDetailModalState(false);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (isCredentialsMenuOpen) setCredentialsMenuState(false);
+    const modal = document.getElementById('detailModal');
+    if (modal.classList.contains('open')) setDetailModalState(false);
+  });
+
+  (async function init() {
+    try {
+      const r = await fetch(`${API_BASE_URL}/auth/bootstrap-status`);
+      const res = await r.json();
+      if (!res.data || !res.data.adminConfigured) { showView('setupView'); return; }
+    } catch (error) { document.getElementById('loginStatus').textContent = 'Unable to contact backend server.'; }
+
+    const sess = getSession();
+    if (sess && sess.token) {
+      try {
+        await fetchDashboard();
+        showView('dashboardView');
+      } catch (error) {
+        clearSession();
+        document.getElementById('loginStatus').textContent = 'Previous session expired. Please login again.';
+        showView('loginView');
+      }
+    } else {
+      showView('loginView');
+    }
+  })();
+</script>
 </body>
 </html>
