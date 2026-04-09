@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Complaint | Women Safety Wing - Telangana Police</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gov-navy: #003087;
+    --gov-navy-dark: #001f5b;
+    --gov-blue: #005eb8;
+    --gov-gold: #f5c542;
+    --gov-red: #b91c1c;
+    --gov-green: #15803d;
+    --color-text-primary: #1a2332;
+    --color-text-secondary: #4a5568;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f4f6f9;
+    --color-border: #c5cdd8;
+    --shadow-panel: 0 10px 28px rgba(26,35,50,0.09);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Noto Sans", Arial, sans-serif; background: var(--color-background-secondary); color: var(--color-text-primary); min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+  .skip-link:focus { left:12px; top:12px; width:auto; height:auto; background:#fff; color:#000; padding:8px 12px; z-index:999; }
+  .top-bar { background:#0b1f3a; color:rgba(255,255,255,0.82); font-size:12px; display:flex; justify-content:space-between; padding:6px 32px; gap:16px; }
+  .top-bar a { margin-right:18px; }
+  .top-bar a:hover { color:#fff; }
+  .tricolor { display:grid; grid-template-columns:1fr 1fr 1fr; height:4px; }
+  .saffron { background:#ff9933; } .white { background:#fff; } .green { background:#138808; }
+
+  .gov-header { background:#fff; border-bottom:1px solid var(--color-border); padding:18px 36px; display:flex; justify-content:space-between; align-items:center; gap:24px; }
+  .logo-block { display:flex; align-items:center; gap:18px; min-width:0; }
+  .emblem-circle { width:74px; height:74px; border:2px solid var(--gov-gold); border-radius:50%; display:grid; place-items:center; background:#fff; flex:0 0 auto; overflow:hidden; }
+  .emblem-circle img { width:100%; height:100%; object-fit:cover; }
+  .ministry { font-size:12px; text-transform:uppercase; letter-spacing:.8px; color:var(--color-text-secondary); font-weight:700; }
+  .gov-titles h1 { font-family:"Noto Serif", serif; color:var(--gov-navy); font-size:32px; line-height:1.12; margin-top:2px; }
+  .subtitle { font-size:14px; color:var(--color-text-secondary); margin-top:4px; }
+  .header-right { display:flex; align-items:center; gap:14px; }
+  .helpline-box, .header-badge { border:1px solid var(--color-border); padding:10px 14px; text-align:center; background:#fff; }
+  .helpline-box .number { display:block; font-size:22px; font-weight:700; color:var(--gov-red); line-height:1; }
+  .helpline-box small, .header-badge { font-size:11px; text-transform:uppercase; letter-spacing:.8px; color:var(--color-text-secondary); font-weight:700; }
+
+  .nav-bar { background:var(--gov-navy); color:#fff; display:flex; align-items:center; padding:0 36px; min-height:48px; gap:22px; }
+  .nav-home, .nav-links a, .nav-btn { display:flex; align-items:center; min-height:48px; padding:0 14px; font-size:14px; font-weight:600; }
+  .nav-links { list-style:none; display:flex; flex:1; flex-wrap:wrap; }
+  .nav-links li.active a, .nav-links a:hover, .nav-btn { background:var(--gov-navy-dark); }
+  .nav-right { margin-left:auto; }
+  .breadcrumb-bar { background:#fff; border-bottom:1px solid var(--color-border); padding:10px 36px; font-size:13px; color:var(--color-text-secondary); display:flex; gap:9px; flex-wrap:wrap; }
+  .breadcrumb-current { color:var(--gov-navy); font-weight:700; }
+
+  main { max-width:1120px; margin:34px auto; padding:0 24px 70px; }
+  .page-header { background:#fff; border:1px solid var(--color-border); box-shadow:var(--shadow-panel); padding:24px; margin-bottom:22px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .page-title { font-family:"Noto Serif", serif; color:var(--gov-navy); font-size:32px; font-weight:600; }
+  .page-subtitle { margin-top:6px; color:var(--color-text-secondary); font-size:14px; line-height:1.6; }
+
+  .tracker-panel, .result-panel { background:#fff; border:1px solid var(--color-border); box-shadow:var(--shadow-panel); }
+  .panel-head { background:var(--gov-navy); color:#fff; padding:18px 24px; }
+  .panel-head h2 { font-family:"Noto Serif", serif; font-size:23px; font-weight:500; }
+  .panel-head p { color:rgba(255,255,255,.74); margin-top:6px; font-size:13px; line-height:1.55; }
+  .tracker-body { padding:24px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:end; }
+  .field { display:flex; flex-direction:column; gap:7px; }
+  label { font-size:12px; font-weight:700; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.7px; }
+  input { width:100%; height:44px; border:1px solid var(--color-border); background:#fff; color:var(--color-text-primary); padding:0 13px; font-size:16px; font-family:inherit; outline:none; }
+  input:focus { border-color:var(--gov-blue); box-shadow:0 0 0 3px rgba(0,94,184,.14); }
+  button, .btn { border:0; background:var(--gov-navy); color:#fff; min-height:44px; padding:0 22px; font-family:inherit; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  button:hover, .btn:hover { background:var(--gov-navy-dark); }
+  button:disabled { opacity:.7; cursor:not-allowed; }
+  .status-line { padding:0 24px 22px; min-height:20px; color:var(--gov-red); font-size:14px; }
+
+  .result-panel { margin-top:22px; display:none; }
+  .result-panel.open { display:block; }
+  .result-body { padding:24px; }
+  .status-banner { border-left:6px solid var(--gov-blue); background:#eef6ff; padding:18px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:22px; }
+  .status-text { font-size:13px; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.8px; font-weight:700; }
+  .status-value { font-size:28px; color:var(--gov-navy); font-family:"Noto Serif", serif; margin-top:3px; }
+  .ref-badge { background:var(--gov-navy); color:#fff; padding:10px 13px; font-family:Consolas, monospace; font-weight:700; }
+  .tracking-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+  .tracking-field { border:1px solid #d9dee8; background:#fbfcfe; padding:15px; min-height:76px; }
+  .tf-label { font-size:11px; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.8px; font-weight:700; margin-bottom:7px; }
+  .tf-value { color:var(--color-text-primary); font-size:16px; line-height:1.55; word-break:break-word; }
+
+  .timeline { margin-top:24px; border-top:1px solid var(--color-border); padding-top:22px; display:grid; gap:14px; }
+  .timeline-item { display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:start; }
+  .timeline-dot { width:14px; height:14px; border-radius:50%; background:var(--gov-green); margin-top:4px; box-shadow:0 0 0 5px rgba(21,128,61,.12); }
+  .timeline-title { font-weight:700; color:var(--gov-navy); }
+  .timeline-meta { color:var(--color-text-secondary); font-size:13px; line-height:1.6; margin-top:3px; }
+
+  .gov-footer { background:#0b1f3a; color:rgba(255,255,255,.78); }
+  .footer-top { max-width:1120px; margin:0 auto; padding:34px 24px; display:grid; grid-template-columns:2fr repeat(3,1fr); gap:28px; }
+  .footer-brand h3, .footer-links-group h4 { font-family:"Noto Serif", serif; color:#fff; margin-bottom:10px; }
+  .footer-brand p, .footer-links-group li { font-size:13px; line-height:1.75; }
+  .footer-links-group ul { list-style:none; }
+  .footer-links-group a:hover { color:#fff; }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,.14); max-width:1120px; margin:0 auto; padding:14px 24px; font-size:12px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+  @media (max-width:760px) {
+    .top-bar, .gov-header, .nav-bar, .page-header, .tracker-body, .footer-bottom { align-items:stretch; flex-direction:column; }
+    .top-bar, .gov-header, .nav-bar, .breadcrumb-bar { padding-left:18px; padding-right:18px; }
+    .header-right, .nav-right { display:none; }
+    .gov-titles h1, .page-title { font-size:25px; }
+    .tracker-body, .tracking-grid, .footer-top { grid-template-columns:1fr; }
+    button { width:100%; }
+    main { margin-top:22px; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-left">
+    <a href="#main" class="skip-link">Skip to Content</a>
+    <a href="https://www.telangana.gov.in/">Telangana Government</a>
+    <a href="https://tspolice.gov.in/">Telangana Police</a>
+  </div>
+  <div class="top-bar-right">
+    <a href="#">Hindi</a><a href="#">Telugu</a><a href="#">English</a>
+  </div>
+</div>
+<div class="tricolor"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
+
+<header class="gov-header">
+  <div class="logo-block">
+    <div class="emblem-circle"><img src="assets/logo.png" alt="Women Safety Wing Logo"></div>
+    <div class="gov-titles">
+      <div class="ministry">Government of Telangana | Home Department</div>
+      <h1>Women Safety Wing</h1>
+      <div class="subtitle">Telangana Police | Integrated Complaint Management Portal</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="helpline-box"><span class="number">100</span><small>Police Helpline</small></div>
+    <div class="header-badge">Track<br>Status</div>
+  </div>
+</header>
+
+<nav class="nav-bar" role="navigation" aria-label="Main navigation">
+  <a class="nav-home" href="index.html">&#8962; Home</a>
+  <ul class="nav-links">
+    <li class="active"><a href="track-page.html">Track Status</a></li>
+  </ul>
+  <div class="nav-right"><a class="nav-btn" href="booth-dashboard.html">Register Complaint</a></div>
+</nav>
+
+<div class="breadcrumb-bar" role="navigation" aria-label="Breadcrumb">
+  <a href="index.html">Home</a><span class="sep">&rsaquo;</span>
+  <a href="#">Women Safety Wing</a><span class="sep">&rsaquo;</span>
+  <span class="breadcrumb-current">Track Complaint</span>
+</div>
+
+<main id="main">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Track Complaint Status</div>
+      <div class="page-subtitle">Use the complaint reference number printed on the acknowledgement receipt.</div>
+    </div>
+    <a class="btn" href="booth-dashboard.html">Register New Complaint</a>
+  </div>
+
+  <section class="tracker-panel" aria-label="Complaint tracker search">
+    <div class="panel-head">
+      <h2>Complaint Reference Search</h2>
+      <p>Enter the complete application number. Example: TG-260409-1430-ABCD</p>
+    </div>
+    <form class="tracker-body" id="trackForm">
+      <div class="field">
+        <label for="referenceInput">Complaint Reference Number</label>
+        <input id="referenceInput" type="text" placeholder="Enter reference number" autocomplete="off">
+      </div>
+      <button id="trackBtn" type="submit">Track Complaint</button>
+    </form>
+    <div class="status-line" id="trackStatus"></div>
+  </section>
+
+  <section class="result-panel" id="resultPanel" aria-label="Complaint tracking result">
+    <div class="panel-head">
+      <h2>Tracking Result</h2>
+      <p>Latest information available in the complaint registration system.</p>
+    </div>
+    <div class="result-body" id="resultBody"></div>
+  </section>
+</main>
+
+<footer class="gov-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h3>Women Safety Wing</h3>
+      <p>Telangana Police, Government of Telangana.<br>Complaint tracking and acknowledgement support.</p>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.5);">Last Updated: <span id="lastUpdated"></span></div>
+    </div>
+    <div class="footer-links-group">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="booth-dashboard.html">File a Complaint</a></li>
+        <li><a href="track-page.html">Track Your Complaint</a></li>
+        <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-group">
+      <h4>Helplines</h4>
+      <ul>
+        <li><a href="#">Women Helpline - 1098</a></li>
+        <li><a href="#">Police - 100</a></li>
+        <li><a href="#">Emergency - 112</a></li>
+        <li><a href="#">Cybercrime - 1930</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-group">
+      <h4>Portals</h4>
+      <ul>
+        <li><a href="admin-dashboard.html">Admin Login</a></li>
+        <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; <span id="footerYear"></span> Government of Telangana. All Rights Reserved.</span>
+    <span>Track complaint | Women Safety Wing</span>
+  </div>
+</footer>
+
+<script>
+  const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
+
+  function esc(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function displayValue(value) {
+    return value === undefined || value === null || value === '' ? 'N/A' : String(value);
+  }
+
+  function fmtDate(value) {
+    if (!value) return 'N/A';
+    return new Date(value).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+
+  function updateFooterDates() {
+    const now = new Date();
+    document.getElementById('footerYear').textContent = now.getFullYear();
+    document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  }
+
+  function trackingField(label, value) {
+    return `
+      <div class="tracking-field">
+        <div class="tf-label">${esc(label)}</div>
+        <div class="tf-value">${esc(displayValue(value))}</div>
+      </div>
+    `;
+  }
+
+  function renderResult(item) {
+    document.getElementById('resultPanel').classList.add('open');
+    document.getElementById('resultBody').innerHTML = `
+      <div class="status-banner">
+        <div>
+          <div class="status-text">Current Status</div>
+          <div class="status-value">${esc(displayValue(item.status))}</div>
+        </div>
+        <div class="ref-badge">${esc(displayValue(item.applicationNumber))}</div>
+      </div>
+      <div class="tracking-grid">
+        ${trackingField('Commissionerate', item.commissionerate)}
+        ${trackingField('Complaint Type', item.complaintType)}
+        ${trackingField('Nature of Petition', item.naturePetition)}
+        ${trackingField('Offence Location', item.offenceLocation)}
+        ${trackingField('Officer', item.officerName)}
+        ${trackingField('Last Updated', fmtDate(item.updatedAt))}
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-title">Complaint submitted</div>
+            <div class="timeline-meta">${esc(fmtDate(item.submittedAt))} | Reference number generated by the registration portal.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-title">Forwarded to ${esc(displayValue(item.commissionerate))} Commissionerate</div>
+            <div class="timeline-meta">Quote the reference number for any help-desk follow-up.</div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById('resultPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  async function trackComplaint(event) {
+    event.preventDefault();
+    const reference = document.getElementById('referenceInput').value.trim();
+    const status = document.getElementById('trackStatus');
+    const button = document.getElementById('trackBtn');
+    document.getElementById('resultPanel').classList.remove('open');
+
+    if (!reference) {
+      status.textContent = 'Enter a complaint reference number.';
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Searching...';
+    status.textContent = '';
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/complaints/track/${encodeURIComponent(reference)}`);
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.message || 'Unable to track complaint');
+      status.style.color = 'var(--gov-green)';
+      status.textContent = 'Complaint found.';
+      renderResult(result.data);
+    } catch (error) {
+      status.style.color = 'var(--gov-red)';
+      status.textContent = error.message || 'Unable to contact backend server.';
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Track Complaint';
+    }
+  }
+
+  updateFooterDates();
+  document.getElementById('trackForm').addEventListener('submit', trackComplaint);
+
+  const params = new URLSearchParams(window.location.search);
+  const reference = params.get('ref');
+  if (reference) {
+    document.getElementById('referenceInput').value = reference;
+    document.getElementById('trackForm').requestSubmit();
+  }
+</script>
+</body>
+</html>
