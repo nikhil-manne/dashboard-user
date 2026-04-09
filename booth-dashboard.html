@@ -852,6 +852,7 @@
     'https://wsw-backend.onrender.com/api'
   ).replace(/\/$/, '');
   const BOOTH_SESSION_KEY = 'wsw-booth-session';
+  let authToken = null;
   const g = id => (document.getElementById(id)?.value || '').trim();
   const asNumber = id => {
     const value = g(id);
@@ -873,11 +874,49 @@
   }
 
   function setBoothSession(session) {
-    sessionStorage.setItem(BOOTH_SESSION_KEY, JSON.stringify(session));
+    authToken = session?.token || authToken;
+    sessionStorage.setItem(BOOTH_SESSION_KEY, JSON.stringify({ user: session?.user || session }));
   }
 
   function clearBoothSession() {
+    authToken = null;
     sessionStorage.removeItem(BOOTH_SESSION_KEY);
+  }
+
+  async function refreshBoothSession() {
+    const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+      method: 'POST',
+      credentials: 'include'
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.message || 'Session expired');
+    setBoothSession(result.data);
+    return result.data;
+  }
+
+  async function getAccessToken() {
+    if (authToken) return authToken;
+    const session = await refreshBoothSession();
+    return session.token;
+  }
+
+  async function authFetch(url, options = {}) {
+    const token = await getAccessToken();
+    let response = await fetch(url, {
+      ...options,
+      credentials: 'include',
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` }
+    });
+
+    if (response.status !== 401) return response;
+
+    authToken = null;
+    const nextToken = await getAccessToken();
+    return fetch(url, {
+      ...options,
+      credentials: 'include',
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${nextToken}` }
+    });
   }
 
   function showBoothView(isAuthenticated) {
@@ -904,6 +943,7 @@
     try {
       const response = await fetch(`${API_BASE_URL}/auth/booth/login`, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
@@ -922,6 +962,7 @@
   }
 
   function logoutBooth() {
+    fetch(`${API_BASE_URL}/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
     clearBoothSession();
     document.getElementById('boothLoginPassword').value = '';
     showBoothView(false);
@@ -938,7 +979,20 @@
   document.getElementById('boothLoginPassword').addEventListener('keydown', event => {
     if (event.key === 'Enter') loginBooth();
   });
-  showBoothView(Boolean(getBoothSession()?.token));
+  (async function initBoothSession() {
+    if (!getBoothSession()?.user) {
+      showBoothView(false);
+      return;
+    }
+
+    try {
+      await refreshBoothSession();
+      showBoothView(true);
+    } catch {
+      clearBoothSession();
+      showBoothView(false);
+    }
+  })();
 
   function selectType(el, val) {
     document.querySelectorAll('.type-chip').forEach(card => card.classList.remove('selected'));
@@ -1240,8 +1294,7 @@
   }
 
   async function submitForm() {
-    const boothSession = getBoothSession();
-    if (!boothSession?.token) {
+    if (!getBoothSession()?.user) {
       showBoothView(false);
       showToast('Please login to the booth dashboard first.', true);
       return;
@@ -1277,9 +1330,9 @@
     submitBtn.textContent = 'Saving complaint...';
 
     try {
-      const response = await fetch(`${API_BASE_URL}/complaints`, {
+      const response = await authFetch(`${API_BASE_URL}/complaints`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${boothSession.token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
 

@@ -1382,6 +1382,7 @@
   let boothCredentials = [];
   let isCredentialsMenuOpen = false;
   let activeComplaintIndex = null;
+  let authToken = null;
 
   function updateClock() {
     const el = document.getElementById('currentTime');
@@ -1406,8 +1407,46 @@
       return null;
     }
   }
-  function setSession(s) { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
-  function clearSession() { sessionStorage.removeItem(STORAGE_KEY); }
+  function setSession(s) {
+    authToken = s?.token || authToken;
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ user: s?.user || s }));
+  }
+  function clearSession() {
+    authToken = null;
+    sessionStorage.removeItem(STORAGE_KEY);
+  }
+
+  async function refreshSession() {
+    const r = await fetch(`${API_BASE_URL}/auth/refresh`, { method: 'POST', credentials: 'include' });
+    const res = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(res.message || 'Session expired');
+    setSession(res.data);
+    return res.data;
+  }
+
+  async function getAccessToken() {
+    if (authToken) return authToken;
+    const session = await refreshSession();
+    return session.token;
+  }
+
+  async function authFetch(url, options = {}) {
+    const token = await getAccessToken();
+    let r = await fetch(url, {
+      ...options,
+      credentials: 'include',
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` }
+    });
+    if (r.status !== 401) return r;
+
+    authToken = null;
+    const nextToken = await getAccessToken();
+    return fetch(url, {
+      ...options,
+      credentials: 'include',
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${nextToken}` }
+    });
+  }
 
   function esc(v) {
     return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -1532,11 +1571,7 @@
   }
 
   async function fetchComplaintDetail(id) {
-    const sess = getSession();
-    if (!sess || !sess.token) throw new Error('Session expired. Please login again.');
-    const r = await fetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`, {
-      headers: { Authorization: `Bearer ${sess.token}` }
-    });
+    const r = await authFetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`);
     const res = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(res.message || 'Unable to load complaint');
     return res.data;
@@ -1546,9 +1581,17 @@
     const item = allComplaints[index];
     if (!item) return;
     const fullItem = await fetchComplaintDetail(item._id);
-    sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
-    localStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
-    window.open('complaint-view.html', '_blank', 'noopener');
+    const serializedComplaint = JSON.stringify(fullItem);
+    const complaintWindow = window.open('about:blank', '_blank');
+
+    if (!complaintWindow) {
+      throw new Error('Popup blocked. Please allow popups and try View again.');
+    }
+
+    sessionStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
+    complaintWindow.sessionStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
+    complaintWindow.opener = null;
+    complaintWindow.location.replace('complaint-view.html');
   }
 
   function setDetailModalState(isOpen) {
@@ -1843,9 +1886,7 @@
   }
 
   async function fetchCredentials() {
-    const sess = getSession();
-    if (!sess || !sess.token) return;
-    const r = await fetch(`${API_BASE_URL}/admin/commissionerate`, { headers: { Authorization: `Bearer ${sess.token}` } });
+    const r = await authFetch(`${API_BASE_URL}/admin/commissionerate`);
     const res = await r.json();
     if (!r.ok) throw new Error(res.message || 'Unable to load credentials');
     commissionerateCredentials = res.data || [];
@@ -1853,9 +1894,7 @@
   }
 
   async function fetchBooths() {
-    const sess = getSession();
-    if (!sess || !sess.token) return;
-    const r = await fetch(`${API_BASE_URL}/admin/booths`, { headers: { Authorization: `Bearer ${sess.token}` } });
+    const r = await authFetch(`${API_BASE_URL}/admin/booths`);
     const res = await r.json();
     if (!r.ok) throw new Error(res.message || 'Unable to load booths');
     boothCredentials = res.data || [];
@@ -1863,12 +1902,11 @@
   }
 
   async function fetchDashboard() {
-    const sess = getSession();
-    if (!sess || !sess.token) return;
-    const r = await fetch(`${API_BASE_URL}/dashboard/complaints`, { headers: { Authorization: `Bearer ${sess.token}` } });
+    const r = await authFetch(`${API_BASE_URL}/dashboard/complaints`);
     const res = await r.json();
     if (!r.ok) throw new Error(res.message || 'Unable to load dashboard');
     const { user, summary, complaints } = res.data;
+    setSession({ user });
     allComplaints = complaints;
     document.getElementById('welcomeMeta').textContent = `Signed in as ${user.username} | All commissionerates`;
     document.getElementById('totalCount').textContent = summary.total;
@@ -1890,7 +1928,7 @@
     status.textContent = '';
     btn.disabled = true; btn.textContent = 'Authenticating...';
     try {
-      const r = await fetch(`${API_BASE_URL}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
+      const r = await fetch(`${API_BASE_URL}/auth/login`, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
       const res = await r.json();
       if (!r.ok) throw new Error(res.message || 'Login failed');
       setSession(res.data);
@@ -1906,6 +1944,7 @@
   }
 
   function logout() {
+    fetch(`${API_BASE_URL}/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
     clearSession(); allComplaints = []; commissionerateCredentials = [];
     document.getElementById('password').value = '';
     document.getElementById('loginStatus').textContent = '';
@@ -1937,7 +1976,6 @@
 
   async function saveCommissionerate(e) {
     e.preventDefault();
-    const sess = getSession();
     const commissionerateKey = document.getElementById('credentialSelect').value;
     const password = document.getElementById('newCredentialPassword').value;
     const confirm = document.getElementById('confirmCredentialPassword').value;
@@ -1948,7 +1986,7 @@
     if (password !== confirm) { status.style.color='#b91c1c'; status.textContent = 'Passwords do not match.'; return; }
     btn.disabled = true; btn.textContent = 'Saving...'; status.textContent = '';
     try {
-      const r = await fetch(`${API_BASE_URL}/admin/commissionerate`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sess.token}` }, body: JSON.stringify({ commissionerateKey, password }) });
+      const r = await authFetch(`${API_BASE_URL}/admin/commissionerate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ commissionerateKey, password }) });
       const res = await r.json();
       if (!r.ok) throw new Error(res.message || 'Unable to save');
       document.getElementById('newCredentialPassword').value = '';
@@ -1961,7 +1999,6 @@
 
   async function saveBooth(e) {
     e.preventDefault();
-    const sess = getSession();
     const id = document.getElementById('boothId').value;
     const username = document.getElementById('boothUsername').value.trim();
     const commissionerateKey = document.getElementById('boothCommissionerate').value;
@@ -1982,7 +2019,7 @@
     if (password) payload.password = password;
     btn.disabled = true; btn.textContent = 'Saving...'; status.textContent = '';
     try {
-      const r = await fetch(`${API_BASE_URL}/admin/booths`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sess.token}` }, body: JSON.stringify(payload) });
+      const r = await authFetch(`${API_BASE_URL}/admin/booths`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const res = await r.json();
       if (!r.ok) throw new Error(res.message || 'Unable to save booth');
       status.style.color = '#15803d'; status.textContent = 'Booth saved successfully.';
@@ -1993,12 +2030,11 @@
   }
 
   async function deleteBooth(id) {
-    const sess = getSession();
     const booth = boothCredentials.find(item => item.id === id);
     if (!booth || !confirm(`Delete booth ${booth.username}?`)) return;
     const status = document.getElementById('boothStatus');
     try {
-      const r = await fetch(`${API_BASE_URL}/admin/booths/${encodeURIComponent(id)}`, { method: 'DELETE', headers: { Authorization: `Bearer ${sess.token}` } });
+      const r = await authFetch(`${API_BASE_URL}/admin/booths/${encodeURIComponent(id)}`, { method: 'DELETE' });
       const res = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(res.message || 'Unable to delete booth');
       status.style.color = '#15803d'; status.textContent = 'Booth deleted successfully.';
@@ -2063,8 +2099,9 @@
     } catch (error) { document.getElementById('loginStatus').textContent = 'Unable to contact backend server.'; }
 
     const sess = getSession();
-    if (sess && sess.token) {
+    if (sess && sess.user) {
       try {
+        await refreshSession();
         await fetchDashboard();
         showView('dashboardView');
       } catch (error) {

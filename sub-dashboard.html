@@ -1061,6 +1061,7 @@
     const STORAGE_KEY = 'wsw-sub-session';
     const COMPLAINT_VIEW_KEY = 'wsw-selected-complaint';
     let allComplaints = [];
+    let authToken = null;
 
     function updateClock() {
       const el = document.getElementById('currentTime');
@@ -1100,11 +1101,48 @@
     }
 
     function setSession(session) {
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+      authToken = session?.token || authToken;
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ user: session?.user || session }));
     }
 
     function clearSession() {
+      authToken = null;
       sessionStorage.removeItem(STORAGE_KEY);
+    }
+
+    async function refreshSession() {
+      const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.message || 'Session expired');
+      setSession(result.data);
+      return result.data;
+    }
+
+    async function getAccessToken() {
+      if (authToken) return authToken;
+      const session = await refreshSession();
+      return session.token;
+    }
+
+    async function authFetch(url, options = {}) {
+      const token = await getAccessToken();
+      const headers = { ...(options.headers || {}), Authorization: `Bearer ${token}` };
+      let response = await fetch(url, { ...options, headers, credentials: 'include' });
+
+      if (response.status === 401) {
+        authToken = null;
+        const nextToken = await getAccessToken();
+        response = await fetch(url, {
+          ...options,
+          headers: { ...(options.headers || {}), Authorization: `Bearer ${nextToken}` },
+          credentials: 'include'
+        });
+      }
+
+      return response;
     }
 
     function showView(name) {
@@ -1184,16 +1222,7 @@
     }
 
     async function fetchComplaintDetail(id) {
-      const session = getSession();
-      if (!session?.token) {
-        throw new Error('Session expired. Please login again.');
-      }
-
-      const response = await fetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`, {
-        headers: {
-          Authorization: `Bearer ${session.token}`
-        }
-      });
+      const response = await authFetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`);
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok) {
@@ -1215,7 +1244,6 @@
       }
 
       sessionStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
-      localStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
       complaintWindow.sessionStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
       complaintWindow.opener = null;
       complaintWindow.location.replace('complaint-view.html');
@@ -1246,16 +1274,7 @@
     }
 
     async function fetchDashboard() {
-      const session = getSession();
-      if (!session?.token) {
-        return;
-      }
-
-      const response = await fetch(`${API_BASE_URL}/dashboard/complaints`, {
-        headers: {
-          Authorization: `Bearer ${session.token}`
-        }
-      });
+      const response = await authFetch(`${API_BASE_URL}/dashboard/complaints`);
 
       const result = await response.json();
       if (!response.ok) {
@@ -1263,6 +1282,7 @@
       }
 
       const { user, summary, complaints } = result.data;
+      if (user) setSession({ user });
       allComplaints = complaints;
       document.getElementById('welcomeTitle').textContent = `${user.commissionerate || 'Commissionerate'} Dashboard`;
       document.getElementById('welcomeMeta').textContent = `Login key: ${user.commissionerateKey || user.username}`;
@@ -1289,6 +1309,7 @@
       try {
         const response = await fetch(`${API_BASE_URL}/auth/commissionerate/login`, {
           method: 'POST',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ commissionerateKey, password })
         });
@@ -1309,7 +1330,8 @@
       }
     }
 
-    function logout() {
+    async function logout() {
+      fetch(`${API_BASE_URL}/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
       clearSession();
       allComplaints = [];
       document.getElementById('commissionerateKey').value = '';
@@ -1340,9 +1362,10 @@
     (async function init() {
       const session = getSession();
 
-      if (session?.token) {
+      if (session?.user) {
         showView('dashboardView');
         try {
+          await refreshSession();
           await fetchDashboard();
         } catch {
           logout();
