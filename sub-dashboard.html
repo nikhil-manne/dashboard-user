@@ -1207,8 +1207,18 @@
       const item = allComplaints[index];
       if (!item) return;
       const fullItem = await fetchComplaintDetail(item._id);
-      sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
-      window.open('complaint-view.html', '_blank', 'noopener');
+      const serializedComplaint = JSON.stringify(fullItem);
+      const complaintWindow = window.open('about:blank', '_blank');
+
+      if (!complaintWindow) {
+        throw new Error('Popup blocked. Please allow popups and try View again.');
+      }
+
+      sessionStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
+      localStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
+      complaintWindow.sessionStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
+      complaintWindow.opener = null;
+      complaintWindow.location.replace('complaint-view.html');
     }
 
     function filterTable() {
