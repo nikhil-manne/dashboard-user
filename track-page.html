@@ -139,12 +139,25 @@
   </div>
 </header>
 
-<nav class="nav-bar" role="navigation" aria-label="Main navigation">
+<nav class="nav-bar" id="main-nav" role="navigation" aria-label="Main navigation">
   <a class="nav-home" href="index.html">&#8962; Home</a>
-  <ul class="nav-links">
-    <li class="active"><a href="track-page.html">Track Status</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li id="nav-booth">
+      <a href="booth-dashboard.html">&#128203; Register Complaint</a>
+    </li>
+    <li id="nav-sub">
+      <a href="sub-dashboard.html">&#128196; Commissionerate login</a>
+    </li>
+    <li id="nav-admin">
+      <a href="admin-dashboard.html">&#9776; Admin login</a>
+    </li>
+    <li>
+      <a href="track-page.html">&#128506; Track Status</a>
+    </li>
   </ul>
-  <div class="nav-right"><a class="nav-btn" href="booth-dashboard.html">Register Complaint</a></div>
+  <div class="nav-right">
+    <a class="nav-btn" id="openTab" href="booth-dashboard.html" target="_blank" rel="noopener">&#128279; Register Complaint</a>
+  </div>
 </nav>
 
 <div class="breadcrumb-bar" role="navigation" aria-label="Breadcrumb">
