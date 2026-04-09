@@ -1547,6 +1547,7 @@
     if (!item) return;
     const fullItem = await fetchComplaintDetail(item._id);
     sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
+    localStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
     window.open('complaint-view.html', '_blank', 'noopener');
   }
 
