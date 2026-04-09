@@ -92,6 +92,61 @@
   .timeline-title { font-weight:700; color:var(--gov-navy); }
   .timeline-meta { color:var(--color-text-secondary); font-size:13px; line-height:1.6; margin-top:3px; }
 
+  .content-shell { max-width:1120px; margin:0 auto; padding:24px 20px 70px; }
+  .page-hero { background:linear-gradient(135deg,#003087 0%,#0a3d8f 60%,#1a5ab5 100%); color:#fff; border-radius:8px; padding:36px 40px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; box-shadow:0 16px 48px rgba(0,48,135,.18); }
+  .hero-left .kicker { font-size:11px; letter-spacing:1.2px; text-transform:uppercase; color:rgba(255,255,255,.65); margin-bottom:8px; font-weight:700; }
+  .hero-left h2 { font-family:"Noto Serif", serif; font-size:30px; line-height:1.15; margin-bottom:8px; }
+  .hero-left p { font-size:14px; color:rgba(255,255,255,.82); max-width:560px; line-height:1.65; }
+  .hero-badge { background:var(--gov-gold); color:#1a1a1a; padding:10px 18px; border-radius:3px; font-size:12px; font-weight:700; letter-spacing:.7px; text-transform:uppercase; white-space:nowrap; }
+  .info-strip { background:#e8f0fe; border:1px solid #b8cef0; border-left:4px solid var(--gov-navy); border-radius:2px; padding:10px 16px; font-size:13px; margin-bottom:24px; display:flex; align-items:flex-start; gap:10px; color:var(--gov-navy-dark); }
+  .search-card { background:#fff; border:1px solid var(--color-border); box-shadow:var(--shadow-panel); margin-bottom:26px; }
+  .search-card-head { background:var(--gov-navy); color:#fff; padding:16px 24px; display:flex; align-items:center; gap:12px; }
+  .search-card-head h2 { font-family:"Noto Serif", serif; font-size:22px; font-weight:600; }
+  .sh-icon { width:32px; height:32px; background:rgba(245,197,66,.18); display:grid; place-items:center; border-radius:3px; }
+  .search-card-body { padding:24px; }
+  .search-row { display:flex; gap:14px; align-items:flex-end; flex-wrap:wrap; }
+  .search-field { flex:1; min-width:240px; display:flex; flex-direction:column; gap:7px; }
+  .field-hint { display:block; min-height:18px; margin-top:5px; font-size:12px; color:var(--gov-red); }
+  .field-hint.ok { color:var(--gov-green); }
+  .search-btn { min-height:44px; padding:0 24px; background:var(--gov-navy); color:#fff; border:0; font-weight:700; cursor:pointer; }
+  .search-btn:hover { background:var(--gov-navy-dark); }
+  .result-wrap.show { display:block; }
+  .result-card { background:#fff; border:1px solid var(--color-border); box-shadow:var(--shadow-panel); margin-bottom:22px; overflow:hidden; animation:fadeUp .25s ease both; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  .result-card-head { background:var(--gov-navy); padding:16px 22px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; color:#fff; }
+  .result-card-head .kicker { font-size:11px; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:4px; }
+  .result-card-head h3 { font-family:"Noto Serif", serif; font-size:19px; }
+  .app-no-badge { background:var(--gov-gold); color:var(--gov-navy-dark); padding:7px 16px; border-radius:999px; font-family:Consolas, monospace; font-size:13px; font-weight:700; }
+  .meta-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-bottom:24px; }
+  .mf-label, .df-label { font-size:11px; text-transform:uppercase; letter-spacing:.7px; color:var(--color-text-secondary); font-weight:700; margin-bottom:4px; }
+  .mf-val, .df-val { color:var(--color-text-primary); font-weight:600; word-break:break-word; line-height:1.55; }
+  .status-pill { display:inline-block; padding:5px 14px; border-radius:2px; font-size:12px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
+  .sp-pending { background:#fef3c7; color:#92400e; border:1px solid #fcd34d; }
+  .sp-reviewed { background:#dbeafe; color:#1e3a8a; border:1px solid #93c5fd; }
+  .sp-resolved { background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; }
+  .sp-escalated { background:#fee2e2; color:#7f1d1d; border:1px solid #fca5a5; }
+  .timeline-section, .details-section { border-top:1px solid var(--color-border); padding-top:22px; margin-top:22px; }
+  .timeline-section h4, .details-section h4, .how-section h3 { font-family:"Noto Serif", serif; color:var(--gov-navy); font-size:17px; margin-bottom:16px; }
+  .progress-timeline { position:relative; padding-left:30px; display:grid; gap:18px; }
+  .progress-timeline::before { content:""; position:absolute; left:9px; top:4px; bottom:4px; width:2px; background:var(--color-border); }
+  .tl-item { position:relative; }
+  .tl-dot { position:absolute; left:-30px; top:2px; width:20px; height:20px; border-radius:50%; border:2px solid var(--color-border); background:#fff; display:grid; place-items:center; font-size:11px; z-index:1; }
+  .tl-dot.done, .tl-dot.active { background:var(--gov-green); border-color:var(--gov-green); color:#fff; }
+  .tl-title { font-weight:700; color:var(--gov-navy); line-height:1.35; }
+  .tl-desc { font-size:13px; color:var(--color-text-secondary); margin-top:3px; line-height:1.6; }
+  .detail-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 22px; }
+  .notice-box { background:#fff8e1; border:1px solid #e7d7a1; border-left:4px solid var(--gov-gold); padding:13px 16px; font-size:13px; color:#5b4b18; line-height:1.65; margin-top:22px; }
+  .state-box { background:#fff; border:1px solid var(--color-border); box-shadow:var(--shadow-panel); padding:40px 24px; text-align:center; margin-bottom:24px; }
+  .state-icon { font-size:38px; margin-bottom:10px; }
+  .state-box h3 { font-family:"Noto Serif", serif; color:var(--gov-navy); margin-bottom:8px; }
+  .state-box p { color:var(--color-text-secondary); max-width:520px; margin:0 auto; line-height:1.65; }
+  .how-section { background:#fff; border:1px solid var(--color-border); box-shadow:var(--shadow-panel); padding:24px; }
+  .how-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+  .how-step { text-align:center; }
+  .hs-num { width:38px; height:38px; border-radius:50%; background:var(--gov-navy); color:#fff; display:grid; place-items:center; font-family:"Noto Serif", serif; font-size:17px; font-weight:700; margin:0 auto 10px; }
+  .how-step h4 { color:var(--gov-navy); margin-bottom:6px; }
+  .how-step p { color:var(--color-text-secondary); font-size:12px; line-height:1.65; }
+
   .gov-footer { background:#0b1f3a; color:rgba(255,255,255,.78); }
   .footer-top { max-width:1120px; margin:0 auto; padding:34px 24px; display:grid; grid-template-columns:2fr repeat(3,1fr); gap:28px; }
   .footer-brand h3, .footer-links-group h4 { font-family:"Noto Serif", serif; color:#fff; margin-bottom:10px; }
@@ -106,6 +161,8 @@
     .header-right, .nav-right { display:none; }
     .gov-titles h1, .page-title { font-size:25px; }
     .tracker-body, .tracking-grid, .footer-top { grid-template-columns:1fr; }
+    .meta-grid, .detail-grid, .how-grid { grid-template-columns:1fr; }
+    .page-hero { padding:26px 22px; }
     button { width:100%; }
     main { margin-top:22px; }
   }
@@ -164,36 +221,72 @@
 </div>
 
 <main id="main">
-  <div class="page-header">
-    <div>
-      <div class="page-title">Track Complaint Status</div>
-      <div class="page-subtitle">Use the complaint reference number printed on the acknowledgement receipt.</div>
-    </div>
-    <a class="btn" href="booth-dashboard.html">Register New Complaint</a>
-  </div>
-
-  <section class="tracker-panel" aria-label="Complaint tracker search">
-    <div class="panel-head">
-      <h2>Complaint Reference Search</h2>
-      <p>Enter the complete application number. Example: TG-260409-1430-ABCD</p>
-    </div>
-    <form class="tracker-body" id="trackForm">
-      <div class="field">
-        <label for="referenceInput">Complaint Reference Number</label>
-        <input id="referenceInput" type="text" placeholder="Enter reference number" autocomplete="off">
+  <div class="content-shell">
+    <section class="page-hero">
+      <div class="hero-left">
+        <div class="kicker">Complaint Tracking</div>
+        <h2>Track Your Complaint Status</h2>
+        <p>Enter the application number from your acknowledgement receipt to view the latest public status available in the Women Safety Wing system.</p>
       </div>
-      <button id="trackBtn" type="submit">Track Complaint</button>
-    </form>
-    <div class="status-line" id="trackStatus"></div>
-  </section>
+      <a class="hero-badge" href="booth-dashboard.html">Register Complaint</a>
+    </section>
 
-  <section class="result-panel" id="resultPanel" aria-label="Complaint tracking result">
-    <div class="panel-head">
-      <h2>Tracking Result</h2>
-      <p>Latest information available in the complaint registration system.</p>
+    <div class="info-strip">
+      <span aria-hidden="true">&#9432;</span>
+      <span>
+        <strong>Keep your application number private.</strong>
+        For security reasons, public tracking is available by application number only. Example format: <strong>TG-260409-ABC1234</strong>.
+      </span>
     </div>
-    <div class="result-body" id="resultBody"></div>
-  </section>
+
+    <section class="search-card" aria-label="Complaint tracker search">
+      <div class="search-card-head">
+        <span class="sh-icon" aria-hidden="true">&#128269;</span>
+        <div>
+          <h2>Check Complaint Progress</h2>
+          <p style="margin-top:4px;color:rgba(255,255,255,.72);font-size:13px;">Application number based status lookup.</p>
+        </div>
+      </div>
+      <div class="search-card-body">
+        <form class="search-row" id="trackForm">
+          <div class="search-field">
+            <label for="referenceInput">Application Number</label>
+            <input id="referenceInput" type="text" placeholder="Example: TG-260409-ABC1234" autocomplete="off">
+            <span class="field-hint" id="trackStatus"></span>
+          </div>
+          <button class="search-btn" id="trackBtn" type="submit">Track Complaint</button>
+        </form>
+      </div>
+    </section>
+
+    <div id="resultArea" aria-live="polite"></div>
+
+    <section class="how-section" id="howSection" aria-label="How complaint tracking works">
+      <h3>How Tracking Works</h3>
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="hs-num">1</div>
+          <h4>Register</h4>
+          <p>A complaint is submitted and an application number is generated.</p>
+        </div>
+        <div class="how-step">
+          <div class="hs-num">2</div>
+          <h4>Route</h4>
+          <p>The record is routed to the selected commissionerate for review.</p>
+        </div>
+        <div class="how-step">
+          <div class="hs-num">3</div>
+          <h4>Review</h4>
+          <p>Authorized dashboard users review the complaint and update progress.</p>
+        </div>
+        <div class="how-step">
+          <div class="hs-num">4</div>
+          <h4>Track</h4>
+          <p>Use your application number here to check the current public status.</p>
+        </div>
+      </div>
+    </section>
+  </div>
 </main>
 
 <footer class="gov-footer">
@@ -270,52 +363,126 @@
     });
   }
 
-  function trackingField(label, value) {
+  function statusPillClass(status) {
+    const normalized = String(status || '').toLowerCase();
+    if (['resolved', 'closed', 'completed'].includes(normalized)) return 'sp-resolved';
+    if (['reviewed', 'in review', 'assigned', 'submitted'].includes(normalized)) return 'sp-reviewed';
+    if (['rejected', 'escalated'].includes(normalized)) return 'sp-escalated';
+    return 'sp-pending';
+  }
+
+  function metaField(label, value) {
     return `
-      <div class="tracking-field">
-        <div class="tf-label">${esc(label)}</div>
-        <div class="tf-value">${esc(displayValue(value))}</div>
+      <div>
+        <div class="mf-label">${esc(label)}</div>
+        <div class="mf-val">${esc(displayValue(value))}</div>
       </div>
     `;
   }
 
-  function renderResult(item) {
-    document.getElementById('resultPanel').classList.add('open');
-    document.getElementById('resultBody').innerHTML = `
-      <div class="status-banner">
-        <div>
-          <div class="status-text">Current Status</div>
-          <div class="status-value">${esc(displayValue(item.status))}</div>
-        </div>
-        <div class="ref-badge">${esc(displayValue(item.applicationNumber))}</div>
-      </div>
-      <div class="tracking-grid">
-        ${trackingField('Complainant', item.complainantName)}
-        ${trackingField('Commissionerate', item.commissionerate)}
-        ${trackingField('Complaint Type', item.complaintType)}
-        ${trackingField('Nature of Petition', item.naturePetition)}
-        ${trackingField('Offence Location', item.offenceLocation)}
-        ${trackingField('Officer', item.officerName)}
-        ${trackingField('Last Updated', fmtDate(item.updatedAt))}
-      </div>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <div class="timeline-title">Complaint submitted</div>
-            <div class="timeline-meta">${esc(fmtDate(item.submittedAt))} | Reference number generated by the registration portal.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <div class="timeline-title">Forwarded to ${esc(displayValue(item.commissionerate))} Commissionerate</div>
-            <div class="timeline-meta">Quote the reference number for any help-desk follow-up.</div>
-          </div>
-        </div>
+  function detailField(label, value) {
+    return `
+      <div>
+        <div class="df-label">${esc(label)}</div>
+        <div class="df-val">${esc(displayValue(value))}</div>
       </div>
     `;
-    document.getElementById('resultPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function buildTimeline(item) {
+    const status = String(item.status || 'Submitted');
+    const isClosed = /closed|resolved|completed/i.test(status);
+    const isRejected = /rejected/i.test(status);
+    const isReviewed = isClosed || isRejected || /review|assigned|pending|submitted/i.test(status);
+
+    const steps = [
+      {
+        done: true,
+        title: 'Complaint submitted',
+        desc: `${fmtDate(item.submittedAt)} | Application number generated.`
+      },
+      {
+        done: isReviewed,
+        title: `Routed to ${displayValue(item.commissionerate)}`,
+        desc: 'The complaint is visible to the authorized commissionerate dashboard.'
+      },
+      {
+        done: isClosed || isRejected,
+        title: `Current status: ${status}`,
+        desc: `Last public update: ${fmtDate(item.updatedAt || item.submittedAt)}`
+      }
+    ];
+
+    return steps.map((step, index) => `
+      <div class="tl-item">
+        <div class="tl-dot ${step.done ? 'done' : index === 2 ? 'active' : ''}">${step.done ? '&#10003;' : ''}</div>
+        <div class="tl-title">${esc(step.title)}</div>
+        <div class="tl-desc">${esc(step.desc)}</div>
+      </div>
+    `).join('');
+  }
+
+  function renderResult(item) {
+    const resultArea = document.getElementById('resultArea');
+    const howSection = document.getElementById('howSection');
+    const status = displayValue(item.status);
+
+    if (howSection) howSection.style.display = 'none';
+    resultArea.innerHTML = `
+      <article class="result-card">
+        <div class="result-card-head">
+          <div>
+            <div class="kicker">Tracking Result</div>
+            <h3>${esc(displayValue(item.complainantName))}</h3>
+          </div>
+          <div class="app-no-badge">${esc(displayValue(item.applicationNumber))}</div>
+        </div>
+        <div class="result-body">
+          <div class="meta-grid">
+            <div>
+              <div class="mf-label">Status</div>
+              <div class="mf-val"><span class="status-pill ${statusPillClass(status)}">${esc(status)}</span></div>
+            </div>
+            ${metaField('Submitted On', fmtDate(item.submittedAt))}
+            ${metaField('Last Updated', fmtDate(item.updatedAt || item.submittedAt))}
+            ${metaField('Commissionerate', item.commissionerate)}
+          </div>
+
+          <section class="timeline-section">
+            <h4>Status Timeline</h4>
+            <div class="progress-timeline">${buildTimeline(item)}</div>
+          </section>
+
+          <section class="details-section">
+            <h4>Complaint Summary</h4>
+            <div class="detail-grid">
+              ${detailField('Complaint Type', item.complaintType)}
+              ${detailField('Nature of Petition', item.naturePetition)}
+              ${detailField('Offence Location', item.offenceLocation)}
+              ${detailField('Assigned Officer', item.officerName)}
+              ${detailField('Complainant', item.complainantName)}
+              ${detailField('Application Number', item.applicationNumber)}
+            </div>
+          </section>
+
+          <div class="notice-box">
+            Quote your application number when contacting the Women Safety Wing or police help desk. Sensitive complaint details are not shown on the public tracking page.
+          </div>
+        </div>
+      </article>
+    `;
+    resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showState(type, title, message) {
+    const icon = type === 'loading' ? '&#8987;' : type === 'error' ? '&#9888;' : '&#128269;';
+    document.getElementById('resultArea').innerHTML = `
+      <div class="state-box">
+        <div class="state-icon">${icon}</div>
+        <h3>${esc(title)}</h3>
+        <p>${esc(message)}</p>
+      </div>
+    `;
   }
 
   async function trackComplaint(event) {
@@ -323,7 +490,9 @@
     const reference = document.getElementById('referenceInput').value.trim();
     const status = document.getElementById('trackStatus');
     const button = document.getElementById('trackBtn');
-    document.getElementById('resultPanel').classList.remove('open');
+    const howSection = document.getElementById('howSection');
+    document.getElementById('resultArea').innerHTML = '';
+    if (howSection) howSection.style.display = '';
 
     if (!reference) {
       status.textContent = 'Enter a complaint reference number.';
@@ -332,18 +501,21 @@
 
     button.disabled = true;
     button.textContent = 'Searching...';
-    status.textContent = '';
+    status.textContent = 'Searching complaint status...';
+    status.className = 'field-hint';
+    showState('loading', 'Searching Records', 'Please wait while we check the complaint tracking service.');
 
     try {
       const response = await fetch(`${API_BASE_URL}/complaints/track/${encodeURIComponent(reference)}`);
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.message || 'Unable to track complaint');
-      status.style.color = 'var(--gov-green)';
+      status.className = 'field-hint ok';
       status.textContent = 'Complaint found.';
       renderResult(result.data);
     } catch (error) {
-      status.style.color = 'var(--gov-red)';
+      status.className = 'field-hint';
       status.textContent = error.message || 'Unable to contact backend server.';
+      showState('error', 'No Complaint Found', 'Check the application number exactly as printed on your acknowledgement receipt, then try again.');
     } finally {
       button.disabled = false;
       button.textContent = 'Track Complaint';
@@ -354,7 +526,7 @@
   document.getElementById('trackForm').addEventListener('submit', trackComplaint);
 
   const params = new URLSearchParams(window.location.search);
-  const reference = params.get('ref');
+  const reference = params.get('ref') || params.get('appno') || params.get('applicationNumber');
   if (reference) {
     document.getElementById('referenceInput').value = reference;
     document.getElementById('trackForm').requestSubmit();
