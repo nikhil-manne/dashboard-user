@@ -1169,7 +1169,7 @@
 
       <div class="menu-panel" id="credentialsPanel">
         <div class="gov-panel-header">
-          <span class="gov-panel-title">Manage Commissionerate Credentials</span>
+          <span class="gov-panel-title">Manage Dashboard Credentials</span>
           <button class="gov-btn" id="closeCredentialsBtn">Close</button>
         </div>
         <div class="credentials-grid">
@@ -1199,6 +1199,51 @@
             </div>
             <button class="gov-btn primary" id="savePasswordBtn" style="width:100%;">Save Account</button>
             <div style="font-size:15px; margin-top:8px;" id="credentialStatus"></div>
+          </div>
+        </div>
+        <div class="credentials-grid" style="border-top:0.5px solid var(--color-border-tertiary);">
+          <div class="credentials-pane">
+            <div style="font-size:15px; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-text-secondary); margin-bottom:10px; font-weight:500;">Booth Accounts</div>
+            <div id="boothList" style="display:grid; gap:6px;"></div>
+          </div>
+          <div class="credentials-pane">
+            <div style="font-size:15px; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-text-secondary); margin-bottom:10px; font-weight:500;">Create / Modify Booth</div>
+            <input id="boothId" type="hidden">
+            <div class="gov-field">
+              <label for="boothUsername">Booth username</label>
+              <input id="boothUsername" type="text" placeholder="e.g. booth-hyd-01" autocomplete="off">
+            </div>
+            <div class="gov-field">
+              <label for="boothCommissionerate">Commissionerate</label>
+              <select id="boothCommissionerate" style="width:100%; height:32px; border-radius:4px; border:0.5px solid var(--color-border-secondary); background:var(--color-background-primary); font-size:16px; padding:0 8px; color:var(--color-text-primary);">
+                <option value="">Select commissionerate</option>
+                <option value="HYDERABAD">Hyderabad</option>
+                <option value="CYBERABAD">Cyberabad</option>
+                <option value="MALKAJGIRI">Malkajgiri</option>
+                <option value="FUTURE_CITY">Future City</option>
+              </select>
+            </div>
+            <div class="gov-field">
+              <label for="boothLatitude">Booth latitude</label>
+              <input id="boothLatitude" type="number" step="any" placeholder="17.3850">
+            </div>
+            <div class="gov-field">
+              <label for="boothLongitude">Booth longitude</label>
+              <input id="boothLongitude" type="number" step="any" placeholder="78.4867">
+            </div>
+            <div class="gov-field">
+              <label for="boothPassword">Password</label>
+              <input id="boothPassword" type="password" placeholder="Required for new booth">
+            </div>
+            <div class="gov-field">
+              <label for="boothConfirmPassword">Confirm password</label>
+              <input id="boothConfirmPassword" type="password" placeholder="Re-enter">
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="gov-btn primary" id="saveBoothBtn" style="flex:1;">Save Booth</button>
+              <button class="gov-btn" id="clearBoothBtn" type="button">Clear</button>
+            </div>
+            <div style="font-size:15px; margin-top:8px;" id="boothStatus"></div>
           </div>
         </div>
       </div>
@@ -1324,6 +1369,7 @@
   const COMPLAINT_VIEW_KEY = 'wsw-selected-complaint';
   let allComplaints = [];
   let commissionerateCredentials = [];
+  let boothCredentials = [];
   let isCredentialsMenuOpen = false;
   let activeComplaintIndex = null;
 
@@ -1392,6 +1438,57 @@
         <div style="font-size:14px;color:var(--color-text-secondary);">Updated: ${esc(fmtDate(i.updatedAt))}</div>
       </div>
     `).join('');
+  }
+
+  function commissionerateKeyFromName(name = '') {
+    return String(name).trim().toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  }
+
+  function renderBoothList(items) {
+    const el = document.getElementById('boothList');
+    if (!items.length) { el.innerHTML = '<div style="font-size:16px;color:var(--color-text-secondary);">No booth accounts found.</div>'; return; }
+    el.innerHTML = items.map(i => {
+      const lat = i.boothLocation?.latitude ?? '';
+      const lon = i.boothLocation?.longitude ?? '';
+      return `
+        <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:4px;padding:8px 10px;">
+          <div style="font-size:16px;font-weight:500;color:var(--color-text-primary);">${esc(i.username)}</div>
+          <div style="font-size:14px;color:var(--color-text-secondary);">${esc(i.commissionerate || 'No commissionerate')} | ${esc(lat)}, ${esc(lon)}</div>
+          <div style="font-size:14px;color:var(--color-text-secondary);">Updated: ${esc(fmtDate(i.updatedAt))}</div>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+            <button class="gov-btn" type="button" data-booth-action="edit" data-booth-id="${esc(i.id)}">Modify</button>
+            <button class="gov-btn danger" type="button" data-booth-action="delete" data-booth-id="${esc(i.id)}">Delete</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function clearBoothForm() {
+    document.getElementById('boothId').value = '';
+    document.getElementById('boothUsername').value = '';
+    document.getElementById('boothCommissionerate').value = '';
+    document.getElementById('boothLatitude').value = '';
+    document.getElementById('boothLongitude').value = '';
+    document.getElementById('boothPassword').value = '';
+    document.getElementById('boothConfirmPassword').value = '';
+    document.getElementById('boothStatus').textContent = '';
+    document.getElementById('saveBoothBtn').textContent = 'Save Booth';
+  }
+
+  function editBooth(id) {
+    const booth = boothCredentials.find(item => item.id === id);
+    if (!booth) return;
+    document.getElementById('boothId').value = booth.id;
+    document.getElementById('boothUsername').value = booth.username || '';
+    document.getElementById('boothCommissionerate').value = commissionerateKeyFromName(booth.commissionerate);
+    document.getElementById('boothLatitude').value = booth.boothLocation?.latitude ?? '';
+    document.getElementById('boothLongitude').value = booth.boothLocation?.longitude ?? '';
+    document.getElementById('boothPassword').value = '';
+    document.getElementById('boothConfirmPassword').value = '';
+    document.getElementById('boothStatus').textContent = 'Editing booth. Leave password blank to keep existing password.';
+    document.getElementById('boothStatus').style.color = '#475569';
+    document.getElementById('saveBoothBtn').textContent = 'Update Booth';
   }
 
   function setCredentialsMenuState(isOpen) {
@@ -1732,6 +1829,16 @@
     renderCredentialList(commissionerateCredentials);
   }
 
+  async function fetchBooths() {
+    const sess = getSession();
+    if (!sess || !sess.token) return;
+    const r = await fetch(`${API_BASE_URL}/admin/booths`, { headers: { Authorization: `Bearer ${sess.token}` } });
+    const res = await r.json();
+    if (!r.ok) throw new Error(res.message || 'Unable to load booths');
+    boothCredentials = res.data || [];
+    renderBoothList(boothCredentials);
+  }
+
   async function fetchDashboard() {
     const sess = getSession();
     if (!sess || !sess.token) return;
@@ -1748,6 +1855,7 @@
     populateFilter(summary.byCommissionerate);
     applyFilters();
     await fetchCredentials();
+    await fetchBooths();
   }
 
   async function login() {
@@ -1828,6 +1936,54 @@
     finally { btn.disabled = false; btn.textContent = 'Save Account'; }
   }
 
+  async function saveBooth(e) {
+    e.preventDefault();
+    const sess = getSession();
+    const id = document.getElementById('boothId').value;
+    const username = document.getElementById('boothUsername').value.trim();
+    const commissionerateKey = document.getElementById('boothCommissionerate').value;
+    const latitude = Number(document.getElementById('boothLatitude').value);
+    const longitude = Number(document.getElementById('boothLongitude').value);
+    const password = document.getElementById('boothPassword').value;
+    const confirm = document.getElementById('boothConfirmPassword').value;
+    const btn = document.getElementById('saveBoothBtn');
+    const status = document.getElementById('boothStatus');
+    if (!username || username.length < 3) { status.style.color='#b91c1c'; status.textContent = 'Booth username must be at least 3 characters.'; return; }
+    if (!commissionerateKey) { status.style.color='#b91c1c'; status.textContent = 'Select a commissionerate.'; return; }
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) { status.style.color='#b91c1c'; status.textContent = 'Enter booth coordinates as latitude and longitude.'; return; }
+    if (!id && (!password || password.length < 8)) { status.style.color='#b91c1c'; status.textContent = 'Password must be at least 8 characters for a new booth.'; return; }
+    if (password && password.length < 8) { status.style.color='#b91c1c'; status.textContent = 'Password must be at least 8 characters.'; return; }
+    if (password !== confirm) { status.style.color='#b91c1c'; status.textContent = 'Passwords do not match.'; return; }
+    const payload = { username, commissionerateKey, boothLocation: { latitude, longitude } };
+    if (id) payload.id = id;
+    if (password) payload.password = password;
+    btn.disabled = true; btn.textContent = 'Saving...'; status.textContent = '';
+    try {
+      const r = await fetch(`${API_BASE_URL}/admin/booths`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sess.token}` }, body: JSON.stringify(payload) });
+      const res = await r.json();
+      if (!r.ok) throw new Error(res.message || 'Unable to save booth');
+      status.style.color = '#15803d'; status.textContent = 'Booth saved successfully.';
+      clearBoothForm();
+      await fetchBooths();
+    } catch (e) { status.style.color='#b91c1c'; status.textContent = e.message; }
+    finally { btn.disabled = false; btn.textContent = id ? 'Update Booth' : 'Save Booth'; }
+  }
+
+  async function deleteBooth(id) {
+    const sess = getSession();
+    const booth = boothCredentials.find(item => item.id === id);
+    if (!booth || !confirm(`Delete booth ${booth.username}?`)) return;
+    const status = document.getElementById('boothStatus');
+    try {
+      const r = await fetch(`${API_BASE_URL}/admin/booths/${encodeURIComponent(id)}`, { method: 'DELETE', headers: { Authorization: `Bearer ${sess.token}` } });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(res.message || 'Unable to delete booth');
+      status.style.color = '#15803d'; status.textContent = 'Booth deleted successfully.';
+      if (document.getElementById('boothId').value === id) clearBoothForm();
+      await fetchBooths();
+    } catch (e) { status.style.color='#b91c1c'; status.textContent = e.message; }
+  }
+
   document.getElementById('loginBtn').addEventListener('click', login);
   document.getElementById('setupBtn').addEventListener('click', createAdmin);
   document.getElementById('logoutBtn').addEventListener('click', logout);
@@ -1839,6 +1995,14 @@
     setCredentialsMenuState(false);
   });
   document.getElementById('savePasswordBtn').addEventListener('click', saveCommissionerate);
+  document.getElementById('saveBoothBtn').addEventListener('click', saveBooth);
+  document.getElementById('clearBoothBtn').addEventListener('click', clearBoothForm);
+  document.getElementById('boothList').addEventListener('click', e => {
+    const button = e.target.closest('button[data-booth-action]');
+    if (!button) return;
+    if (button.dataset.boothAction === 'edit') editBooth(button.dataset.boothId);
+    if (button.dataset.boothAction === 'delete') deleteBooth(button.dataset.boothId);
+  });
   document.getElementById('searchInput').addEventListener('input', applyFilters);
   document.getElementById('commissionerateFilter').addEventListener('change', applyFilters);
   document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
