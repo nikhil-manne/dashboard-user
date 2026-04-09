@@ -846,7 +846,11 @@
 <div id="toast">✅ <span id="toastMsg">Done</span></div>
 
 <script>
-  const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
+  const API_BASE_URL = (
+    window.WSW_API_BASE_URL ||
+    document.querySelector('meta[name="wsw-api-base-url"]')?.content ||
+    'https://wsw-backend.onrender.com/api'
+  ).replace(/\/$/, '');
   const BOOTH_SESSION_KEY = 'wsw-booth-session';
   const g = id => (document.getElementById(id)?.value || '').trim();
   const asNumber = id => {
@@ -1057,17 +1061,6 @@
     label.textContent = 'Click microphone to record your complaint';
   }
 
-  function generateID() {
-    const now = new Date();
-    const yy = now.getFullYear().toString().slice(-2);
-    const mm = String(now.getMonth() + 1).padStart(2, '0');
-    const dd = String(now.getDate()).padStart(2, '0');
-    const hh = String(now.getHours()).padStart(2, '0');
-    const mi = String(now.getMinutes()).padStart(2, '0');
-    const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-    return `TG-${yy}${mm}${dd}-${hh}${mi}-${rand}`;
-  }
-
   function showToast(msg, isError) {
     const toast = document.getElementById('toast');
     const message = document.getElementById('toastMsg');
@@ -1078,7 +1071,7 @@
     setTimeout(() => toast.classList.remove('show'), 4500);
   }
 
-  function buildPayload(applicationNumber) {
+  function buildPayload(applicationNumber = 'PENDING') {
     const offenceLocation = g('offence');
 
     return {
@@ -1277,8 +1270,7 @@
       stopMicUI();
     }
 
-    const id = generateID();
-    const payload = buildPayload(id);
+    const payload = buildPayload();
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.disabled = true;
     submitBtn.style.opacity = '0.75';
@@ -1295,6 +1287,7 @@
       if (!response.ok) {
         throw new Error(result.message || 'Unable to save complaint');
       }
+      payload.complaint.applicationNumber = result.data?.applicationNumber || payload.complaint.applicationNumber;
     } catch (error) {
       showToast(error.message || 'Unable to connect to backend server', true);
       return;
@@ -1306,8 +1299,8 @@
 
     const now = new Date();
     const dateStr = now.toLocaleString('en-IN', { dateStyle: 'long', timeStyle: 'short' });
-    renderReceipt(id, dateStr);
-    showToast(`Submitted! Application No: ${id} - Printing...`);
+    renderReceipt(payload.complaint.applicationNumber, dateStr);
+    showToast(`Submitted! Application No: ${payload.complaint.applicationNumber} - Printing...`);
     setTimeout(() => window.print(), 1200);
   }
 
