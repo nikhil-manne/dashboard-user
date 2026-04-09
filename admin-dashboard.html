@@ -3,15 +3,261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard</title>
+<title>Admin Dashboard | Women Safety Wing - Telangana Police</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --gov-saffron: #FF6200;
+    --gov-navy: #003087;
+    --gov-navy-dark: #001f5c;
+    --gov-navy-mid: #0a3d8f;
+    --gov-green: #138808;
+    --gov-white: #ffffff;
+    --gov-gold: #c8960c;
+    --gov-bg: #f0f4f8;
+    --gov-bg-alt: #e8ecf2;
+    --gov-border: #c5cdd8;
+    --gov-text: #1a2332;
+    --gov-text-muted: #4a5568;
+    --gov-red: #c0392b;
+    --stripe-h: 6px;
+    --font-sans: "Noto Sans", Arial, sans-serif;
+    --font-serif: "Noto Serif", Georgia, serif;
+    --font-mono: Consolas, "Courier New", monospace;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: var(--gov-bg);
+    --color-background-tertiary: var(--gov-bg);
+    --color-border-secondary: var(--gov-border);
+    --color-border-tertiary: var(--gov-border);
+    --color-text-primary: var(--gov-text);
+    --color-text-secondary: var(--gov-text-muted);
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--font-sans); font-size: 18px; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--gov-bg);
+    color: var(--gov-text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  a { color: inherit; }
 
   .gov-shell {
-    background: var(--color-background-tertiary);
     min-height: 100vh;
-    font-family: var(--font-sans);
+    background: var(--gov-bg);
+  }
+
+  .gov-topbar, .gov-subbar { display: none; }
+
+  .top-bar {
+    background: #1a2332;
+    color: rgba(255,255,255,.75);
+    font-size: 12px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .top-bar a { color: rgba(255,255,255,.75); text-decoration: none; }
+  .top-bar a:hover { color: #fff; text-decoration: underline; }
+  .top-bar-left, .top-bar-right {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .skip-link {
+    background: var(--gov-gold);
+    color: #000 !important;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 11px;
+    text-decoration: none;
+  }
+  .tricolor { display: flex; height: var(--stripe-h); }
+  .tricolor div { flex: 1; }
+  .tricolor .saffron { background: var(--gov-saffron); }
+  .tricolor .white {
+    background: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  .tricolor .green { background: var(--gov-green); }
+
+  .site-header {
+    background: #fff;
+    border-bottom: 2px solid var(--gov-border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .logo-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .emblem-circle {
+    width: 68px;
+    height: 68px;
+    background: #fff;
+    border: 2px solid var(--gov-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .emblem-circle img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+  .site-titles { flex: 1; }
+  .site-titles .ministry {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gov-text-muted);
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+  .site-titles h1 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gov-navy);
+    line-height: 1.2;
+    margin: 2px 0;
+  }
+  .site-titles .subtitle {
+    font-size: 12px;
+    color: var(--gov-text-muted);
+  }
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .header-badge {
+    background: var(--gov-navy);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .helpline-box {
+    border: 1px solid var(--gov-red);
+    border-radius: 3px;
+    padding: 7px 12px;
+    text-align: center;
+    background: #fff5f5;
+  }
+  .helpline-box .number {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gov-red);
+    display: block;
+    line-height: 1;
+  }
+  .helpline-box small {
+    font-size: 10px;
+    color: var(--gov-text-muted);
+    letter-spacing: .4px;
+    text-transform: uppercase;
+  }
+
+  .nav-bar {
+    background: var(--gov-navy);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid var(--gov-gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-home {
+    background: var(--gov-gold);
+    color: #1a1a1a;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    list-style: none;
+    height: 100%;
+  }
+  .nav-links li a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 13px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,.88);
+    text-decoration: none;
+    border-right: 1px solid rgba(255,255,255,.1);
+    white-space: nowrap;
+  }
+  .nav-links li a:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .nav-links li.active a {
+    background: rgba(255,255,255,.15);
+    color: #fff;
+    box-shadow: inset 0 -3px 0 var(--gov-gold);
+  }
+  .nav-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  .nav-status {
+    padding: 12px 14px;
+    font-size: 12px;
+    color: rgba(255,255,255,.75);
+    border-left: 1px solid rgba(255,255,255,.1);
+    white-space: nowrap;
+  }
+  .breadcrumb-bar {
+    background: var(--gov-bg-alt);
+    border-bottom: 1px solid var(--gov-border);
+    padding: 7px 20px;
+    font-size: 12px;
+    color: var(--gov-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .breadcrumb-bar a {
+    color: var(--gov-navy);
+    text-decoration: none;
+  }
+  .breadcrumb-bar a:hover { text-decoration: underline; }
+  .breadcrumb-bar .sep { opacity: .5; }
+  .breadcrumb-current {
+    color: var(--gov-text);
+    font-weight: 500;
   }
 
   .gov-topbar {
@@ -127,17 +373,16 @@
   }
 
   .gov-page-title {
-    font-size: 22px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 700;
     color: var(--color-text-primary);
-    letter-spacing: 0.3px;
+    font-family: var(--font-serif);
   }
 
   .gov-page-meta {
-    font-size: 16px;
+    font-size: 13px;
     color: var(--color-text-secondary);
     margin-top: 3px;
-    letter-spacing: 0.3px;
   }
 
   .gov-actions {
@@ -148,34 +393,36 @@
   }
 
   .gov-btn {
-    height: 32px;
-    padding: 0 14px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: 500;
+    min-height: 36px;
+    padding: 0 16px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    border: 0.5px solid var(--color-border-secondary);
+    border: 1px solid var(--color-border-secondary);
     background: var(--color-background-primary);
     color: var(--color-text-primary);
-    letter-spacing: 0.3px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    justify-content: center;
+    font-family: var(--font-sans);
+    text-decoration: none;
   }
 
   .gov-btn:hover { background: var(--color-background-secondary); }
 
   .gov-btn.primary {
-    background: #1a3a5c;
+    background: var(--gov-navy);
     color: white;
-    border-color: #1a3a5c;
+    border-color: var(--gov-navy-dark);
   }
 
-  .gov-btn.primary:hover { background: #0f2540; }
+  .gov-btn.primary:hover { background: var(--gov-navy-dark); }
 
   .gov-btn.danger {
     background: white;
-    color: #991b1b;
+    color: var(--gov-red);
     border-color: #fca5a5;
   }
 
@@ -188,48 +435,50 @@
 
   .gov-stat {
     background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: 4px;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 3px;
     padding: 14px 16px;
-    border-top: 3px solid #1a3a5c;
+    border-top: 3px solid var(--gov-navy);
   }
 
-  .gov-stat.amber { border-top-color: #c8a84b; }
-  .gov-stat.green { border-top-color: #15803d; }
-  .gov-stat.red { border-top-color: #b91c1c; }
+  .gov-stat.amber { border-top-color: var(--gov-gold); }
+  .gov-stat.green { border-top-color: var(--gov-green); }
+  .gov-stat.red { border-top-color: var(--gov-red); }
 
   .gov-stat-label {
-    font-size: 14px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--color-text-secondary);
     margin-bottom: 6px;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .gov-stat-value {
     font-size: 28px;
-    font-weight: 500;
-    color: var(--color-text-primary);
+    font-weight: 700;
+    color: var(--gov-navy);
     line-height: 1;
     margin-bottom: 4px;
   }
 
   .gov-stat-sub {
-    font-size: 15px;
+    font-size: 12px;
     color: var(--color-text-secondary);
   }
 
   .gov-panel {
     background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: 4px;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 3px;
     margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    overflow: hidden;
   }
 
   .gov-panel-header {
     padding: 12px 16px;
-    border-bottom: 0.5px solid var(--color-border-tertiary);
+    border-bottom: 1px solid var(--color-border-tertiary);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -238,11 +487,12 @@
   }
 
   .gov-panel-title {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--color-text-secondary);
+    letter-spacing: .6px;
+    color: var(--color-text-primary);
+    font-family: var(--font-serif);
   }
 
   .gov-filter-row {
@@ -255,10 +505,10 @@
   .gov-filter-row input,
   .gov-filter-row select {
     height: 30px;
-    border-radius: 4px;
-    border: 0.5px solid var(--color-border-secondary);
+    border-radius: 3px;
+    border: 1px solid var(--color-border-secondary);
     background: var(--color-background-secondary);
-    font-size: 16px;
+    font-size: 13px;
     padding: 0 10px;
     color: var(--color-text-primary);
     outline: none;
@@ -272,48 +522,48 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 13px;
     min-width: 960px;
   }
 
   thead tr {
-    background: var(--color-background-secondary);
+    background: var(--gov-navy);
   }
 
   th {
-    padding: 9px 14px;
+    padding: 10px 14px;
     text-align: left;
-    font-size: 14px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--color-text-secondary);
-    font-weight: 500;
-    border-bottom: 0.5px solid var(--color-border-tertiary);
+    letter-spacing: .6px;
+    color: rgba(255,255,255,.9);
+    font-weight: 700;
+    border-bottom: 1px solid var(--color-border-tertiary);
     white-space: nowrap;
   }
 
   td {
-    padding: 10px 14px;
-    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--gov-bg-alt);
     color: var(--color-text-primary);
     vertical-align: middle;
   }
 
   tr:last-child td { border-bottom: none; }
 
-  tr:hover td { background: var(--color-background-secondary); }
+  tr:hover td { background: var(--gov-bg); }
 
   .status-pill {
     display: inline-block;
     padding: 2px 8px;
     border-radius: 2px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
   }
 
-  .status-submitted { background: #dbeafe; color: #1e40af; }
+  .status-submitted { background: #dbeafe; color: #1e3a8a; }
   .status-pending { background: #fef3c7; color: #92400e; }
   .status-closed { background: #dcfce7; color: #14532d; }
   .status-rejected { background: #fee2e2; color: #991b1b; }
@@ -322,13 +572,11 @@
     display: inline-block;
     padding: 2px 7px;
     border-radius: 2px;
-    background: #f0f4f8;
-    border: 0.5px solid #cbd5e0;
-    color: #2d3748;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
+    background: var(--gov-bg-alt);
+    border: 1px solid var(--gov-border);
+    color: var(--gov-navy-mid);
+    font-size: 11px;
+    font-weight: 600;
   }
 
   .gov-login-wrap {
@@ -338,27 +586,28 @@
 
   .gov-login-panel {
     background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: 4px;
-    border-top: 4px solid #1a3a5c;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 3px;
+    border-top: 4px solid var(--gov-navy);
     overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
   }
 
   .gov-login-header {
     background: var(--color-background-secondary);
     padding: 16px 20px;
-    border-bottom: 0.5px solid var(--color-border-tertiary);
+    border-bottom: 1px solid var(--color-border-tertiary);
   }
 
   .gov-login-header h2 {
-    font-size: 18px;
-    font-weight: 500;
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 700;
     color: var(--color-text-primary);
-    letter-spacing: 0.3px;
   }
 
   .gov-login-header p {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--color-text-secondary);
     margin-top: 2px;
   }
@@ -373,10 +622,10 @@
 
   .gov-field label {
     display: block;
-    font-size: 15px;
+    font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-weight: 500;
+    letter-spacing: .8px;
+    font-weight: 600;
     color: var(--color-text-secondary);
     margin-bottom: 5px;
   }
@@ -385,17 +634,17 @@
     width: 100%;
     height: 36px;
     padding: 0 12px;
-    border-radius: 4px;
-    border: 0.5px solid var(--color-border-secondary);
+    border-radius: 3px;
+    border: 1px solid var(--color-border-secondary);
     background: var(--color-background-primary);
-    font-size: 17px;
+    font-size: 14px;
     color: var(--color-text-primary);
     outline: none;
   }
 
   .gov-field input:focus {
-    border-color: #1a3a5c;
-    box-shadow: 0 0 0 2px rgba(26,58,92,0.15);
+    border-color: var(--gov-navy-mid);
+    box-shadow: 0 0 0 2px rgba(0,48,135,.15);
   }
 
   .gov-login-footer {
@@ -405,19 +654,19 @@
   .gov-login-submit {
     width: 100%;
     height: 36px;
-    background: #1a3a5c;
+    background: var(--gov-navy);
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 17px;
-    font-weight: 500;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 700;
     cursor: pointer;
     letter-spacing: 0.3px;
   }
 
-  .gov-login-submit:hover { background: #0f2540; }
+  .gov-login-submit:hover { background: var(--gov-navy-dark); }
 
-  .gov-error { font-size: 15px; color: #b91c1c; margin-top: 8px; }
+  .gov-error { font-size: 13px; color: var(--gov-red); margin-top: 8px; }
 
   .gov-sidebar-layout {
     display: grid;
@@ -428,8 +677,8 @@
 
   .gov-sidebar {
     background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: 4px;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 3px;
   }
 
   .gov-sidebar-header {
@@ -466,9 +715,9 @@
   .gov-chip {
     padding: 3px 9px;
     background: var(--color-background-secondary);
-    border: 0.5px solid var(--color-border-tertiary);
+    border: 1px solid var(--color-border-tertiary);
     border-radius: 2px;
-    font-size: 15px;
+    font-size: 12px;
     color: var(--color-text-secondary);
     letter-spacing: 0.3px;
   }
@@ -481,9 +730,24 @@
     margin: 0;
   }
 
-  .ref-num { font-family: var(--font-mono); font-size: 15px; color: var(--color-text-secondary); }
+  .ref-num { font-family: var(--font-mono); font-size: 12px; color: var(--gov-navy-mid); font-weight: 700; }
 
-  .view-link { color: #1a3a5c; text-decoration: none; font-size: 15px; font-weight: 500; }
+  .view-link {
+    color: var(--gov-navy);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--gov-border);
+    border-radius: 3px;
+    padding: 4px 10px;
+    display: inline-block;
+  }
+  .view-link:hover {
+    background: var(--gov-navy);
+    color: #fff;
+    border-color: var(--gov-navy);
+    text-decoration: none;
+  }
 
   .menu-wrap { position: relative; }
   .menu-btn { min-width: 36px; padding: 0 10px; }
@@ -491,9 +755,9 @@
     position: relative;
     width: 100%;
     background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: 4px;
-    box-shadow: 0 14px 40px rgba(15, 37, 64, 0.18);
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 3px;
+    box-shadow: 0 8px 24px rgba(15, 37, 64, 0.14);
     display: none;
     margin-bottom: 16px;
     overflow: hidden;
@@ -512,7 +776,6 @@
   .credentials-pane + .credentials-pane {
     border-left: 0.5px solid var(--color-border-tertiary);
   }
-  .view-link:hover { text-decoration: underline; }
   .detail-modal {
     position: fixed;
     inset: 0;
@@ -547,7 +810,7 @@
   .detail-card {
     background: #ffffff;
     border: 1px solid var(--color-border-tertiary);
-    border-radius: 6px;
+    border-radius: 3px;
     padding: 16px 18px;
     min-width: 0;
   }
@@ -703,8 +966,11 @@
   @media (max-width: 700px) {
     .gov-stats { grid-template-columns: repeat(2, 1fr); }
     .gov-sidebar-layout { grid-template-columns: 1fr; }
-    .gov-topbar { padding: 10px 16px; }
-    .gov-topbar-right { width: 100%; justify-content: flex-start; }
+    .site-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .header-right { margin-left: 0; width: 100%; }
+    .nav-links { display: none; }
+    .nav-status { display: none; }
+    .top-bar-right { display: none; }
   }
   @media (max-width: 900px) {
     .credentials-grid { grid-template-columns: 1fr; }
@@ -712,37 +978,119 @@
     .detail-row { grid-template-columns: 1fr; gap: 4px; }
     .admin-receipt-grid { grid-template-columns: 1fr; }
   }
+
+  .gov-footer {
+    background: var(--gov-navy-dark);
+    color: rgba(255,255,255,.75);
+    margin-top: 32px;
+  }
+  .footer-top {
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    padding: 20px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .footer-brand { flex: 1; min-width: 200px; }
+  .footer-brand h3 {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .footer-brand p {
+    font-size: 12px;
+    line-height: 1.6;
+    max-width: 360px;
+  }
+  .footer-links-group { min-width: 160px; }
+  .footer-links-group h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--gov-gold);
+    margin-bottom: 10px;
+  }
+  .footer-links-group ul { list-style: none; }
+  .footer-links-group li { margin-bottom: 5px; }
+  .footer-links-group a {
+    font-size: 12px;
+    color: rgba(255,255,255,.65);
+    text-decoration: none;
+  }
+  .footer-links-group a:hover { color: #fff; text-decoration: underline; }
+  .footer-bottom {
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
 </style>
 </head>
 <body>
 
 <div class="gov-shell">
 
-  <div class="gov-topbar">
-    <div class="gov-topbar-left">
-      <div class="gov-emblem">TS</div>
-      <div>
-        <div class="gov-topbar-title">Telangana State Police — Complaint Management System</div>
-        <div class="gov-topbar-subtitle">Commissionerate Administration Portal &nbsp;|&nbsp; Restricted Access</div>
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <a href="#main" class="skip-link">Skip to Content</a>
+      <a href="https://www.telangana.gov.in/">Telangana Government</a>
+      <a href="https://tspolice.gov.in/">Telangana Police</a>
+    </div>
+    <div class="top-bar-right">
+      <a href="#">Hindi</a>
+      <a href="#">Telugu</a>
+      <a href="#">English</a>
+    </div>
+  </div>
+  <div class="tricolor"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
+
+  <header class="site-header">
+    <div class="logo-block">
+      <div class="emblem-circle"><img src="assets/logo.png" alt="Women Safety Wing Logo"></div>
+      <div class="site-titles">
+        <div class="ministry">Government of Telangana | Home Department</div>
+        <h1>Women Safety Wing</h1>
+        <div class="subtitle">Telangana Police | Central Admin Dashboard</div>
       </div>
     </div>
-    <div class="gov-topbar-right">
-      <span class="gov-badge online">● System Online</span>
-      <span class="gov-badge" id="currentTime"></span>
+    <div class="header-right">
+      <div class="helpline-box"><span class="number">100</span><small>Police Helpline</small></div>
+      <div class="header-badge">Admin<br>Portal</div>
     </div>
+  </header>
+
+  <nav class="nav-bar" role="navigation" aria-label="Main navigation">
+    <a class="nav-home" href="index.html">&#8962; Home</a>
+    <ul class="nav-links">
+      <li><a href="index.html">File a Complaint</a></li>
+      <li><a href="booth-dashboard.html">Booth Dashboard</a></li>
+      <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
+      <li class="active"><a href="admin-dashboard.html">Admin Login</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-status">System Online</span>
+      <span class="nav-status" id="currentTime"></span>
+    </div>
+  </nav>
+
+  <div class="breadcrumb-bar" role="navigation" aria-label="Breadcrumb">
+    <a href="index.html">Home</a><span class="sep">&rsaquo;</span>
+    <a href="#">Women Safety Wing</a><span class="sep">&rsaquo;</span>
+    <span class="breadcrumb-current">Admin Dashboard</span>
   </div>
 
-  <div class="gov-subbar">
-    <a class="gov-nav-item" href="index.html" style="color: rgba(255,255,255,0.6); text-decoration: none;">Return to Home</a>
-    <a class="gov-nav-item" href="sub-dashboard.html" style="color: rgba(255,255,255,0.6); text-decoration: none;">Commissionerates</a>
-    <div class="gov-nav-item">Audit Log</div>
-  </div>
+  <main id="main">
 
   <div id="loginView">
     <div class="gov-main">
       <div class="gov-login-wrap">
         <div style="text-align: center; margin-bottom: 20px;">
-          <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-secondary);">Telangana Police — Admin Portal</div>
+          <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-secondary); font-weight: 700;">Government of Telangana | Admin Portal</div>
           <div style="font-size: 14px; color: var(--color-text-secondary); margin-top: 4px;">Authorised personnel only. All access is logged.</div>
         </div>
         <div class="gov-login-panel">
@@ -808,8 +1156,8 @@
 
       <div class="gov-page-header">
         <div>
-          <div class="gov-page-title">Complaint Management — System Overview</div>
-          <div class="gov-page-meta" id="welcomeMeta">All commissionerates &nbsp;·&nbsp; Admin view</div>
+          <div class="gov-page-title">Central Administration Dashboard</div>
+          <div class="gov-page-meta" id="welcomeMeta">Statewide complaint monitoring | Admin view</div>
         </div>
         <div class="gov-actions">
           <button class="gov-btn" id="refreshBtn">&#x21bb; Refresh</button>
@@ -879,7 +1227,7 @@
 
       <div class="gov-panel">
         <div class="gov-panel-header">
-          <span class="gov-panel-title">All Complaint Records</span>
+          <span class="gov-panel-title">Complaint Records</span>
           <div class="gov-filter-row">
             <select id="commissionerateFilter">
               <option value="">All commissionerates</option>
@@ -913,6 +1261,47 @@
     </div>
   </div>
 
+  </main>
+
+  <footer class="gov-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Women Safety Wing</h3>
+        <p>Telangana Police, Government of Telangana.<br>Restricted central administration portal for complaint monitoring and commissionerate coordination.</p>
+        <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.5);">Last Updated: <span id="lastUpdated"></span></div>
+      </div>
+      <div class="footer-links-group">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">File a Complaint</a></li>
+          <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
+          <li><a href="booth-dashboard.html">Booth Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-group">
+        <h4>Helplines</h4>
+        <ul>
+          <li><a href="#">Women Helpline - 1098</a></li>
+          <li><a href="#">Police - 100</a></li>
+          <li><a href="#">Emergency - 112</a></li>
+          <li><a href="#">Cybercrime - 1930</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-group">
+        <h4>Policies</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Accessibility Statement</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="footerYear"></span> Government of Telangana. All Rights Reserved.</span>
+      <span>Admin portal | Restricted access</span>
+    </div>
+  </footer>
+
   <div class="detail-modal" id="detailModal" aria-hidden="true">
     <div class="detail-dialog">
       <div class="gov-panel-header">
@@ -945,6 +1334,15 @@
   }
   updateClock();
   setInterval(updateClock, 30000);
+
+  function updateFooterDates() {
+    const now = new Date();
+    const footerYear = document.getElementById('footerYear');
+    const lastUpdated = document.getElementById('lastUpdated');
+    if (footerYear) footerYear.textContent = now.getFullYear();
+    if (lastUpdated) lastUpdated.textContent = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  updateFooterDates();
 
   function getSession() {
     try {
@@ -1343,7 +1741,7 @@
     if (!r.ok) throw new Error(res.message || 'Unable to load dashboard');
     const { user, summary, complaints } = res.data;
     allComplaints = complaints;
-    document.getElementById('welcomeMeta').textContent = `Signed in as ${user.username} · All commissionerates`;
+    document.getElementById('welcomeMeta').textContent = `Signed in as ${user.username} | All commissionerates`;
     document.getElementById('totalCount').textContent = summary.total;
     document.getElementById('commissionerateCount').textContent = summary.byCommissionerate.length;
     renderChips('commissionerateChips', summary.byCommissionerate, 'No data');
