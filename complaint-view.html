@@ -686,8 +686,14 @@
 
   function getComplaint() {
     try {
-      return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+      const sessionComplaint = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+      if (sessionComplaint) return sessionComplaint;
+
+      const localComplaint = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      localStorage.removeItem(STORAGE_KEY);
+      return localComplaint;
     } catch {
+      localStorage.removeItem(STORAGE_KEY);
       return null;
     }
   }
