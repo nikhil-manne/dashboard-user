@@ -1370,7 +1370,11 @@
 </div>
 
 <script>
-  const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
+  const API_BASE_URL = (
+    window.WSW_API_BASE_URL ||
+    document.querySelector('meta[name="wsw-api-base-url"]')?.content ||
+    'https://wsw-backend.onrender.com/api'
+  ).replace(/\/$/, '');
   const STORAGE_KEY = 'wsw-admin-session';
   const COMPLAINT_VIEW_KEY = 'wsw-selected-complaint';
   let allComplaints = [];
@@ -1527,11 +1531,23 @@
     return `<div class="admin-receipt-field"><div class="admin-rf-label">${esc(label)}</div><div class="admin-rf-val">${esc(finalValue)}</div></div>`;
   }
 
-  function openComplaintPage(index) {
+  async function fetchComplaintDetail(id) {
+    const sess = getSession();
+    if (!sess || !sess.token) throw new Error('Session expired. Please login again.');
+    const r = await fetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`, {
+      headers: { Authorization: `Bearer ${sess.token}` }
+    });
+    const res = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(res.message || 'Unable to load complaint');
+    return res.data;
+  }
+
+  async function openComplaintPage(index) {
     const item = allComplaints[index];
     if (!item) return;
-    sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(item));
-    window.open('complaint-view.html', '_blank');
+    const fullItem = await fetchComplaintDetail(item._id);
+    sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
+    window.open('complaint-view.html', '_blank', 'noopener');
   }
 
   function setDetailModalState(isOpen) {
@@ -2017,7 +2033,9 @@
     const link = e.target.closest('a[data-index]');
     if (!link) return;
     e.preventDefault();
-    openComplaintPage(Number(link.dataset.index));
+    openComplaintPage(Number(link.dataset.index)).catch(error => {
+      document.getElementById('tableFooter').textContent = error.message || 'Unable to open complaint.';
+    });
   });
   document.addEventListener('click', e => {
     const panel = document.getElementById('credentialsPanel');
