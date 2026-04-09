@@ -1053,7 +1053,11 @@
   </div>
 
   <script>
-    const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
+    const API_BASE_URL = (
+      window.WSW_API_BASE_URL ||
+      document.querySelector('meta[name="wsw-api-base-url"]')?.content ||
+      'https://wsw-backend.onrender.com/api'
+    ).replace(/\/$/, '');
     const STORAGE_KEY = 'wsw-sub-session';
     const COMPLAINT_VIEW_KEY = 'wsw-selected-complaint';
     let allComplaints = [];
@@ -1179,11 +1183,32 @@
       }).join('');
     }
 
-    function openComplaintPage(index) {
+    async function fetchComplaintDetail(id) {
+      const session = getSession();
+      if (!session?.token) {
+        throw new Error('Session expired. Please login again.');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`, {
+        headers: {
+          Authorization: `Bearer ${session.token}`
+        }
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Unable to load complaint');
+      }
+
+      return result.data;
+    }
+
+    async function openComplaintPage(index) {
       const item = allComplaints[index];
       if (!item) return;
-      sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(item));
-      window.open('complaint-view.html', '_blank');
+      const fullItem = await fetchComplaintDetail(item._id);
+      sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
+      window.open('complaint-view.html', '_blank', 'noopener');
     }
 
     function filterTable() {
@@ -1292,7 +1317,9 @@
       const link = event.target.closest('a[data-index]');
       if (!link) return;
       event.preventDefault();
-      openComplaintPage(Number(link.dataset.index));
+      openComplaintPage(Number(link.dataset.index)).catch(error => {
+        showLoginError(error.message || 'Unable to open complaint.');
+      });
     });
     document.getElementById('password').addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
