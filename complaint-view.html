@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Complaint View</title>
+<title>Complaint View | Women Safety Wing - Telangana Police</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy: #0f1f3d;
@@ -235,9 +238,342 @@
       border-radius: 0;
     }
   }
+
+  /* Shared Government of Telangana / Women Safety Wing shell */
+  :root {
+    --gov-saffron: #FF6200;
+    --gov-navy: #003087;
+    --gov-navy-dark: #001f5c;
+    --gov-navy-mid: #0a3d8f;
+    --gov-green: #138808;
+    --gov-gold: #c8960c;
+    --gov-bg: #f0f4f8;
+    --gov-bg-alt: #e8ecf2;
+    --gov-border: #c5cdd8;
+    --gov-text: #1a2332;
+    --gov-text-muted: #4a5568;
+    --gov-red: #c0392b;
+    --navy: var(--gov-navy);
+    --navy-mid: var(--gov-navy-mid);
+    --gold: var(--gov-gold);
+    --cream: var(--gov-bg);
+    --cream-dark: var(--gov-bg-alt);
+    --ink: var(--gov-text);
+    --muted: var(--gov-text-muted);
+    --border: var(--gov-border);
+  }
+  body {
+    font-family: "Noto Sans", Arial, sans-serif;
+    background: var(--gov-bg);
+    color: var(--gov-text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .top-bar {
+    background: #1a2332;
+    color: rgba(255,255,255,.75);
+    font-size: 12px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .top-bar a { color: rgba(255,255,255,.75); text-decoration: none; }
+  .top-bar a:hover { color: #fff; text-decoration: underline; }
+  .top-bar-left, .top-bar-right { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .skip-link {
+    background: var(--gov-gold);
+    color: #000 !important;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .tricolor { display: flex; height: 6px; }
+  .tricolor div { flex: 1; }
+  .tricolor .saffron { background: var(--gov-saffron); }
+  .tricolor .white { background: #fff; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+  .tricolor .green { background: var(--gov-green); }
+  .gov-header {
+    background: #fff;
+    border-bottom: 2px solid var(--gov-border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .logo-block { display: flex; align-items: center; gap: 16px; }
+  .emblem-circle {
+    width: 68px;
+    height: 68px;
+    background: #fff;
+    border: 2px solid var(--gov-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .emblem-circle img { width: 60px; height: 60px; object-fit: contain; }
+  .gov-titles .ministry {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gov-text-muted);
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+  .gov-titles h1 {
+    font-family: "Noto Serif", serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gov-navy);
+    line-height: 1.2;
+    margin: 2px 0;
+  }
+  .gov-titles .subtitle { font-size: 12px; color: var(--gov-text-muted); }
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .helpline-box {
+    border: 1px solid var(--gov-red);
+    border-radius: 3px;
+    padding: 7px 12px;
+    text-align: center;
+    background: #fff5f5;
+  }
+  .helpline-box .number {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gov-red);
+    display: block;
+    line-height: 1;
+  }
+  .helpline-box small {
+    font-size: 10px;
+    color: var(--gov-text-muted);
+    letter-spacing: .4px;
+    text-transform: uppercase;
+  }
+  .header-badge {
+    background: var(--gov-navy);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .nav-bar {
+    background: var(--gov-navy);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid var(--gov-gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-home {
+    background: var(--gov-gold);
+    color: #1a1a1a;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-links { display: flex; list-style: none; height: 100%; }
+  .nav-links li a {
+    display: flex;
+    align-items: center;
+    padding: 13px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,.88);
+    text-decoration: none;
+    border-right: 1px solid rgba(255,255,255,.1);
+    white-space: nowrap;
+  }
+  .nav-links li a:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .nav-right { margin-left: auto; display: flex; align-items: center; }
+  .nav-btn {
+    padding: 12px 14px;
+    font-size: 12px;
+    color: rgba(255,255,255,.75);
+    border-left: 1px solid rgba(255,255,255,.1);
+    text-decoration: none;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,.08); color: #fff; }
+  .breadcrumb-bar {
+    background: var(--gov-bg-alt);
+    border-bottom: 1px solid var(--gov-border);
+    padding: 7px 20px;
+    font-size: 12px;
+    color: var(--gov-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .breadcrumb-bar a { color: var(--gov-navy); text-decoration: none; }
+  .breadcrumb-bar a:hover { text-decoration: underline; }
+  .breadcrumb-bar .sep { opacity: .5; }
+  .breadcrumb-current { color: var(--gov-text); font-weight: 500; }
+  .page-shell { padding: 24px 20px 40px; }
+  .page-title {
+    font-family: "Noto Serif", serif;
+    font-size: 24px;
+    color: var(--gov-navy);
+  }
+  .page-subtitle { color: var(--gov-text-muted); font-size: 13px; }
+  .btn {
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: "Noto Sans", Arial, sans-serif;
+  }
+  .btn.primary, .comm-badge { background: var(--gov-navy); }
+  .receipt {
+    border-color: var(--gov-navy);
+    border-radius: 6px;
+    box-shadow: 0 8px 32px rgba(0,48,135,.1);
+  }
+  .receipt-header { background: var(--gov-navy); }
+  .receipt-title, .receipt-section h3 { font-family: "Noto Serif", serif; }
+  .receipt-title { font-size: 20px; font-weight: 700; }
+  .receipt-section h3 { font-size: 17px; color: var(--gov-navy-mid); }
+  .rf-val { font-size: 14px; }
+  .receipt-footer { font-size: 12px; }
+  .empty-state { border-radius: 6px; padding: 48px; }
+  .status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+  .status-pending { background: #fef3c7; color: #92400e; }
+  .status-reviewed { background: #dbeafe; color: #1e3a8a; }
+  .status-resolved { background: #d1fae5; color: #065f46; }
+  .status-escalated { background: #fee2e2; color: #7f1d1d; }
+  .gov-footer {
+    background: var(--gov-navy-dark);
+    color: rgba(255,255,255,.75);
+    margin-top: 32px;
+  }
+  .footer-top {
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    padding: 20px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .footer-brand { flex: 1; min-width: 200px; }
+  .footer-brand h3 {
+    font-family: "Noto Serif", serif;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .footer-brand p {
+    font-size: 12px;
+    line-height: 1.6;
+    max-width: 360px;
+  }
+  .footer-links-group { min-width: 160px; }
+  .footer-links-group h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--gov-gold);
+    margin-bottom: 10px;
+  }
+  .footer-links-group ul { list-style: none; }
+  .footer-links-group li { margin-bottom: 5px; }
+  .footer-links-group a {
+    font-size: 12px;
+    color: rgba(255,255,255,.65);
+    text-decoration: none;
+  }
+  .footer-links-group a:hover { color: #fff; text-decoration: underline; }
+  .footer-bottom {
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+  @media (max-width: 700px) {
+    .gov-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .header-right { margin-left: 0; width: 100%; }
+    .nav-links, .nav-right, .top-bar-right { display: none; }
+  }
+  @media print {
+    .top-bar, .tricolor, .gov-header, .nav-bar, .breadcrumb-bar, .gov-footer { display: none !important; }
+    .receipt { border: 1.5px solid #333; }
+    .receipt-header { background: #003087 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
 </style>
 </head>
 <body>
+<div class="top-bar">
+  <div class="top-bar-left">
+    <a href="#main" class="skip-link">Skip to Content</a>
+    <a href="https://www.telangana.gov.in/">Telangana Government</a>
+    <a href="https://tspolice.gov.in/">Telangana Police</a>
+  </div>
+  <div class="top-bar-right">
+    <a href="#">Hindi</a>
+    <a href="#">Telugu</a>
+    <a href="#">English</a>
+  </div>
+</div>
+<div class="tricolor"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
+
+<header class="gov-header">
+  <div class="logo-block">
+    <div class="emblem-circle"><img src="assets/logo.png" alt="Women Safety Wing Logo"></div>
+    <div class="gov-titles">
+      <div class="ministry">Government of Telangana | Home Department</div>
+      <h1>Women Safety Wing</h1>
+      <div class="subtitle">Telangana Police | Integrated Complaint Management Portal</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="helpline-box"><span class="number">100</span><small>Police Helpline</small></div>
+    <div class="header-badge">Complaint<br>Receipt</div>
+  </div>
+</header>
+
+<nav class="nav-bar" role="navigation" aria-label="Main navigation">
+  <a class="nav-home" href="index.html">&#8962; Home</a>
+  <ul class="nav-links">
+    <li><a href="index.html">File a Complaint</a></li>
+    <li><a href="booth-dashboard.html">Booth Dashboard</a></li>
+    <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
+    <li><a href="admin-dashboard.html">Admin Login</a></li>
+  </ul>
+  <div class="nav-right"><a class="nav-btn" href="admin-dashboard.html">Back to Dashboard</a></div>
+</nav>
+
+<div class="breadcrumb-bar" role="navigation" aria-label="Breadcrumb">
+  <a href="index.html">Home</a><span class="sep">&rsaquo;</span>
+  <a href="admin-dashboard.html">Admin Dashboard</a><span class="sep">&rsaquo;</span>
+  <span class="breadcrumb-current" id="breadcrumbCurrent">Complaint Details</span>
+</div>
+
+<main id="main">
 <div class="page-shell">
   <div class="page-header">
     <div>
@@ -245,13 +581,53 @@
       <div class="page-subtitle" id="pageSubtitle">Structured complaint view</div>
     </div>
     <div class="page-actions">
-      <a class="btn" href="admin-dashboard.html">Back To Dashboard</a>
-      <button class="btn primary" id="printBtn" type="button">Print</button>
+      <a class="btn" href="admin-dashboard.html">Back to Dashboard</a>
+      <button class="btn primary" id="printBtn" type="button">Print Receipt</button>
     </div>
   </div>
 
   <div id="content"></div>
 </div>
+</main>
+
+<footer class="gov-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h3>Women Safety Wing</h3>
+      <p>Telangana Police, Government of Telangana.<br>Structured complaint acknowledgement and review receipt.</p>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.5);">Last Updated: <span id="lastUpdated"></span></div>
+    </div>
+    <div class="footer-links-group">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">File a Complaint</a></li>
+        <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
+        <li><a href="admin-dashboard.html">Admin Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-group">
+      <h4>Helplines</h4>
+      <ul>
+        <li><a href="#">Women Helpline - 1098</a></li>
+        <li><a href="#">Police - 100</a></li>
+        <li><a href="#">Emergency - 112</a></li>
+        <li><a href="#">Cybercrime - 1930</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-group">
+      <h4>Policies</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Accessibility Statement</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; <span id="footerYear"></span> Government of Telangana. All Rights Reserved.</span>
+    <span>Complaint receipt | Women Safety Wing</span>
+  </div>
+</footer>
 
 <script>
   const STORAGE_KEY = 'wsw-selected-complaint';
@@ -284,6 +660,28 @@
   function fmtDate(value) {
     if (!value) return 'N/A';
     return new Date(value).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+
+  function statusBadge(status) {
+    const statusText = safeDisplayValue(status) === 'N/A' ? 'Pending' : safeDisplayValue(status);
+    const classMap = {
+      Pending: 'status-pending',
+      Reviewed: 'status-reviewed',
+      Resolved: 'status-resolved',
+      Escalated: 'status-escalated'
+    };
+    const statusClass = classMap[statusText] || 'status-pending';
+    return `<span class="status-badge ${statusClass}">${esc(statusText)}</span>`;
+  }
+
+  function updateFooterDates() {
+    const now = new Date();
+    document.getElementById('footerYear').textContent = now.getFullYear();
+    document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
   }
 
   function getComplaint() {
@@ -329,6 +727,7 @@
     }
 
     document.getElementById('pageSubtitle').textContent = `${safeDisplayValue(complaint.applicationNumber)} | ${commissionerateLabel}`;
+    document.getElementById('breadcrumbCurrent').textContent = `${safeDisplayValue(complaint.applicationNumber)} | Complaint Details`;
     document.title = `${safeDisplayValue(complaint.applicationNumber)} - Complaint View`;
     document.getElementById('content').innerHTML = `
       <div class="receipt">
@@ -384,7 +783,7 @@
               ${receiptField('Complaint Type', complaint.complaintType)}
               ${receiptField('Nature of Petition', complaint.naturePetition)}
               ${receiptField('Assigned Commissionerate', complaint.commissionerate)}
-              ${receiptField('Status', complaint.status)}
+              <div class="receipt-field"><div class="rf-label">Status</div><div class="rf-val">${statusBadge(complaint.status)}</div></div>
               ${receiptField('Declaration Accepted', complaint.declarationAccepted)}
               ${receiptField('Submitted At', fmtDate(item.createdAt))}
               ${receiptField('Last Updated', fmtDate(item.updatedAt))}
@@ -416,6 +815,8 @@
     `;
     document.getElementById('printBtn').style.display = 'none';
   }
+
+  updateFooterDates();
 
   document.getElementById('printBtn').addEventListener('click', () => window.print());
 
