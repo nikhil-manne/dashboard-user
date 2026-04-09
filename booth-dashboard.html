@@ -70,6 +70,16 @@
   .card-head h2 { font-family: 'EB Garamond', serif; color: white; font-size: 17px; font-weight: 500; letter-spacing: 0.3px; }
   .card-head .section-num { margin-left: auto; font-size: 11px; color: rgba(200,168,75,0.7); letter-spacing: 1px; text-transform: uppercase; }
   .card-body { padding: 28px 28px 24px; }
+  .login-view { max-width: 520px; margin: 36px auto; padding: 0 24px 60px; }
+  .login-panel { background: white; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
+  .login-head { background: var(--navy); color: white; padding: 20px 24px; }
+  .login-head h2 { font-family: 'EB Garamond', serif; font-weight: 500; font-size: 24px; margin-bottom: 6px; }
+  .login-head p { color: rgba(255,255,255,0.72); font-size: 13px; line-height: 1.5; }
+  .login-body { padding: 24px; display: grid; gap: 16px; }
+  .login-actions { padding: 0 24px 24px; }
+  .login-submit { width: 100%; justify-content: center; }
+  .login-error { min-height: 18px; margin-top: 10px; color: var(--danger); font-size: 13px; }
+  .booth-session { max-width: 1120px; margin: 28px auto -12px; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 13px; }
 
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 24px; }
   .col-2 { grid-column: span 2; }
@@ -476,7 +486,35 @@
   <span class="breadcrumb-current">Booth Dashboard | Complaint Form</span>
 </div>
 
-<main id="main">
+<div id="loginView" class="login-view">
+  <div class="login-panel">
+    <div class="login-head">
+      <h2>Booth Dashboard Login</h2>
+      <p>Enter the booth username and password created by the administrator.</p>
+    </div>
+    <div class="login-body">
+      <div class="field">
+        <label for="boothLoginUsername">Booth Username</label>
+        <input id="boothLoginUsername" type="text" placeholder="Booth username" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="boothLoginPassword">Password</label>
+        <input id="boothLoginPassword" type="password" placeholder="Booth password" autocomplete="current-password">
+      </div>
+    </div>
+    <div class="login-actions">
+      <button class="btn btn-primary login-submit" id="boothLoginBtn" type="button">Login to Booth</button>
+      <div class="login-error" id="boothLoginStatus"></div>
+    </div>
+  </div>
+</div>
+
+<div id="boothSessionBar" class="booth-session" style="display:none;">
+  <div id="boothSessionMeta">Signed in as booth</div>
+  <button class="btn-reset" id="boothLogoutBtn" type="button">Sign Out</button>
+</div>
+
+<main id="main" style="display:none;">
 
   <!-- ① Personal Details (Complainant) -->
   <div class="card">
@@ -800,6 +838,7 @@
 
 <script>
   const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
+  const BOOTH_SESSION_KEY = 'wsw-booth-session';
   const g = id => (document.getElementById(id)?.value || '').trim();
   const asNumber = id => {
     const value = g(id);
@@ -812,12 +851,81 @@
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
+  function getBoothSession() {
+    try {
+      return JSON.parse(sessionStorage.getItem(BOOTH_SESSION_KEY) || 'null');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setBoothSession(session) {
+    sessionStorage.setItem(BOOTH_SESSION_KEY, JSON.stringify(session));
+  }
+
+  function clearBoothSession() {
+    sessionStorage.removeItem(BOOTH_SESSION_KEY);
+  }
+
+  function showBoothView(isAuthenticated) {
+    document.getElementById('loginView').style.display = isAuthenticated ? 'none' : '';
+    document.getElementById('boothSessionBar').style.display = isAuthenticated ? '' : 'none';
+    document.getElementById('main').style.display = isAuthenticated ? '' : 'none';
+    if (isAuthenticated) {
+      const session = getBoothSession();
+      const user = session?.user || {};
+      document.getElementById('boothSessionMeta').textContent =
+        `Signed in as ${user.username || 'booth'} | ${user.commissionerate || 'Booth dashboard'}`;
+    }
+  }
+
+  async function loginBooth() {
+    const username = g('boothLoginUsername');
+    const password = document.getElementById('boothLoginPassword').value;
+    const button = document.getElementById('boothLoginBtn');
+    const status = document.getElementById('boothLoginStatus');
+    if (!username || !password) { status.textContent = 'Enter booth username and password.'; return; }
+    button.disabled = true;
+    button.textContent = 'Authenticating...';
+    status.textContent = '';
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/booth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || 'Login failed');
+      setBoothSession(result.data);
+      document.getElementById('boothLoginPassword').value = '';
+      showBoothView(true);
+    } catch (error) {
+      clearBoothSession();
+      status.textContent = error.message || 'Unable to login.';
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Login to Booth';
+    }
+  }
+
+  function logoutBooth() {
+    clearBoothSession();
+    document.getElementById('boothLoginPassword').value = '';
+    showBoothView(false);
+  }
+
   function updateFooterDates() {
     const now = new Date();
     document.getElementById('footerYear').textContent = now.getFullYear();
     document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
   }
   updateFooterDates();
+  document.getElementById('boothLoginBtn').addEventListener('click', loginBooth);
+  document.getElementById('boothLogoutBtn').addEventListener('click', logoutBooth);
+  document.getElementById('boothLoginPassword').addEventListener('keydown', event => {
+    if (event.key === 'Enter') loginBooth();
+  });
+  showBoothView(Boolean(getBoothSession()?.token));
 
   function selectType(el, val) {
     document.querySelectorAll('.type-chip').forEach(card => card.classList.remove('selected'));
@@ -1130,6 +1238,13 @@
   }
 
   async function submitForm() {
+    const boothSession = getBoothSession();
+    if (!boothSession?.token) {
+      showBoothView(false);
+      showToast('Please login to the booth dashboard first.', true);
+      return;
+    }
+
     if (!g('fname')) { showToast('Please enter your first name', true); return; }
     if (!g('district')) { showToast('Please enter the district', true); return; }
     if (!g('offence')) { showToast('Please enter the offence location', true); return; }
@@ -1163,7 +1278,7 @@
     try {
       const response = await fetch(`${API_BASE_URL}/complaints`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${boothSession.token}` },
         body: JSON.stringify(payload)
       });
 
