@@ -1062,6 +1062,14 @@
       label.textContent = 'Recording... speak clearly';
     };
 
+    recognition.onaudiostart = () => {
+      console.log('Audio capturing started');
+    };
+
+    recognition.onspeechstart = () => {
+      console.log('Speech detected');
+    };
+
     recognition.onresult = event => {
       let text = '';
 
