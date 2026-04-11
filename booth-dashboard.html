@@ -1072,8 +1072,8 @@
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
     recognition.lang = lang;
-    recognition.continuous = true;      // ✅ keep listening
-    recognition.interimResults = true;  // ✅ live updates
+    recognition.interimResults = false;
+    recognition.continuous = false;
     recognition.maxAlternatives = 1;
 
     recognition.onstart = () => {
@@ -1093,22 +1093,28 @@
       console.log('Speech detected');
     };
 
-    recognition.onresult = (event) => {
-    let finalText = '';
+    recognition.onresult = event => {
+      let finalText = '';
 
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-    const transcript = event.results[i][0].transcript;
+      for (let i = event.resultIndex; i < event.results.length; i += 1) {
+        const transcript = event.results[i][0].transcript;
 
-      if (event.results[i].isFinal) {
-      finalText += transcript + ' ';
-      }
+        if (event.results[i].isFinal) {
+          finalText += `${transcript} `;
+        }
       }
 
       if (finalText) {
-      console.log("FINAL TEXT:", finalText);
-      document.getElementById('voiceText').value += finalText;
+        console.log('FINAL TEXT:', finalText);
+        voiceTextarea.value += finalText;
       }
-      };
+    };
+
+    recognition.onspeechend = () => {
+      console.log('Speech ended -> forcing stop');
+      recognition.stop();
+    };
+
     recognition.onerror = event => {
       console.error(event.error);
       alert(event.error);
@@ -1116,23 +1122,33 @@
     };
 
     recognition.onend = () => {
-  console.log("Mic ended");
+      console.log('Mic ended');
 
-  if (listening) {
-    console.log("Restarting...");
-    recognition.start();   // 🔁 keeps it alive
-  } else {
-    stopMicUI();
+      if (listening) {
+        console.log('Restarting...');
+
+        try {
+          recognition.start();
+          return;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      stopMicUI('Click microphone to record your complaint');
+    };
+
+    recognition.start();
   }
-};
 
   function stopRecording() {
+    listening = false;
+
     if (recognition) {
       recognition.stop();
     }
-    listening = false;
+
     console.log('Stopped manually');
-    stopMicUI('Recording stopped');
   }
 
   function stopMicUI(message = 'Click microphone to record your complaint') {
