@@ -694,7 +694,7 @@
       </div>
       <div class="voice-box">
         <div class="voice-top">
-          <button id="micBtn" onclick="toggleMic()" type="button" title="Start / Stop Voice Recording">🎤</button>
+          <button id="micBtn" onclick="startMic()" type="button" title="Start Voice Recording">🎤</button>
           <div>
             <div class="mic-status" id="micStatus"><div class="mic-dot"></div><span id="micLabel">Click microphone to record your complaint</span></div>
             <p>Speak your complaint — it will be transcribed automatically. Click again to stop.</p>
@@ -1027,92 +1027,75 @@
 
   let recognition = null;
   let listening = false;
-  let finalTranscript = '';
 
-  function toggleMic() {
+  function startMic() {
     const btn = document.getElementById('micBtn');
     const status = document.getElementById('micStatus');
     const label = document.getElementById('micLabel');
     const box = document.getElementById('voiceText');
 
+    console.log('Button clicked');
+
     if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-      showToast('Voice recognition not supported. Please use Chrome.', true);
+      alert('Speech recognition is not supported in this browser.');
       return;
     }
 
-    if (listening) {
+    if (recognition && listening) {
       recognition.stop();
-      listening = false;
-      btn.classList.remove('listening');
-      btn.innerHTML = '??';
-      status.classList.remove('active');
-      label.textContent = 'Recording stopped';
-      setTimeout(() => {
-        label.textContent = 'Click microphone to record your complaint';
-      }, 3000);
       return;
     }
 
-    finalTranscript = box.value;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
-    recognition.continuous = true;
-    recognition.interimResults = true;
     recognition.lang = 'en-IN';
+    recognition.interimResults = true;
+    recognition.continuous = false;
     recognition.maxAlternatives = 1;
 
     recognition.onstart = () => {
+      console.log('Mic started');
       listening = true;
       btn.classList.add('listening');
-      btn.innerHTML = '?';
+      btn.textContent = '■';
       status.classList.add('active');
       label.textContent = 'Recording... speak clearly';
     };
 
     recognition.onresult = event => {
-      let interim = '';
+      let text = '';
+
       for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += `${transcript} `;
-        } else {
-          interim += transcript;
-        }
+        text += event.results[i][0].transcript;
       }
-      box.value = finalTranscript + interim;
+
+      console.log(text);
+      box.value = text.trim();
     };
 
-    recognition.onerror = error => {
-      if (error.error === 'not-allowed') {
-        showToast('Microphone access denied.', true);
-      } else {
-        showToast(`Mic error: ${error.error}`, true);
-      }
-      stopMicUI();
+    recognition.onerror = event => {
+      console.error(event.error);
+      alert(event.error);
+      stopMicUI('Microphone error');
     };
 
     recognition.onend = () => {
-      if (listening) {
-        try {
-          recognition.start();
-        } catch (err) {
-          stopMicUI();
-        }
-      }
+      console.log('Mic stopped');
+      stopMicUI('Click microphone to record your complaint');
     };
 
     recognition.start();
   }
 
-  function stopMicUI() {
+  function stopMicUI(message = 'Click microphone to record your complaint') {
     const btn = document.getElementById('micBtn');
     const status = document.getElementById('micStatus');
     const label = document.getElementById('micLabel');
     listening = false;
     btn.classList.remove('listening');
-    btn.innerHTML = '??';
+    btn.textContent = '🎤';
     status.classList.remove('active');
-    label.textContent = 'Click microphone to record your complaint';
+    label.textContent = message;
   }
 
   function showToast(msg, isError) {
@@ -1377,8 +1360,6 @@
     document.getElementById('mobileHint').textContent = '';
     document.getElementById('altmobileHint').textContent = '';
     document.getElementById('receipt').style.display = 'none';
-    finalTranscript = '';
-
     if (listening) {
       recognition.stop();
       stopMicUI();
