@@ -1049,7 +1049,7 @@
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
     recognition.lang = 'en-IN';
-    recognition.interimResults = true;
+    recognition.interimResults = false;
     recognition.continuous = false;
     recognition.maxAlternatives = 1;
 
@@ -1071,14 +1071,15 @@
     };
 
     recognition.onresult = event => {
-      let text = '';
+      const text = event.results[0][0].transcript;
 
-      for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        text += event.results[i][0].transcript;
-      }
+      console.log('FINAL TEXT:', text);
+      box.value = text;
+    };
 
-      console.log(text);
-      box.value = text.trim();
+    recognition.onspeechend = () => {
+      console.log('Speech ended -> forcing stop');
+      recognition.stop();
     };
 
     recognition.onerror = event => {
