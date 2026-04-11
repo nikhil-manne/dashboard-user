@@ -1072,8 +1072,8 @@
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
     recognition.lang = lang;
-    recognition.interimResults = false;
-    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.continuous = true;
     recognition.maxAlternatives = 1;
 
     recognition.onstart = () => {
@@ -1094,26 +1094,27 @@
     };
 
     recognition.onresult = event => {
-      let finalText = '';
+  let interim = '';
+  let final = '';
 
-      for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        const transcript = event.results[i][0].transcript;
+  for (let i = event.resultIndex; i < event.results.length; i++) {
+    const transcript = event.results[i][0].transcript;
 
-        if (event.results[i].isFinal) {
-          finalText += `${transcript} `;
-        }
-      }
+    if (event.results[i].isFinal) {
+      final += transcript + ' ';
+    } else {
+      interim += transcript;
+    }
+  }
 
-      if (finalText) {
-        console.log('FINAL TEXT:', finalText);
-        box.value += finalText;
-      }
-    };
+  if (final) {
+    console.log('FINAL:', final);
+    box.value += final;
+  }
 
-    recognition.onspeechend = () => {
-      console.log('Speech ended -> forcing stop');
-      recognition.stop();
-    };
+  // optional: show live typing
+  document.getElementById('micLabel').textContent = interim || 'Listening...';
+};
 
     recognition.onerror = event => {
       console.error(event.error);
@@ -1122,18 +1123,18 @@
     };
 
     recognition.onend = () => {
-      console.log('Mic ended');
+  console.log('Mic ended');
 
-      if (listening) {
-        console.log('Restarting...');
-
-        try {
-          recognition.start();
-          return;
-        } catch (error) {
-          console.error(error);
-        }
-      }
+  if (listening) {
+    try {
+      recognition.start();
+    } catch (e) {
+      console.log('Restart failed:', e);
+    }
+  } else {
+    stopMicUI();
+  }
+};
 
       stopMicUI('Click microphone to record your complaint');
     };
