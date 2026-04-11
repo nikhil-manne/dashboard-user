@@ -115,6 +115,8 @@
   .voice-box { background: var(--cream); border: 1.5px dashed var(--border); border-radius: 10px; padding: 24px; }
   .voice-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
   .voice-top p { font-size: 13px; color: var(--muted); flex: 1; min-width: 200px; }
+  .voice-controls { display: flex; gap: 12px; align-items: end; flex-wrap: wrap; margin-bottom: 16px; }
+  .voice-controls .field { min-width: 220px; flex: 1; }
   #micBtn { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--navy-mid); background: var(--navy); color: white; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.25s ease; }
   #micBtn:hover { background: var(--navy-mid); }
   #micBtn.listening { background: var(--danger); border-color: var(--danger); animation: pulse-ring 1.4s ease infinite; }
@@ -693,8 +695,19 @@
         <textarea id="description" placeholder="Describe the incident in detail — include date, time, persons involved, sequence of events, and any witnesses..."></textarea>
       </div>
       <div class="voice-box">
+        <div class="voice-controls">
+          <div class="field">
+            <label for="langSelect">Voice Input Language</label>
+            <select id="langSelect">
+              <option value="en-IN">English</option>
+              <option value="hi-IN">Hindi</option>
+              <option value="te-IN">Telugu</option>
+              <option value="auto">Auto (Whisper)</option>
+            </select>
+          </div>
+        </div>
         <div class="voice-top">
-          <button id="micBtn" onclick="startMic()" type="button" title="Start Voice Recording">🎤</button>
+          <button id="micBtn" onclick="handleMic()" type="button" title="Start Voice Recording">🎤</button>
           <div>
             <div class="mic-status" id="micStatus"><div class="mic-dot"></div><span id="micLabel">Click microphone to record your complaint</span></div>
             <p>Speak your complaint — it will be transcribed automatically. Click again to stop.</p>
@@ -1028,27 +1041,38 @@
   let recognition = null;
   let listening = false;
 
-  function startMic() {
+  function handleMic() {
+    console.log('Button clicked');
+
+    if (listening) {
+      stopRecording();
+      return;
+    }
+
+    const lang = document.getElementById('langSelect').value;
+
+    if (lang === 'auto') {
+      alert('Auto mode -> Use Whisper API (not in browser)');
+      return;
+    }
+
+    startBrowserSTT(lang);
+  }
+
+  function startBrowserSTT(lang) {
     const btn = document.getElementById('micBtn');
     const status = document.getElementById('micStatus');
     const label = document.getElementById('micLabel');
     const box = document.getElementById('voiceText');
-
-    console.log('Button clicked');
 
     if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
       alert('Speech recognition is not supported in this browser.');
       return;
     }
 
-    if (recognition && listening) {
-      recognition.stop();
-      return;
-    }
-
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
-    recognition.lang = 'en-IN';
+    recognition.lang = lang;
     recognition.interimResults = false;
     recognition.continuous = false;
     recognition.maxAlternatives = 1;
@@ -1074,7 +1098,7 @@
       const text = event.results[0][0].transcript;
 
       console.log('FINAL TEXT:', text);
-      box.value = text;
+      box.value += `${text} `;
     };
 
     recognition.onspeechend = () => {
@@ -1094,6 +1118,15 @@
     };
 
     recognition.start();
+  }
+
+  function stopRecording() {
+    if (recognition) {
+      recognition.stop();
+    }
+    listening = false;
+    console.log('Stopped manually');
+    stopMicUI('Recording stopped');
   }
 
   function stopMicUI(message = 'Click microphone to record your complaint') {
