@@ -1184,350 +1184,271 @@
       </div>
     </footer>
   </div>
+<script>
+const API_BASE_URL = (
+  window.WSW_API_BASE_URL ||
+  document.querySelector('meta[name="wsw-api-base-url"]')?.content ||
+  'https://wsw-backend.onrender.com/api'
+).replace(/\/$/, '');
 
-  <script>
-    const API_BASE_URL = (
-      window.WSW_API_BASE_URL ||
-      document.querySelector('meta[name="wsw-api-base-url"]')?.content ||
-      'https://wsw-backend.onrender.com/api'
-    ).replace(/\/$/, '');
-    const STORAGE_KEY = 'wsw-sub-session';
-    const COMPLAINT_VIEW_KEY = 'wsw-selected-complaint';
-    let allComplaints = [];
+const STORAGE_KEY = 'wsw-sub-session';
+const COMPLAINT_VIEW_KEY = 'wsw-selected-complaint';
 
-    function updateClock() {
-      const el = document.getElementById('currentTime');
-      if (el) {
-        el.textContent = new Date().toLocaleString('en-IN', {
-          dateStyle: 'medium',
-          timeStyle: 'short'
-        });
-      }
+let allComplaints = [];
+
+/* =========================
+   SESSION HELPERS
+========================= */
+function getSession() {
+  try {
+    return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+  } catch {
+    return null;
+  }
+}
+
+function setSession(session) {
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+}
+
+function clearSession() {
+  sessionStorage.removeItem(STORAGE_KEY);
+}
+
+/* =========================
+   VIEW HANDLING
+========================= */
+function showView(name) {
+  document.getElementById('loginView').style.display = name === 'loginView' ? '' : 'none';
+  document.getElementById('dashboardView').style.display = name === 'dashboardView' ? '' : 'none';
+}
+
+/* =========================
+   UTILITIES
+========================= */
+function esc(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function fmtDate(value) {
+  if (!value) return '-';
+  return new Date(value).toLocaleString('en-IN', {
+    dateStyle: 'medium',
+    timeStyle: 'short'
+  });
+}
+
+function statusClass(status) {
+  const s = String(status || '').toLowerCase();
+  if (s === 'pending') return 'status-pending';
+  if (s === 'closed') return 'status-closed';
+  if (s === 'rejected') return 'status-rejected';
+  return 'status-submitted';
+}
+
+/* =========================
+   MODAL FUNCTIONS
+========================= */
+function viewComplaint(index) {
+  const item = allComplaints[index];
+  if (!item) return;
+
+  const c = item.complainant || {};
+  const complaint = item.complaint || {};
+  const accused = item.accused || {};
+
+  document.getElementById('d_id').textContent = complaint.applicationNumber || '-';
+  document.getElementById('d_name').textContent =
+    `${c.firstName || ''} ${c.surname || ''}`.trim() || '-';
+  document.getElementById('d_phone').textContent = c.mobile || '-';
+  document.getElementById('d_age').textContent = c.age || '-';
+  document.getElementById('d_occupation').textContent = c.occupation || '-';
+
+  document.getElementById('d_address').textContent =
+    [c.houseNo, c.street, c.area, c.city, c.pincode].filter(Boolean).join(', ') || '-';
+
+  document.getElementById('d_appNo').textContent = complaint.applicationNumber || '-';
+  document.getElementById('d_status').textContent = complaint.status || 'Submitted';
+  document.getElementById('d_complaintType').textContent = complaint.complaintType || '-';
+  document.getElementById('d_nature').textContent = complaint.naturePetition || '-';
+  document.getElementById('d_location').textContent = complaint.offenceLocation || '-';
+  document.getElementById('d_date').textContent = fmtDate(item.createdAt);
+  document.getElementById('d_issue').textContent =
+    complaint.details || complaint.issue || '-';
+
+  document.getElementById('d_accusedName').textContent = accused.name || '-';
+  document.getElementById('d_accusedPhone').textContent = accused.mobile || '-';
+  document.getElementById('d_accusedAddress').textContent =
+    [accused.houseNo, accused.street, accused.area, accused.city].filter(Boolean).join(', ') || '-';
+
+  document.getElementById('detailModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('detailModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* =========================
+   🔥 FIXED FUNCTION (MAIN ISSUE)
+========================= */
+async function fetchComplaintDetail(id) {
+  const session = getSession();
+
+  if (!session?.token) {
+    throw new Error('Session expired. Please login again.');
+  }
+
+  const response = await fetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`, {
+    headers: {
+      Authorization: `Bearer ${session.token}`
     }
+  });
 
-    updateClock();
-    setInterval(updateClock, 30000);
+  const result = await response.json().catch(() => ({}));
 
-    function updateFooterDates() {
-      const now = new Date();
-      const footerYear = document.getElementById('footerYear');
-      const lastUpdated = document.getElementById('lastUpdated');
-      if (footerYear) footerYear.textContent = now.getFullYear();
-      if (lastUpdated) {
-        lastUpdated.textContent = now.toLocaleDateString('en-IN', {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric'
-        });
-      }
-    }
+  if (!response.ok) {
+    throw new Error(result.message || 'Unable to load complaint');
+  }
 
-    updateFooterDates();
+  return result.data;
+}
 
-    function getSession() {
-      try {
-        return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
-      } catch {
-        return null;
-      }
-    }
+/* =========================
+   OPEN FULL PAGE
+========================= */
+async function openComplaintPage(index) {
+  const item = allComplaints[index];
+  if (!item) return;
 
-    function setSession(session) {
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
-    }
+  const fullItem = await fetchComplaintDetail(item._id);
 
-    function clearSession() {
-      sessionStorage.removeItem(STORAGE_KEY);
-    }
+  sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
 
-    function showView(name) {
-      document.getElementById('loginView').style.display = name === 'loginView' ? '' : 'none';
-      document.getElementById('dashboardView').style.display = name === 'dashboardView' ? '' : 'none';
-    }
+  window.open('complaint-view.html', '_blank', 'noopener');
+}
 
-    function esc(value) {
-      return String(value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
+/* =========================
+   TABLE + FILTER
+========================= */
+function renderTableRows(complaints) {
+  const body = document.getElementById('complaintTableBody');
+  const empty = document.getElementById('emptyState');
 
-    function fmtDate(value) {
-      if (!value) return '-';
-      return new Date(value).toLocaleString('en-IN', {
-        dateStyle: 'medium',
-        timeStyle: 'short'
-      });
-    }
+  if (!complaints.length) {
+    body.innerHTML = '';
+    empty.style.display = '';
+    return;
+  }
 
-    function statusClass(status) {
-      const normalized = String(status || '').toLowerCase();
-      if (normalized === 'pending') return 'status-pending';
-      if (normalized === 'closed') return 'status-closed';
-      if (normalized === 'rejected') return 'status-rejected';
-      return 'status-submitted';
-    }
+  empty.style.display = 'none';
 
-    function showLoginError(message) {
-      document.getElementById('loginStatus').textContent = message || '';
-    }
+  body.innerHTML = complaints.map(item => {
+    const i = allComplaints.indexOf(item);
 
-    function renderTypeChips(items) {
-      const container = document.getElementById('typeChips');
-      if (!items.length) {
-        container.innerHTML = '<span class="gov-chip">No data yet</span>';
-        return;
-      }
+    return `<tr>
+      <td><span class="ref-num">${esc(item.complaint.applicationNumber || '-')}</span></td>
+      <td>${esc(item.complainant.firstName || '')}</td>
+      <td>${esc(item.complainant.mobile || '-')}</td>
+      <td>${esc(item.complaint.complaintType || '-')}</td>
+      <td>${esc(item.complaint.naturePetition || '-')}</td>
+      <td>${esc(item.complaint.offenceLocation || '-')}</td>
+      <td>${esc(fmtDate(item.createdAt))}</td>
+      <td><span class="status-pill ${statusClass(item.complaint.status)}">${esc(item.complaint.status)}</span></td>
+      <td><a href="#" data-index="${i}">View</a></td>
+    </tr>`;
+  }).join('');
+}
 
-      container.innerHTML = items
-        .map(item => `<span class="gov-chip"><strong>${esc(item.label)}</strong>: ${item.count}</span>`)
-        .join('');
-    }
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
 
-    function renderTableRows(complaints) {
-      const body = document.getElementById('complaintTableBody');
-      const empty = document.getElementById('emptyState');
+  const filtered = allComplaints.filter(item =>
+    JSON.stringify(item).toLowerCase().includes(q)
+  );
 
-      if (!complaints.length) {
-        body.innerHTML = '';
-        empty.style.display = '';
-        return;
-      }
+  renderTableRows(filtered);
+}
 
-      empty.style.display = 'none';
-      body.innerHTML = complaints.map(item => {
-        const itemIndex = allComplaints.indexOf(item);
-        const complainant = `${item.complainant.firstName || ''} ${item.complainant.surname || ''}`.trim() || '-';
-        const status = item.complaint.status || 'Submitted';
+/* =========================
+   FETCH DASHBOARD
+========================= */
+async function fetchDashboard() {
+  const session = getSession();
+  if (!session?.token) return;
 
-        return `<tr>
-          <td><span class="ref-num">${esc(item.complaint.applicationNumber || '-')}</span></td>
-          <td>${esc(complainant)}</td>
-          <td style="font-family:var(--font-mono);">${esc(item.complainant.mobile || '-')}</td>
-          <td>${esc(item.complaint.complaintType || '-')}</td>
-          <td>${esc(item.complaint.naturePetition || '-')}</td>
-          <td>${esc(item.complaint.offenceLocation || '-')}</td>
-          <td style="white-space:nowrap;">${esc(fmtDate(item.createdAt))}</td>
-          <td><span class="status-pill ${statusClass(status)}">${esc(status)}</span></td>
-          <td><a class="view-link" href="#" data-index="${itemIndex}">View</a></td>
-        </tr>`;
-      }).join('');
-    }
+  const res = await fetch(`${API_BASE_URL}/dashboard/complaints`, {
+    headers: { Authorization: `Bearer ${session.token}` }
+  });
 
-    // ==========================
-    // VIEW COMPLAINT (modal)
-    // ==========================
-    function viewComplaint(index) {
-      const item = allComplaints[index];
-      if (!item) { alert('Complaint not found'); return; }
+  const data = await res.json();
 
-      const c = item.complainant || {};
-      const complaint = item.complaint || {};
-      const accused = item.accused || {};
+  allComplaints = data.data.complaints;
 
-      // Complainant section
-      const fullName = `${c.firstName || ''} ${c.surname || ''}`.trim() || '-';
-      document.getElementById('d_id').textContent    = complaint.applicationNumber || '-';
-      document.getElementById('d_name').textContent  = fullName;
-      document.getElementById('d_phone').textContent = c.mobile || '-';
-      document.getElementById('d_age').textContent   = c.age || '-';
-      document.getElementById('d_occupation').textContent = c.occupation || '-';
-      const addr = [c.houseNo, c.street, c.area, c.city, c.pincode].filter(Boolean).join(', ');
-      document.getElementById('d_address').textContent = addr || '-';
+  renderTableRows(allComplaints);
+}
 
-      // Complaint section
-      document.getElementById('d_appNo').textContent        = complaint.applicationNumber || '-';
-      document.getElementById('d_status').textContent       = complaint.status || 'Submitted';
-      document.getElementById('d_complaintType').textContent = complaint.complaintType || '-';
-      document.getElementById('d_nature').textContent       = complaint.naturePetition || '-';
-      document.getElementById('d_location').textContent     = complaint.offenceLocation || '-';
-      document.getElementById('d_date').textContent         = fmtDate(item.createdAt);
-      document.getElementById('d_issue').textContent        = complaint.details || complaint.issue || '-';
+/* =========================
+   LOGIN / LOGOUT
+========================= */
+async function login() {
+  const commissionerateKey = document.getElementById('commissionerateKey').value;
+  const password = document.getElementById('password').value;
 
-      // Accused section
-      document.getElementById('d_accusedName').textContent    = accused.name || '-';
-      document.getElementById('d_accusedPhone').textContent   = accused.mobile || '-';
-      const accAddr = [accused.houseNo, accused.street, accused.area, accused.city].filter(Boolean).join(', ');
-      document.getElementById('d_accusedAddress').textContent = accAddr || '-';
+  const res = await fetch(`${API_BASE_URL}/auth/commissionerate/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ commissionerateKey, password })
+  });
 
-      // Open modal
-      document.getElementById('detailModal').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
+  const data = await res.json();
 
-    // ==========================
-    // CLOSE MODAL
-    // ==========================
-    function closeModal() {
-      document.getElementById('detailModal').classList.remove('open');
-      document.body.style.overflow = '';
-    }
+  setSession(data.data);
 
-    // Close modal on backdrop click
-    document.getElementById('detailModal').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-    // Close modal on Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
-    });
-      const session = getSession();
-      if (!session?.token) {
-        throw new Error('Session expired. Please login again.');
-      }
+  showView('dashboardView');
+  await fetchDashboard();
+}
 
-      const response = await fetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`, {
-        headers: {
-          Authorization: `Bearer ${session.token}`
-        }
-      });
-      const result = await response.json().catch(() => ({}));
+function logout() {
+  clearSession();
+  showView('loginView');
+}
 
-      if (!response.ok) {
-        throw new Error(result.message || 'Unable to load complaint');
-      }
+/* =========================
+   EVENTS
+========================= */
+document.getElementById('loginBtn').onclick = login;
+document.getElementById('refreshBtn').onclick = fetchDashboard;
+document.getElementById('logoutBtn').onclick = logout;
+document.getElementById('searchInput').oninput = filterTable;
 
-      return result.data;
-    }
+document.getElementById('complaintTableBody').addEventListener('click', e => {
+  const link = e.target.closest('a[data-index]');
+  if (!link) return;
 
-    async function openComplaintPage(index) {
-      const item = allComplaints[index];
-      if (!item) return;
-      const fullItem = await fetchComplaintDetail(item._id);
-      sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
-      window.open('complaint-view.html', '_blank', 'noopener');
-    }
+  e.preventDefault();
+  viewComplaint(Number(link.dataset.index));
+});
 
-    function filterTable() {
-      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+/* =========================
+   INIT
+========================= */
+(async function init() {
+  const session = getSession();
 
-      const filtered = allComplaints.filter(item => {
-        const haystack = [
-          item.complaint.applicationNumber,
-          item.complainant.firstName,
-          item.complainant.surname,
-          item.complainant.mobile,
-          item.complaint.complaintType,
-          item.complaint.naturePetition,
-          item.complaint.offenceLocation
-        ].join(' ').toLowerCase();
-
-        return !query || haystack.includes(query);
-      });
-
-      renderTableRows(filtered);
-      document.getElementById('tableFooter').textContent =
-        filtered.length === allComplaints.length
-          ? `Showing all ${allComplaints.length} records`
-          : `Showing ${filtered.length} of ${allComplaints.length} records`;
-    }
-
-    async function fetchDashboard() {
-      const session = getSession();
-      if (!session?.token) {
-        return;
-      }
-
-      const response = await fetch(`${API_BASE_URL}/dashboard/complaints`, {
-        headers: {
-          Authorization: `Bearer ${session.token}`
-        }
-      });
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.message || 'Unable to load dashboard');
-      }
-
-      const { user, summary, complaints } = result.data;
-      allComplaints = complaints;
-      document.getElementById('welcomeTitle').textContent = `${user.commissionerate || 'Commissionerate'} Dashboard`;
-      document.getElementById('welcomeMeta').textContent = `Login key: ${user.commissionerateKey || user.username}`;
-      document.getElementById('totalCount').textContent = summary.total;
-      document.getElementById('commissionerateName').textContent = user.commissionerate || '-';
-      renderTypeChips(summary.byType);
-      filterTable();
-    }
-
-    async function login() {
-      const commissionerateKey = document.getElementById('commissionerateKey').value;
-      const password = document.getElementById('password').value;
-      const button = document.getElementById('loginBtn');
-
-      if (!commissionerateKey || !password) {
-        showLoginError('Select commissionerate and enter password.');
-        return;
-      }
-
-      showLoginError('');
-      button.disabled = true;
-      button.textContent = 'Authenticating...';
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/auth/commissionerate/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ commissionerateKey, password })
-        });
-
-        const result = await response.json();
-        if (!response.ok) {
-          throw new Error(result.message || 'Login failed');
-        }
-
-        setSession(result.data);
-        showView('dashboardView');
-        await fetchDashboard();
-      } catch (error) {
-        showLoginError(error.message);
-      } finally {
-        button.disabled = false;
-        button.textContent = 'Login to Dashboard';
-      }
-    }
-
-    function logout() {
-      clearSession();
-      allComplaints = [];
-      document.getElementById('commissionerateKey').value = '';
-      document.getElementById('password').value = '';
-      document.getElementById('searchInput').value = '';
-      showLoginError('');
-      showView('loginView');
-    }
-
-    document.getElementById('loginBtn').addEventListener('click', login);
-    document.getElementById('refreshBtn').addEventListener('click', fetchDashboard);
-    document.getElementById('logoutBtn').addEventListener('click', logout);
-    document.getElementById('searchInput').addEventListener('input', filterTable);
-    document.getElementById('complaintTableBody').addEventListener('click', (event) => {
-      const link = event.target.closest('a[data-index]');
-      if (!link) return;
-      event.preventDefault();
-      viewComplaint(Number(link.dataset.index));
-    });
-    document.getElementById('password').addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        login();
-      }
-    });
-
-    (async function init() {
-      const session = getSession();
-
-      if (session?.token) {
-        showView('dashboardView');
-        try {
-          await fetchDashboard();
-        } catch {
-          logout();
-        }
-      } else {
-        showView('loginView');
-      }
-    })();
-  </script>
+  if (session?.token) {
+    showView('dashboardView');
+    await fetchDashboard();
+  } else {
+    showView('loginView');
+  }
+})();
+</script>
 </body>
 </html>
