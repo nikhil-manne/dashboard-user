@@ -115,6 +115,8 @@
   .voice-box { background: var(--cream); border: 1.5px dashed var(--border); border-radius: 10px; padding: 24px; }
   .voice-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
   .voice-top p { font-size: 13px; color: var(--muted); flex: 1; min-width: 200px; }
+  .voice-controls { display: flex; gap: 12px; align-items: end; flex-wrap: wrap; margin-bottom: 16px; }
+  .voice-controls .field { min-width: 220px; flex: 1; }
   #micBtn { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--navy-mid); background: var(--navy); color: white; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.25s ease; }
   #micBtn:hover { background: var(--navy-mid); }
   #micBtn.listening { background: var(--danger); border-color: var(--danger); animation: pulse-ring 1.4s ease infinite; }
@@ -524,10 +526,10 @@
 
 <main id="main" style="display:none;">
 
-  <!-- â‘  Personal Details (Complainant) -->
+  <!--  Personal Details (Complainant) -->
   <div class="card">
     <div class="card-head">
-      <div class="icon">ðŸ‘¤</div>
+      <div class="icon">ID</div>
       <h2>Complainant Personal Details</h2>
       <span class="section-num">Section 01</span>
     </div>
@@ -550,7 +552,7 @@
         </div>
 
         <div class="field"><label>Caste</label>
-            <select id="rrcaste"><option value="">â€” Select â€”</option><option>SC</option><option>ST</option><option>BC</option><option>OC</option><option>Minority</option><option>Other</option></select>
+            <select id="rrcaste"><option value="">-- Select --</option><option>SC</option><option>ST</option><option>BC</option><option>OC</option><option>Minority</option><option>Other</option></select>
           </div>
         <div class="field"><label>Religion</label><input id="religion" placeholder="e.g. Hindu, Muslim"></div>
         <div class="field"><label>Nationality</label><input id="nationality" value="Indian"></div>
@@ -572,7 +574,7 @@
     </div>
   </div>
 
-  <!-- â‘¡ Address Details -->
+  <!--  Address Details -->
   <div class="card">
     <div class="card-head">
       <h2>Address Details</h2>
@@ -600,7 +602,7 @@
     </div>
   </div>
 
-  <!-- â‘¢ Respondent Details -->
+  <!--  Respondent Details -->
   <div class="card">
     <div class="card-head">
       <h2>Respondent Details</h2>
@@ -619,35 +621,35 @@
           <div class="field"><label>Respondent Name <span class="req">*</span></label><input id="rname" placeholder="Enter respondent name"></div>
           <div class="field"><label>Surname</label><input id="rsurname" placeholder="Enter surname"></div>
           <div class="field"><label>Gender <span class="req">*</span></label>
-            <select id="rgender"><option value="">â€” Select â€”</option><option>Male</option><option>Female</option><option>Transgender</option></select>
+            <select id="rgender"><option value="">-- Select --</option><option>Male</option><option>Female</option><option>Transgender</option></select>
           </div>
 
           <div class="field"><label>Father / Husband / Guardian Name</label><input id="rguardian" placeholder="Enter name"></div>
           <div class="field"><label>Relation Type</label>
-            <select id="rrelation"><option value="">â€” Select â€”</option><option>Father</option><option>Husband</option><option>Guardian</option></select>
+            <select id="rrelation"><option value="">-- Select --</option><option>Father</option><option>Husband</option><option>Guardian</option></select>
           </div>
           <div class="field"><label>Age</label><input type="number" id="rage" placeholder="Years" min="0" max="120"></div>
 
           <div class="field"><label>Date of Birth (DD/MM/YYYY)</label><input id="rdob" placeholder="DD/MM/YYYY"></div>
           <div class="field"><label>Occupation</label>
-            <select id="roccupation"><option value="">â€” Select â€”</option><option>Government Employee</option><option>Private Employee</option><option>Business</option><option>Student</option><option>Unemployed</option><option>Other</option></select>
+            <select id="roccupation"><option value="">-- Select --</option><option>Government Employee</option><option>Private Employee</option><option>Business</option><option>Student</option><option>Unemployed</option><option>Other</option></select>
           </div>
           <div class="field"><label>Education Qualification</label>
-            <select id="reducation"><option value="">â€” Select â€”</option><option>No Formal Education</option><option>Primary</option><option>Secondary (10th)</option><option>Intermediate (12th)</option><option>Graduate</option><option>Post Graduate</option><option>Other</option></select>
+            <select id="reducation"><option value="">-- Select --</option><option>No Formal Education</option><option>Primary</option><option>Secondary (10th)</option><option>Intermediate (12th)</option><option>Graduate</option><option>Post Graduate</option><option>Other</option></select>
           </div>
 
           <div class="field"><label>Caste</label>
-            <select id="rcaste"><option value="">â€” Select â€”</option><option>SC</option><option>ST</option><option>BC</option><option>OC</option><option>Minority</option><option>Other</option></select>
+            <select id="rcaste"><option value="">-- Select --</option><option>SC</option><option>ST</option><option>BC</option><option>OC</option><option>Minority</option><option>Other</option></select>
           </div>
           <div class="field"><label>Religion</label>
-            <select id="rreligion"><option value="">â€” Select â€”</option><option>Hindu</option><option>Muslim</option><option>Christian</option><option>Sikh</option><option>Buddhist</option><option>Jain</option><option>Other</option></select>
+            <select id="rreligion"><option value="">-- Select --</option><option>Hindu</option><option>Muslim</option><option>Christian</option><option>Sikh</option><option>Buddhist</option><option>Jain</option><option>Other</option></select>
           </div>
 
           <div class="field"><label>Marital Status</label>
-            <select id="rmarital"><option value="">â€” Select â€”</option><option>Single</option><option>Married</option><option>Widowed</option><option>Divorced</option></select>
+            <select id="rmarital"><option value="">-- Select --</option><option>Single</option><option>Married</option><option>Widowed</option><option>Divorced</option></select>
           </div>
           <div class="field"><label>Nationality</label>
-            <select id="rnationality"><option value="">â€” Select â€”</option><option>Indian</option><option>Other</option></select>
+            <select id="rnationality"><option value="">-- Select --</option><option>Indian</option><option>Other</option></select>
           </div>
           <div class="field"></div>
         </div>
@@ -655,10 +657,10 @@
     </div>
   </div>
 
-  <!-- â‘£ Complaint Details -->
+  <!--  Complaint Details -->
   <div class="card">
     <div class="card-head">
-      <div class="icon">ðŸ“‹</div>
+      <div class="icon">FORM</div>
       <h2>Complaint Details</h2>
       <span class="section-num">Section 04</span>
     </div>
@@ -675,7 +677,7 @@
       <div class="field" style="margin-bottom:20px;">
         <label>Nature of Petition <span class="req">*</span></label>
         <select id="naturePetition">
-          <option value="">â€” Choose Nature of Petition â€”</option>
+          <option value="">-- Choose Nature of Petition --</option>
           <option>Abusing in vulgar language</option><option>Blackmailing</option><option>Cheating &amp; Manipulating to marry</option>
           <option>Eveteasing</option><option>Facebook harassment</option><option>Facebook Morphing</option>
           <option>Fake Facebook Account created</option><option>Following &amp; phone harassing</option>
@@ -690,14 +692,24 @@
       </div>
       <div class="field" style="margin-bottom:20px;">
         <label>Written Complaint Description <span class="req">*</span></label>
-        <textarea id="description" placeholder="Describe the incident in detail â€” include date, time, persons involved, sequence of events, and any witnesses..."></textarea>
+        <textarea id="description" placeholder="Describe the incident in detail - include date, time, persons involved, sequence of events, and any witnesses..."></textarea>
       </div>
       <div class="voice-box">
+        <div class="voice-controls">
+          <div class="field">
+            <label for="langSelect">Voice Input Language</label>
+            <select id="langSelect">
+              <option value="en-IN">English</option>
+              <option value="hi-IN">Hindi</option>
+              <option value="te-IN">Telugu</option>
+            </select>
+          </div>
+        </div>
         <div class="voice-top">
-          <button id="micBtn" onclick="toggleMic()" type="button" title="Start / Stop Voice Recording">ðŸŽ¤</button>
+          <button id="micBtn" onclick="handleMic()" type="button" title="Start Voice Recording">MIC</button>
           <div>
             <div class="mic-status" id="micStatus"><div class="mic-dot"></div><span id="micLabel">Click microphone to record your complaint</span></div>
-            <p>Speak your complaint â€” it will be transcribed automatically. Click again to stop.</p>
+            <p>Speak your complaint - it will be transcribed automatically. Click again to stop.</p>
           </div>
         </div>
         <div class="field"><label>Voice Transcription</label><textarea id="voiceText" placeholder="Your spoken complaint will appear here..." style="min-height:80px;"></textarea></div>
@@ -705,7 +717,7 @@
     </div>
   </div>
 
-  <!-- â‘¤ Commissionerate -->
+  <!--  Commissionerate -->
   <div class="card">
     <div class="card-head">
       <h2>Select Commissionerate</h2>
@@ -735,7 +747,7 @@
     </div>
   </div>
 
-  <!-- â‘¥ Declaration -->
+  <!--  Declaration -->
   <div class="card">
     <div class="card-head">
       <h2>Declaration</h2>
@@ -749,7 +761,7 @@
     </div>
   </div>
 
-  <!-- â‘¥ Officer Details -->
+  <!--  Officer Details -->
 <div class="card">
   <div class="card-head">
     <h2>Officer Details</h2>
@@ -779,8 +791,8 @@
   <div class="actions">
     <div class="actions-note">Fields marked <span>*</span> are required</div>
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <button class="btn-reset" onclick="resetForm()">â†º Reset Form</button>
-      <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">âœ” Submit &amp; Print Application â†’</button>
+      <button class="btn-reset" onclick="resetForm()">Reset Form</button>
+      <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">Submit &amp; Print Application</button>
     </div>
   </div>
 
@@ -789,7 +801,7 @@
     <div class="receipt-header">
       <div>
         <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:4px;">Acknowledgement Receipt</div>
-        <h2>Telangana State Police â€” Complaint Registration</h2>
+        <h2>Telangana State Police - Complaint Registration</h2>
       </div>
       <div class="app-no" id="appNoDisplay">APP-XXXXXX</div>
     </div>
@@ -797,7 +809,7 @@
     <div class="receipt-footer">
       <span>Generated: <span id="receiptDate"></span></span>
       <span>Portal: Telangana Police Complaint System</span>
-      <span class="no-print" style="color:var(--gold);cursor:pointer;" onclick="window.print()">ðŸ–¨ï¸ Print this receipt</span>
+      <span class="no-print" style="color:var(--gold);cursor:pointer;" onclick="window.print()">Print this receipt</span>
     </div>
   </div>
 
@@ -843,7 +855,7 @@
   </div>
 </footer>
 
-<div id="toast">âœ… <span id="toastMsg">Done</span></div>
+<div id="toast">OK <span id="toastMsg">Done</span></div>
 
 <script>
   const API_BASE_URL = (
@@ -1027,99 +1039,111 @@
 
   let recognition = null;
   let listening = false;
-  let finalTranscript = '';
 
-  function toggleMic() {
+  function handleMic() {
+    console.log('Button clicked');
+
+    if (listening) {
+      stopRecording();
+      return;
+    }
+
+    const lang = document.getElementById('langSelect').value;
+
+    if (lang === 'auto') {
+      alert('Auto mode -> Use Whisper API (not in browser)');
+      return;
+    }
+
+    startBrowserSTT(lang);
+  }
+
+  function startBrowserSTT(lang) {
     const btn = document.getElementById('micBtn');
     const status = document.getElementById('micStatus');
     const label = document.getElementById('micLabel');
     const box = document.getElementById('voiceText');
 
     if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-      showToast('Voice recognition not supported. Please use Chrome.', true);
+      alert('Speech recognition is not supported in this browser.');
       return;
     }
 
-    if (listening) {
-      recognition.stop();
-      listening = false;
-      btn.classList.remove('listening');
-      btn.innerHTML = '??';
-      status.classList.remove('active');
-      label.textContent = 'Recording stopped';
-      setTimeout(() => {
-        label.textContent = 'Click microphone to record your complaint';
-      }, 3000);
-      return;
-    }
-
-    finalTranscript = box.value;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = 'en-IN';
+    recognition.lang = lang;
+    recognition.interimResults = false;
+    recognition.continuous = false;
     recognition.maxAlternatives = 1;
 
     recognition.onstart = () => {
+      console.log('Mic started');
       listening = true;
       btn.classList.add('listening');
-      btn.innerHTML = '?';
+      btn.textContent = 'STOP';
       status.classList.add('active');
       label.textContent = 'Recording... speak clearly';
     };
 
-    recognition.onresult = event => {
-      let interim = '';
-      for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += `${transcript} `;
-        } else {
-          interim += transcript;
-        }
-      }
-      box.value = finalTranscript + interim;
+    recognition.onaudiostart = () => {
+      console.log('Audio capturing started');
     };
 
-    recognition.onerror = error => {
-      if (error.error === 'not-allowed') {
-        showToast('Microphone access denied.', true);
-      } else {
-        showToast(`Mic error: ${error.error}`, true);
-      }
-      stopMicUI();
+    recognition.onspeechstart = () => {
+      console.log('Speech detected');
+    };
+
+    recognition.onresult = event => {
+      const text = event.results[0][0].transcript;
+
+      console.log('FINAL TEXT:', text);
+      box.value += `${text} `;
+    };
+
+    recognition.onspeechend = () => {
+      console.log('Speech ended -> forcing stop');
+      recognition.stop();
+    };
+
+    recognition.onerror = event => {
+      console.error(event.error);
+      alert(event.error);
+      stopMicUI('Microphone error');
     };
 
     recognition.onend = () => {
-      if (listening) {
-        try {
-          recognition.start();
-        } catch (err) {
-          stopMicUI();
-        }
-      }
+      console.log('Mic stopped');
+      stopMicUI('Click microphone to record your complaint');
     };
 
     recognition.start();
   }
 
-  function stopMicUI() {
+  function stopRecording() {
+    if (recognition) {
+      recognition.stop();
+    }
+    listening = false;
+    console.log('Stopped manually');
+    stopMicUI('Recording stopped');
+  }
+
+  function stopMicUI(message = 'Click microphone to record your complaint') {
     const btn = document.getElementById('micBtn');
     const status = document.getElementById('micStatus');
     const label = document.getElementById('micLabel');
     listening = false;
     btn.classList.remove('listening');
-    btn.innerHTML = '??';
+    btn.textContent = 'MIC';
     status.classList.remove('active');
-    label.textContent = 'Click microphone to record your complaint';
+    label.textContent = message;
   }
 
   function showToast(msg, isError) {
     const toast = document.getElementById('toast');
     const message = document.getElementById('toastMsg');
     toast.style.borderLeftColor = isError ? '#dc2626' : 'var(--gold)';
-    toast.children[0].textContent = isError ? '??' : '?';
+    toast.children[0].textContent = isError ? 'ERR' : 'OK';
     message.textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 4500);
@@ -1377,8 +1401,6 @@
     document.getElementById('mobileHint').textContent = '';
     document.getElementById('altmobileHint').textContent = '';
     document.getElementById('receipt').style.display = 'none';
-    finalTranscript = '';
-
     if (listening) {
       recognition.stop();
       stopMicUI();
@@ -1484,7 +1506,7 @@
 
         whatsappWarningTimer = setTimeout(() => {
           if (latestComplaint !== null && latestComplaint.sent === false) {
-            showMessage('⚠️ WhatsApp not sent yet', true);
+            showMessage('Warning: WhatsApp not sent yet', true);
           }
         }, 120000);
       } else {
