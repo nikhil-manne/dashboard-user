@@ -1,12 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Booth Dashboard | Women Safety Wing - Telangana Police</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+<title>Women Safety Complaint Form — Telangana Police</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy: #0f1f3d;
@@ -69,16 +68,6 @@
   .card-head h2 { font-family: 'EB Garamond', serif; color: white; font-size: 17px; font-weight: 500; letter-spacing: 0.3px; }
   .card-head .section-num { margin-left: auto; font-size: 11px; color: rgba(200,168,75,0.7); letter-spacing: 1px; text-transform: uppercase; }
   .card-body { padding: 28px 28px 24px; }
-  .login-view { max-width: 520px; margin: 36px auto; padding: 0 24px 60px; }
-  .login-panel { background: white; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
-  .login-head { background: var(--navy); color: white; padding: 20px 24px; }
-  .login-head h2 { font-family: 'EB Garamond', serif; font-weight: 500; font-size: 24px; margin-bottom: 6px; }
-  .login-head p { color: rgba(255,255,255,0.72); font-size: 13px; line-height: 1.5; }
-  .login-body { padding: 24px; display: grid; gap: 16px; }
-  .login-actions { padding: 0 24px 24px; }
-  .login-submit { width: 100%; justify-content: center; }
-  .login-error { min-height: 18px; margin-top: 10px; color: var(--danger); font-size: 13px; }
-  .booth-session { max-width: 1120px; margin: 28px auto -12px; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 13px; }
 
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 24px; }
   .col-2 { grid-column: span 2; }
@@ -96,7 +85,7 @@
   textarea { resize: vertical; min-height: 110px; }
 
   .phone-wrap { display: flex; align-items: stretch; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--cream); transition: border-color 0.2s, box-shadow 0.2s; }
-  .phone-wrap:focus-within { border-color: var(--navy-mid); background: white; boxx-shadow: 0 0 0 3px rgba(26,50,96,0.08); }
+  .phone-wrap:focus-within { border-color: var(--navy-mid); background: white; box-shadow: 0 0 0 3px rgba(26,50,96,0.08); }
   .phone-prefix { background: var(--navy); color: var(--gold-light); font-size: 13px; font-weight: 600; padding: 0 12px; display: flex; align-items: center; letter-spacing: 0.5px; flex-shrink: 0; border-right: 1.5px solid var(--border); }
   .phone-wrap input { border: none !important; border-radius: 0 !important; box-shadow: none !important; background: transparent !important; flex: 1; }
   .field-hint { font-size: 11px; color: var(--danger); min-height: 14px; display: block; margin-top: 2px; }
@@ -114,8 +103,6 @@
   .voice-box { background: var(--cream); border: 1.5px dashed var(--border); border-radius: 10px; padding: 24px; }
   .voice-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
   .voice-top p { font-size: 13px; color: var(--muted); flex: 1; min-width: 200px; }
-  .voice-controls { display: flex; gap: 12px; align-items: end; flex-wrap: wrap; margin-bottom: 16px; }
-  .voice-controls .field { min-width: 220px; flex: 1; }
   #micBtn { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--navy-mid); background: var(--navy); color: white; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.25s ease; }
   #micBtn:hover { background: var(--navy-mid); }
   #micBtn.listening { background: var(--danger); border-color: var(--danger); animation: pulse-ring 1.4s ease infinite; }
@@ -174,356 +161,31 @@
   #toast.show { transform: translateY(0); opacity: 1; }
 
   @media print {
-    header, .top-bar, .tricolor, .nav-bar, .breadcrumb-bar, .gov-footer, .card-head, main > .card, main > .actions { display: none !important; }
+    header, .card-head, main > .card, main > .actions { display: none !important; }
     body { background: white; }
     #receipt { display: block !important; border: 1.5px solid #333; box-shadow: none; margin: 0; border-radius: 0; }
     .receipt-header { background: #0f1f3d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .no-print { display: none !important; }
   }
-
-  /* Government portal skin */
-  :root {
-    --gov-saffron: #FF6200;
-    --gov-navy: #003087;
-    --gov-navy-dark: #001f5c;
-    --gov-navy-mid: #0a3d8f;
-    --gov-green: #138808;
-    --gov-gold: #c8960c;
-    --gov-gold-light: #f5e6b0;
-    --gov-bg: #f0f4f8;
-    --gov-bg-alt: #e8ecf2;
-    --gov-border: #c5cdd8;
-    --gov-text: #1a2332;
-    --gov-text-muted: #4a5568;
-    --gov-red: #c0392b;
-    --stripe-h: 6px;
-    --navy: var(--gov-navy);
-    --navy-mid: var(--gov-navy-mid);
-    --gold: var(--gov-gold);
-    --gold-light: var(--gov-gold-light);
-    --cream: var(--gov-bg);
-    --cream-dark: var(--gov-bg-alt);
-    --ink: var(--gov-text);
-    --muted: var(--gov-text-muted);
-    --danger: var(--gov-red);
-    --border: var(--gov-border);
-    --radius: 6px;
-  }
-  body {
-    font-family: "Noto Sans", sans-serif;
-    background: var(--gov-bg);
-    color: var(--gov-text);
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  .top-bar {
-    background: #1a2332;
-    color: rgba(255,255,255,.75);
-    font-size: 12px;
-    padding: 5px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .top-bar a { color: rgba(255,255,255,.75); text-decoration: none; }
-  .top-bar a:hover { color: #fff; text-decoration: underline; }
-  .top-bar-left, .top-bar-right { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-  .skip-link {
-    background: var(--gov-gold);
-    color: #000 !important;
-    padding: 2px 8px;
-    border-radius: 2px;
-    font-weight: 600;
-    font-size: 11px;
-  }
-  .tricolor { display: flex; height: var(--stripe-h); }
-  .tricolor div { flex: 1; }
-  .tricolor .saffron { background: var(--gov-saffron); }
-  .tricolor .white { background: #fff; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
-  .tricolor .green { background: var(--gov-green); }
-  header.gov-header {
-    background: #fff;
-    color: var(--gov-text);
-    border-bottom: 2px solid var(--gov-border);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    overflow: visible;
-  }
-  header.gov-header::before { display: none; }
-  .logo-block { display: flex; align-items: center; gap: 16px; }
-  .emblem-circle {
-    width: 68px;
-    height: 68px;
-    background: #fff;
-    border: 2px solid var(--gov-border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
-  }
-  .emblem-circle img { width: 60px; height: 60px; object-fit: contain; }
-  .gov-titles .ministry {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--gov-text-muted);
-    letter-spacing: .5px;
-    text-transform: uppercase;
-  }
-  .gov-titles h1 {
-    font-family: "Noto Serif", serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--gov-navy);
-    line-height: 1.2;
-    margin: 2px 0;
-  }
-  .gov-titles .subtitle { font-size: 12px; color: var(--gov-text-muted); }
-  .header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .helpline-box {
-    border: 1px solid var(--gov-red);
-    border-radius: 3px;
-    padding: 7px 12px;
-    text-align: center;
-    background: #fff5f5;
-  }
-  .helpline-box .number {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--gov-red);
-    display: block;
-    line-height: 1;
-  }
-  .helpline-box small {
-    font-size: 10px;
-    color: var(--gov-text-muted);
-    letter-spacing: .4px;
-    text-transform: uppercase;
-  }
-  .header-badge {
-    background: var(--gov-navy);
-    border: none;
-    color: #fff;
-    padding: 8px 14px;
-    border-radius: 3px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .8px;
-    text-align: center;
-    line-height: 1.4;
-  }
-  .nav-bar {
-    background: var(--gov-navy);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    border-bottom: 3px solid var(--gov-gold);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .nav-home {
-    background: var(--gov-gold);
-    color: #1a1a1a;
-    padding: 12px 18px;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    text-decoration: none;
-  }
-  .nav-links { display: flex; list-style: none; height: 100%; }
-  .nav-links li a {
-    display: flex;
-    align-items: center;
-    padding: 13px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255,255,255,.88);
-    text-decoration: none;
-    border-right: 1px solid rgba(255,255,255,.1);
-    white-space: nowrap;
-  }
-  .nav-links li a:hover { background: rgba(255,255,255,.1); color: #fff; }
-  .nav-links li.active a { background: rgba(255,255,255,.15); box-shadow: inset 0 -3px 0 var(--gov-gold); }
-  .nav-right { margin-left: auto; display: flex; align-items: center; }
-  .nav-btn {
-    padding: 12px 14px;
-    font-size: 12px;
-    color: rgba(255,255,255,.75);
-    border-left: 1px solid rgba(255,255,255,.1);
-    text-decoration: none;
-  }
-  .nav-btn:hover { background: rgba(255,255,255,.08); color: #fff; }
-  .breadcrumb-bar {
-    background: var(--gov-bg-alt);
-    border-bottom: 1px solid var(--gov-border);
-    padding: 7px 20px;
-    font-size: 12px;
-    color: var(--gov-text-muted);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .breadcrumb-bar a { color: var(--gov-navy); text-decoration: none; }
-  .breadcrumb-bar a:hover { text-decoration: underline; }
-  .breadcrumb-bar .sep { opacity: .5; }
-  .breadcrumb-current { color: var(--gov-text); font-weight: 500; }
-  main { margin: 28px auto; }
-  .card, .actions {
-    border-color: var(--gov-border);
-    border-radius: 4px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
-  }
-  .card { margin-bottom: 20px; }
-  .card-head { background: var(--gov-navy); padding: 12px 20px; }
-  .card-head h2, .receipt-header h2, .receipt-section h3, .footer-brand h3 { font-family: "Noto Serif", serif; }
-  .card-head .icon { border-radius: 4px; }
-  .card-body { padding: 24px; }
-  .type-chip, .comm-card, #receipt, #toast { border-radius: 6px; }
-  .btn, .btn-reset, .app-no, .comm-badge { border-radius: var(--radius); }
-  .type-chip.selected, .comm-card.selected, .btn-primary, .phone-prefix, .receipt-header, .comm-badge, #toast { background: var(--gov-navy); }
-  .btn-primary:hover { background: var(--gov-navy-dark); }
-  .gov-footer {
-    background: var(--gov-navy-dark);
-    color: rgba(255,255,255,.75);
-    margin-top: 32px;
-  }
-  .footer-top {
-    border-bottom: 1px solid rgba(255,255,255,.1);
-    padding: 20px;
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-  .footer-brand { flex: 1; min-width: 200px; }
-  .footer-brand h3 { font-size: 16px; color: #fff; margin-bottom: 6px; }
-  .footer-brand p { font-size: 12px; line-height: 1.6; max-width: 320px; }
-  .footer-links-group { min-width: 160px; }
-  .footer-links-group h4 {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .8px;
-    text-transform: uppercase;
-    color: var(--gov-gold);
-    margin-bottom: 10px;
-  }
-  .footer-links-group ul { list-style: none; }
-  .footer-links-group li { margin-bottom: 5px; }
-  .footer-links-group a, .footer-bottom a {
-    font-size: 12px;
-    color: rgba(255,255,255,.65);
-    text-decoration: none;
-  }
-  .footer-links-group a:hover, .footer-bottom a:hover { color: #fff; text-decoration: underline; }
-  .footer-bottom {
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    font-size: 11px;
-  }
-  @media (max-width: 700px) {
-    header.gov-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .header-right { margin-left: 0; width: 100%; }
-    .nav-links, .nav-right, .top-bar-right { display: none; }
-  }
 </style>
 </head>
 <body>
 
-<div class="top-bar">
-  <div class="top-bar-left">
-    <a href="#main" class="skip-link">Skip to Content</a>
-    <a href="https://www.telangana.gov.in/">Telangana Government</a>
-    <a href="https://tspolice.gov.in/">Telangana Police</a>
-  </div>
-  <div class="top-bar-right">
-    <a href="#">Hindi</a>
-    <a href="#">Telugu</a>
-    <a href="#">English</a>
-  </div>
+<header>
+  <div class="header-inner">
+    <div class="emblem">
+  <img src="assets/logo.png" alt="Women Safety Wing Logo">
 </div>
-<div class="tricolor"><div class="saffron"></div><div class="white"></div><div class="green"></div></div>
-
-<header class="gov-header">
-  <div class="logo-block">
-    <div class="emblem-circle"><img src="assets/logo.png" alt="Women Safety Wing Logo"></div>
-    <div class="gov-titles">
-      <div class="ministry">Government of Telangana | Home Department</div>
-      <h1>Women Safety Wing</h1>
-      <div class="subtitle">Telangana Police | Integrated Complaint Management Portal</div>
+    <div class="header-text">
+      <h1>Women Safety Wing — Complaint Portal</h1>
+      <p>Online Citizen Grievance Registration System</p>
     </div>
-  </div>
-  <div class="header-right">
-    <div class="helpline-box"><span class="number">100</span><small>Police Helpline</small></div>
-    <div class="header-badge">Booth<br>Dashboard</div>
+    <a class="home-link" href="index.html">Back to Homepage</a>
+    <div class="header-badge">Confidential</div>
   </div>
 </header>
 
-<nav class="nav-bar" id="main-nav" role="navigation" aria-label="Main navigation">
-  <a class="nav-home" href="index.html">&#8962; Home</a>
-  <ul class="nav-links" id="navLinks">
-    <li id="nav-booth">
-      <a href="booth-dashboard.html">&#128203; Register Complaint</a>
-    </li>
-    <li id="nav-sub">
-      <a href="sub-dashboard.html">&#128196; Commissionerate login</a>
-    </li>
-    <li id="nav-admin">
-      <a href="admin-dashboard.html">&#9776; Admin login</a>
-    </li>
-    <li>
-      <a href="track-page.html">&#128506; Track Status</a>
-    </li>
-  </ul>
-</nav>
-
-<div class="breadcrumb-bar" role="navigation" aria-label="Breadcrumb">
-  <a href="index.html">Home</a><span class="sep">&rsaquo;</span>
-  <a href="#">Women Safety Wing</a><span class="sep">&rsaquo;</span>
-  <span class="breadcrumb-current">Booth Dashboard | Complaint Form</span>
-</div>
-
-<div id="loginView" class="login-view">
-  <div class="login-panel">
-    <div class="login-head">
-      <h2>Booth Dashboard Login</h2>
-      <p>Enter the booth username and password created by the administrator.</p>
-    </div>
-    <div class="login-body">
-      <div class="field">
-        <label for="boothLoginUsername">Booth Username</label>
-        <input id="boothLoginUsername" type="text" placeholder="Booth username" autocomplete="username">
-      </div>
-      <div class="field">
-        <label for="boothLoginPassword">Password</label>
-        <input id="boothLoginPassword" type="password" placeholder="Booth password" autocomplete="current-password">
-      </div>
-    </div>
-    <div class="login-actions">
-      <button class="btn btn-primary login-submit" id="boothLoginBtn" type="button">Login to Booth</button>
-      <div class="login-error" id="boothLoginStatus"></div>
-    </div>
-  </div>
-</div>
-
-<div id="boothSessionBar" class="booth-session" style="display:none;">
-  <div id="boothSessionMeta">Signed in as booth</div>
-  <button class="btn-reset" id="boothLogoutBtn" type="button">Sign Out</button>
-</div>
-
-<main id="main" style="display:none;">
+<main>
 
   <!-- ① Personal Details (Complainant) -->
   <div class="card">
@@ -694,18 +356,8 @@
         <textarea id="description" placeholder="Describe the incident in detail — include date, time, persons involved, sequence of events, and any witnesses..."></textarea>
       </div>
       <div class="voice-box">
-        <div class="voice-controls">
-          <div class="field">
-            <label for="langSelect">Voice Input Language</label>
-            <select id="langSelect">
-              <option value="en-IN">English</option>
-              <option value="hi-IN">Hindi</option>
-              <option value="te-IN">Telugu</option>
-            </select>
-          </div>
-        </div>
         <div class="voice-top">
-          <button id="micBtn" onclick="handleMic()" type="button" title="Start Voice Recording">🎤</button>
+          <button id="micBtn" onclick="toggleMic()" type="button" title="Start / Stop Voice Recording">🎤</button>
           <div>
             <div class="mic-status" id="micStatus"><div class="mic-dot"></div><span id="micLabel">Click microphone to record your complaint</span></div>
             <p>Speak your complaint — it will be transcribed automatically. Click again to stop.</p>
@@ -814,56 +466,10 @@
 
 </main>
 
-<footer class="gov-footer">
-  <div class="footer-top">
-    <div class="footer-brand">
-      <h3>Women Safety Wing</h3>
-      <p>Telangana Police, Government of Telangana.<br>Complaint registration support for booth and help-desk personnel.</p>
-      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.5);">Last Updated: <span id="lastUpdated"></span></div>
-    </div>
-    <div class="footer-links-group">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="index.html">File a Complaint</a></li>
-        <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
-        <li><a href="track-page.html">Track Status</a></li>
-        <li><a href="admin-dashboard.html">Admin Login</a></li>
-      </ul>
-    </div>
-    <div class="footer-links-group">
-      <h4>Helplines</h4>
-      <ul>
-        <li><a href="#">Women Helpline - 1098</a></li>
-        <li><a href="#">Police - 100</a></li>
-        <li><a href="#">Emergency - 112</a></li>
-        <li><a href="#">Cybercrime - 1930</a></li>
-      </ul>
-    </div>
-    <div class="footer-links-group">
-      <h4>Policies</h4>
-      <ul>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Accessibility Statement</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>&copy; <span id="footerYear"></span> Government of Telangana. All Rights Reserved.</span>
-    <span>Booth dashboard | Complaint form</span>
-  </div>
-</footer>
-
 <div id="toast">✅ <span id="toastMsg">Done</span></div>
 
 <script>
-  const API_BASE_URL = (
-    window.WSW_API_BASE_URL ||
-    document.querySelector('meta[name="wsw-api-base-url"]')?.content ||
-    'https://wsw-backend.onrender.com/api'
-  ).replace(/\/$/, '');
-  const BOOTH_SESSION_KEY = 'wsw-booth-session';
-  let authToken = null;
+  const API_BASE_URL = 'https://wsw-backend.onrender.com/api';
   const g = id => (document.getElementById(id)?.value || '').trim();
   const asNumber = id => {
     const value = g(id);
@@ -875,135 +481,6 @@
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
-
-  function getBoothSession() {
-    try {
-      return JSON.parse(sessionStorage.getItem(BOOTH_SESSION_KEY) || 'null');
-    } catch (error) {
-      return null;
-    }
-  }
-
-  function setBoothSession(session) {
-    authToken = session?.token || authToken;
-    sessionStorage.setItem(BOOTH_SESSION_KEY, JSON.stringify({ user: session?.user || session }));
-  }
-
-  function clearBoothSession() {
-    authToken = null;
-    sessionStorage.removeItem(BOOTH_SESSION_KEY);
-  }
-
-  async function refreshBoothSession() {
-    const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
-      method: 'POST',
-      credentials: 'include'
-    });
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(result.message || 'Session expired');
-    setBoothSession(result.data);
-    return result.data;
-  }
-
-  async function getAccessToken() {
-    if (authToken) return authToken;
-    const session = await refreshBoothSession();
-    return session.token;
-  }
-
-  async function authFetch(url, options = {}) {
-    const token = await getAccessToken();
-    let response = await fetch(url, {
-      ...options,
-      credentials: 'include',
-      headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` }
-    });
-
-    if (response.status !== 401) return response;
-
-    authToken = null;
-    const nextToken = await getAccessToken();
-    return fetch(url, {
-      ...options,
-      credentials: 'include',
-      headers: { ...(options.headers || {}), Authorization: `Bearer ${nextToken}` }
-    });
-  }
-
-  function showBoothView(isAuthenticated) {
-    document.getElementById('loginView').style.display = isAuthenticated ? 'none' : '';
-    document.getElementById('boothSessionBar').style.display = isAuthenticated ? '' : 'none';
-    document.getElementById('main').style.display = isAuthenticated ? '' : 'none';
-    if (isAuthenticated) {
-      const session = getBoothSession();
-      const user = session?.user || {};
-      document.getElementById('boothSessionMeta').textContent =
-        `Signed in as ${user.username || 'booth'} | ${user.commissionerate || 'Booth dashboard'}`;
-    }
-  }
-
-  async function loginBooth() {
-    const username = g('boothLoginUsername');
-    const password = document.getElementById('boothLoginPassword').value;
-    const button = document.getElementById('boothLoginBtn');
-    const status = document.getElementById('boothLoginStatus');
-    if (!username || !password) { status.textContent = 'Enter booth username and password.'; return; }
-    button.disabled = true;
-    button.textContent = 'Authenticating...';
-    status.textContent = '';
-    try {
-      const response = await fetch(`${API_BASE_URL}/auth/booth/login`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.message || 'Login failed');
-      setBoothSession(result.data);
-      document.getElementById('boothLoginPassword').value = '';
-      showBoothView(true);
-    } catch (error) {
-      clearBoothSession();
-      status.textContent = error.message || 'Unable to login.';
-    } finally {
-      button.disabled = false;
-      button.textContent = 'Login to Booth';
-    }
-  }
-
-  function logoutBooth() {
-    fetch(`${API_BASE_URL}/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
-    clearBoothSession();
-    document.getElementById('boothLoginPassword').value = '';
-    showBoothView(false);
-  }
-
-  function updateFooterDates() {
-    const now = new Date();
-    document.getElementById('footerYear').textContent = now.getFullYear();
-    document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-  }
-  updateFooterDates();
-  document.getElementById('boothLoginBtn').addEventListener('click', loginBooth);
-  document.getElementById('boothLogoutBtn').addEventListener('click', logoutBooth);
-  document.getElementById('boothLoginPassword').addEventListener('keydown', event => {
-    if (event.key === 'Enter') loginBooth();
-  });
-  (async function initBoothSession() {
-    if (!getBoothSession()?.user) {
-      showBoothView(false);
-      return;
-    }
-
-    try {
-      await refreshBoothSession();
-      showBoothView(true);
-    } catch {
-      clearBoothSession();
-      showBoothView(false);
-    }
-  })();
 
   function selectType(el, val) {
     document.querySelectorAll('.type-chip').forEach(card => card.classList.remove('selected'));
@@ -1038,104 +515,103 @@
 
   let recognition = null;
   let listening = false;
+  let finalTranscript = '';
 
-  function handleMic() {
-    console.log('Button clicked');
-
-    if (listening) {
-      stopRecording();
-      return;
-    }
-
-    const lang = document.getElementById('langSelect').value;
-
-    if (lang === 'auto') {
-      alert('Auto mode -> Use Whisper API (not in browser)');
-      return;
-    }
-
-    startBrowserSTT(lang);
-  }
-
-  function startBrowserSTT(lang) {
+  function toggleMic() {
     const btn = document.getElementById('micBtn');
     const status = document.getElementById('micStatus');
     const label = document.getElementById('micLabel');
     const box = document.getElementById('voiceText');
 
     if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-      alert('Speech recognition is not supported in this browser.');
+      showToast('Voice recognition not supported. Please use Chrome.', true);
       return;
     }
 
+    if (listening) {
+      recognition.stop();
+      listening = false;
+      btn.classList.remove('listening');
+      btn.innerHTML = '??';
+      status.classList.remove('active');
+      label.textContent = 'Recording stopped';
+      setTimeout(() => {
+        label.textContent = 'Click microphone to record your complaint';
+      }, 3000);
+      return;
+    }
+
+    finalTranscript = box.value;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
-    recognition.lang = lang;
-    recognition.interimResults = false;
-    recognition.continuous = false;
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-IN';
     recognition.maxAlternatives = 1;
 
     recognition.onstart = () => {
-      console.log('Mic started');
       listening = true;
       btn.classList.add('listening');
-      btn.textContent = '■';
+      btn.innerHTML = '?';
       status.classList.add('active');
       label.textContent = 'Recording... speak clearly';
     };
 
-    recognition.onaudiostart = () => {
-      console.log('Audio capturing started');
-    };
-
-    recognition.onspeechstart = () => {
-      console.log('Speech detected');
-    };
-
     recognition.onresult = event => {
-      const text = event.results[0][0].transcript;
-
-      console.log('FINAL TEXT:', text);
-      box.value += `${text} `;
+      let interim = '';
+      for (let i = event.resultIndex; i < event.results.length; i += 1) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += `${transcript} `;
+        } else {
+          interim += transcript;
+        }
+      }
+      box.value = finalTranscript + interim;
     };
 
-    recognition.onspeechend = () => {
-      console.log('Speech ended -> forcing stop');
-      recognition.stop();
-    };
-
-    recognition.onerror = event => {
-      console.error(event.error);
-      alert(event.error);
-      stopMicUI('Microphone error');
+    recognition.onerror = error => {
+      if (error.error === 'not-allowed') {
+        showToast('Microphone access denied.', true);
+      } else {
+        showToast(`Mic error: ${error.error}`, true);
+      }
+      stopMicUI();
     };
 
     recognition.onend = () => {
-      console.log('Mic stopped');
-      stopMicUI('Click microphone to record your complaint');
+      if (listening) {
+        try {
+          recognition.start();
+        } catch (err) {
+          stopMicUI();
+        }
+      }
     };
 
     recognition.start();
   }
 
-  function stopRecording() {
-    if (recognition) {
-      recognition.stop();
-    }
-    listening = false;
-    console.log('Stopped manually');
-    stopMicUI('Recording stopped');
-  }
-
-  function stopMicUI(message = 'Click microphone to record your complaint') {
+  function stopMicUI() {
     const btn = document.getElementById('micBtn');
     const status = document.getElementById('micStatus');
     const label = document.getElementById('micLabel');
     listening = false;
     btn.classList.remove('listening');
-    btn.textContent = '🎤';
+    btn.innerHTML = '??';
     status.classList.remove('active');
-    label.textContent = message;
+    label.textContent = 'Click microphone to record your complaint';
+  }
+
+  function generateID() {
+    const now = new Date();
+    const yy = now.getFullYear().toString().slice(-2);
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mi = String(now.getMinutes()).padStart(2, '0');
+    const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
+    return `TG-${yy}${mm}${dd}-${hh}${mi}-${rand}`;
   }
 
   function showToast(msg, isError) {
@@ -1148,7 +624,7 @@
     setTimeout(() => toast.classList.remove('show'), 4500);
   }
 
-  function buildPayload(applicationNumber = 'PENDING') {
+  function buildPayload(applicationNumber) {
     const offenceLocation = g('offence');
 
     return {
@@ -1317,12 +793,6 @@
   }
 
   async function submitForm() {
-    if (!getBoothSession()?.user) {
-      showBoothView(false);
-      showToast('Please login to the booth dashboard first.', true);
-      return;
-    }
-
     if (!g('fname')) { showToast('Please enter your first name', true); return; }
     if (!g('district')) { showToast('Please enter the district', true); return; }
     if (!g('offence')) { showToast('Please enter the offence location', true); return; }
@@ -1346,14 +816,15 @@
       stopMicUI();
     }
 
-    const payload = buildPayload();
+    const id = generateID();
+    const payload = buildPayload(id);
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.disabled = true;
     submitBtn.style.opacity = '0.75';
     submitBtn.textContent = 'Saving complaint...';
 
     try {
-      const response = await authFetch(`${API_BASE_URL}/complaints`, {
+      const response = await fetch(`${API_BASE_URL}/complaints`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -1363,7 +834,6 @@
       if (!response.ok) {
         throw new Error(result.message || 'Unable to save complaint');
       }
-      payload.complaint.applicationNumber = result.data?.applicationNumber || payload.complaint.applicationNumber;
     } catch (error) {
       showToast(error.message || 'Unable to connect to backend server', true);
       return;
@@ -1375,8 +845,8 @@
 
     const now = new Date();
     const dateStr = now.toLocaleString('en-IN', { dateStyle: 'long', timeStyle: 'short' });
-    renderReceipt(payload.complaint.applicationNumber, dateStr);
-    showToast(`Submitted! Application No: ${payload.complaint.applicationNumber} - Printing...`);
+    renderReceipt(id, dateStr);
+    showToast(`Submitted! Application No: ${id} - Printing...`);
     setTimeout(() => window.print(), 1200);
   }
 
@@ -1400,6 +870,8 @@
     document.getElementById('mobileHint').textContent = '';
     document.getElementById('altmobileHint').textContent = '';
     document.getElementById('receipt').style.display = 'none';
+    finalTranscript = '';
+
     if (listening) {
       recognition.stop();
       stopMicUI();
@@ -1410,3 +882,5 @@
 </script>
 </body>
 </html>
+
+
