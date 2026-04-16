@@ -852,6 +852,100 @@
       .header-right { margin-left: 0; width: 100%; }
       .nav-links, .nav-status, .top-bar-right { display: none; }
     }
+
+    /* ── Detail Modal ── */
+    .detail-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .detail-modal-backdrop.open { display: flex; }
+    .detail-modal {
+      background: #fff;
+      border-radius: 4px;
+      border-top: 4px solid var(--gov-navy);
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+    }
+    .detail-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--gov-border);
+      background: var(--gov-bg);
+      position: sticky;
+      top: 0;
+    }
+    .detail-modal-header h3 {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gov-navy);
+    }
+    .detail-modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--gov-text-muted);
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .detail-modal-close:hover { background: var(--gov-bg-alt); color: var(--gov-text); }
+    .detail-modal-body { padding: 20px; }
+    .detail-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      color: var(--gov-gold);
+      margin: 16px 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--gov-border);
+    }
+    .detail-section-title:first-child { margin-top: 0; }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 20px;
+    }
+    .detail-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--gov-text-muted);
+      margin-bottom: 3px;
+    }
+    .detail-field .detail-value {
+      font-size: 14px;
+      color: var(--gov-text);
+      word-break: break-word;
+    }
+    .detail-field.full { grid-column: 1 / -1; }
+    .detail-modal-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--gov-border);
+      text-align: right;
+      background: var(--gov-bg);
+      position: sticky;
+      bottom: 0;
+    }
+    @media (max-width: 600px) {
+      .detail-grid { grid-template-columns: 1fr; }
+      .detail-field.full { grid-column: 1; }
+    }
   </style>
 </head>
 <body>
@@ -1010,6 +1104,45 @@
       </div>
     </div>
     </main>
+
+    <!-- ── Complaint Detail Modal ── -->
+    <div id="detailModal" class="detail-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+      <div class="detail-modal">
+        <div class="detail-modal-header">
+          <h3 id="detailModalTitle">Complaint Detail — <span id="d_id"></span></h3>
+          <button class="detail-modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+        </div>
+        <div class="detail-modal-body">
+          <div class="detail-section-title">Complainant Information</div>
+          <div class="detail-grid">
+            <div class="detail-field"><label>Full Name</label><div class="detail-value" id="d_name">-</div></div>
+            <div class="detail-field"><label>Mobile</label><div class="detail-value" id="d_phone">-</div></div>
+            <div class="detail-field"><label>Age</label><div class="detail-value" id="d_age">-</div></div>
+            <div class="detail-field"><label>Occupation</label><div class="detail-value" id="d_occupation">-</div></div>
+            <div class="detail-field full"><label>Address</label><div class="detail-value" id="d_address">-</div></div>
+          </div>
+          <div class="detail-section-title">Complaint Information</div>
+          <div class="detail-grid">
+            <div class="detail-field"><label>Application Number</label><div class="detail-value" id="d_appNo">-</div></div>
+            <div class="detail-field"><label>Status</label><div class="detail-value" id="d_status">-</div></div>
+            <div class="detail-field"><label>Complaint Type</label><div class="detail-value" id="d_complaintType">-</div></div>
+            <div class="detail-field"><label>Nature of Petition</label><div class="detail-value" id="d_nature">-</div></div>
+            <div class="detail-field"><label>Offence Location</label><div class="detail-value" id="d_location">-</div></div>
+            <div class="detail-field"><label>Date Submitted</label><div class="detail-value" id="d_date">-</div></div>
+            <div class="detail-field full"><label>Issue / Description</label><div class="detail-value" id="d_issue">-</div></div>
+          </div>
+          <div class="detail-section-title">Accused / Respondent</div>
+          <div class="detail-grid">
+            <div class="detail-field"><label>Name</label><div class="detail-value" id="d_accusedName">-</div></div>
+            <div class="detail-field"><label>Mobile</label><div class="detail-value" id="d_accusedPhone">-</div></div>
+            <div class="detail-field full"><label>Address</label><div class="detail-value" id="d_accusedAddress">-</div></div>
+          </div>
+        </div>
+        <div class="detail-modal-footer">
+          <button class="gov-btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
 
     <footer class="gov-footer">
       <div class="footer-top">
@@ -1183,7 +1316,63 @@
       }).join('');
     }
 
-    async function fetchComplaintDetail(id) {
+    // ==========================
+    // VIEW COMPLAINT (modal)
+    // ==========================
+    function viewComplaint(index) {
+      const item = allComplaints[index];
+      if (!item) { alert('Complaint not found'); return; }
+
+      const c = item.complainant || {};
+      const complaint = item.complaint || {};
+      const accused = item.accused || {};
+
+      // Complainant section
+      const fullName = `${c.firstName || ''} ${c.surname || ''}`.trim() || '-';
+      document.getElementById('d_id').textContent    = complaint.applicationNumber || '-';
+      document.getElementById('d_name').textContent  = fullName;
+      document.getElementById('d_phone').textContent = c.mobile || '-';
+      document.getElementById('d_age').textContent   = c.age || '-';
+      document.getElementById('d_occupation').textContent = c.occupation || '-';
+      const addr = [c.houseNo, c.street, c.area, c.city, c.pincode].filter(Boolean).join(', ');
+      document.getElementById('d_address').textContent = addr || '-';
+
+      // Complaint section
+      document.getElementById('d_appNo').textContent        = complaint.applicationNumber || '-';
+      document.getElementById('d_status').textContent       = complaint.status || 'Submitted';
+      document.getElementById('d_complaintType').textContent = complaint.complaintType || '-';
+      document.getElementById('d_nature').textContent       = complaint.naturePetition || '-';
+      document.getElementById('d_location').textContent     = complaint.offenceLocation || '-';
+      document.getElementById('d_date').textContent         = fmtDate(item.createdAt);
+      document.getElementById('d_issue').textContent        = complaint.details || complaint.issue || '-';
+
+      // Accused section
+      document.getElementById('d_accusedName').textContent    = accused.name || '-';
+      document.getElementById('d_accusedPhone').textContent   = accused.mobile || '-';
+      const accAddr = [accused.houseNo, accused.street, accused.area, accused.city].filter(Boolean).join(', ');
+      document.getElementById('d_accusedAddress').textContent = accAddr || '-';
+
+      // Open modal
+      document.getElementById('detailModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // ==========================
+    // CLOSE MODAL
+    // ==========================
+    function closeModal() {
+      document.getElementById('detailModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('detailModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
       const session = getSession();
       if (!session?.token) {
         throw new Error('Session expired. Please login again.');
@@ -1317,9 +1506,7 @@
       const link = event.target.closest('a[data-index]');
       if (!link) return;
       event.preventDefault();
-      openComplaintPage(Number(link.dataset.index)).catch(error => {
-        showLoginError(error.message || 'Unable to open complaint.');
-      });
+      viewComplaint(Number(link.dataset.index));
     });
     document.getElementById('password').addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
