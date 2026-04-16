@@ -1195,6 +1195,10 @@
               </select>
             </div>
             <div class="gov-field">
+              <label for="credentialMobile">Commissionerate mobile number</label>
+              <input id="credentialMobile" type="tel" placeholder="10-digit mobile number" maxlength="10" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)">
+            </div>
+            <div class="gov-field">
               <label for="newCredentialPassword">New password</label>
               <input id="newCredentialPassword" type="password" placeholder="Min. 8 characters">
             </div>
@@ -1256,12 +1260,12 @@
       <div class="gov-stats">
         <div class="gov-stat">
           <div class="gov-stat-label">Total Complaints</div>
-          <div class="gov-stat-value" id="totalCount">—</div>
+          <div class="gov-stat-value" id="totalCount">â€”</div>
           <div class="gov-stat-sub">All commissionerates</div>
         </div>
         <div class="gov-stat amber">
           <div class="gov-stat-label">Commissionerates</div>
-          <div class="gov-stat-value" id="commissionerateCount">—</div>
+          <div class="gov-stat-value" id="commissionerateCount">â€”</div>
           <div class="gov-stat-sub">Active in system</div>
         </div>
         <div class="gov-stat green">
@@ -1453,7 +1457,7 @@
   }
 
   function fmtDate(v) {
-    if (!v) return '—';
+    if (!v) return 'â€”';
     return new Date(v).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
   }
 
@@ -1484,6 +1488,7 @@
     el.innerHTML = items.map(i => `
       <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:4px;padding:8px 10px;">
         <div style="font-size:16px;font-weight:500;color:var(--color-text-primary);">${esc(i.commissionerate)}</div>
+        <div style="font-size:14px;color:var(--color-text-secondary);">Mobile: +91 ${esc(i.commissionerateMobile || 'Not set')}</div>
         <div style="font-size:14px;color:var(--color-text-secondary);">Updated: ${esc(fmtDate(i.updatedAt))}</div>
       </div>
     `).join('');
@@ -1491,6 +1496,20 @@
 
   function commissionerateKeyFromName(name = '') {
     return String(name).trim().toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  }
+
+  function syncCommissionerateMobileField() {
+    const key = document.getElementById('credentialSelect').value;
+    const input = document.getElementById('credentialMobile');
+    if (!input) return;
+
+    if (!key) {
+      input.value = '';
+      return;
+    }
+
+    const current = commissionerateCredentials.find(item => item.commissionerateKey === key);
+    input.value = current?.commissionerateMobile || '';
   }
 
   function renderBoothList(items) {
@@ -1623,7 +1642,7 @@
     const respondent = item.respondent || {};
     const complaint = item.complaint || {};
     const officer = item.officer || {};
-    document.getElementById('detailSubtitle').textContent = `${displayValue(complaint.applicationNumber)} · ${displayValue(complaint.commissionerate)}`;
+    document.getElementById('detailSubtitle').textContent = `${displayValue(complaint.applicationNumber)} Â· ${displayValue(complaint.commissionerate)}`;
     document.getElementById('detailSubtitle').textContent = `${safeDisplayValue(complaint.applicationNumber)} | ${safeDisplayValue(complaint.commissionerate)}`;
     document.getElementById('detailContent').innerHTML = `
       <div class="detail-card">
@@ -1868,16 +1887,16 @@
     empty.style.display = 'none';
     body.innerHTML = complaints.map(item => {
       const itemIndex = allComplaints.indexOf(item);
-      const name = `${item.complainant.firstName || ''} ${item.complainant.surname || ''}`.trim() || '—';
+      const name = `${item.complainant.firstName || ''} ${item.complainant.surname || ''}`.trim() || 'â€”';
       const status = item.complaint.status || 'Submitted';
       return `<tr>
-        <td><span class="ref-num">${esc(item.complaint.applicationNumber || '—')}</span></td>
-        <td><span class="comm-tag">${esc(item.complaint.commissionerate || '—')}</span></td>
+        <td><span class="ref-num">${esc(item.complaint.applicationNumber || 'â€”')}</span></td>
+        <td><span class="comm-tag">${esc(item.complaint.commissionerate || 'â€”')}</span></td>
         <td>${esc(name)}</td>
-        <td style="font-family:var(--font-mono);font-size:13px;">${esc(item.complainant.mobile || '—')}</td>
-        <td>${esc(item.complaint.complaintType || '—')}</td>
-        <td>${esc(item.complaint.naturePetition || '—')}</td>
-        <td>${esc(item.complaint.offenceLocation || '—')}</td>
+        <td style="font-family:var(--font-mono);font-size:13px;">${esc(item.complainant.mobile || 'â€”')}</td>
+        <td>${esc(item.complaint.complaintType || 'â€”')}</td>
+        <td>${esc(item.complaint.naturePetition || 'â€”')}</td>
+        <td>${esc(item.complaint.offenceLocation || 'â€”')}</td>
         <td style="white-space:nowrap;">${esc(fmtDate(item.createdAt))}</td>
         <td><span class="status-pill ${statusClass(status)}">${esc(status)}</span></td>
         <td><a class="view-link" href="#" data-index="${itemIndex}">View</a></td>
@@ -1891,6 +1910,7 @@
     if (!r.ok) throw new Error(res.message || 'Unable to load credentials');
     commissionerateCredentials = res.data || [];
     renderCredentialList(commissionerateCredentials);
+    syncCommissionerateMobileField();
   }
 
   async function fetchBooths() {
@@ -1977,16 +1997,22 @@
   async function saveCommissionerate(e) {
     e.preventDefault();
     const commissionerateKey = document.getElementById('credentialSelect').value;
+    const commissionerateMobile = document.getElementById('credentialMobile').value.replace(/\D/g, '').trim();
     const password = document.getElementById('newCredentialPassword').value;
     const confirm = document.getElementById('confirmCredentialPassword').value;
     const btn = document.getElementById('savePasswordBtn');
     const status = document.getElementById('credentialStatus');
     if (!commissionerateKey) { status.style.color='#b91c1c'; status.textContent = 'Select a commissionerate.'; return; }
+    if (!/^[6-9]\d{9}$/.test(commissionerateMobile)) { status.style.color='#b91c1c'; status.textContent = 'Enter a valid 10-digit commissionerate mobile number.'; return; }
     if (!password || password.length < 8) { status.style.color='#b91c1c'; status.textContent = 'Password must be at least 8 characters.'; return; }
     if (password !== confirm) { status.style.color='#b91c1c'; status.textContent = 'Passwords do not match.'; return; }
     btn.disabled = true; btn.textContent = 'Saving...'; status.textContent = '';
     try {
-      const r = await authFetch(`${API_BASE_URL}/admin/commissionerate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ commissionerateKey, password }) });
+      const r = await authFetch(`${API_BASE_URL}/admin/commissionerate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ commissionerateKey, commissionerateMobile, password })
+      });
       const res = await r.json();
       if (!r.ok) throw new Error(res.message || 'Unable to save');
       document.getElementById('newCredentialPassword').value = '';
@@ -2054,6 +2080,7 @@
     setCredentialsMenuState(false);
   });
   document.getElementById('savePasswordBtn').addEventListener('click', saveCommissionerate);
+  document.getElementById('credentialSelect').addEventListener('change', syncCommissionerateMobileField);
   document.getElementById('saveBoothBtn').addEventListener('click', saveBooth);
   document.getElementById('clearBoothBtn').addEventListener('click', clearBoothForm);
   document.getElementById('boothList').addEventListener('click', e => {
@@ -2116,3 +2143,4 @@
 </script>
 </body>
 </html>
+
