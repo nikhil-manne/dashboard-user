@@ -724,20 +724,21 @@
     <div class="card-body">
       <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px;">Select the Police Commissionerate to which this complaint should be forwarded. <span style="color:var(--gold);font-weight:600;">*</span></p>
       <input type="hidden" id="commissionerate">
+      <input type="hidden" id="commissionerateKey">
       <div class="comm-grid">
-        <div class="comm-card" onclick="selectComm(this,'Hyderabad')">
+        <div class="comm-card" onclick="selectComm(this,'Hyderabad','HYDERABAD')">
           <div class="comm-name">Hyderabad</div>
           <div class="comm-sub">Hyderabad City Police</div>
         </div>
-        <div class="comm-card" onclick="selectComm(this,'Cyberabad')">
+        <div class="comm-card" onclick="selectComm(this,'Cyberabad','CYBERABAD')">
           <div class="comm-name">Cyberabad</div>
           <div class="comm-sub">Cyberabad Police Commissionerate</div>
         </div>
-        <div class="comm-card" onclick="selectComm(this,'Malkajgiri')">
+        <div class="comm-card" onclick="selectComm(this,'Malkajgiri','MALKAJGIRI')">
           <div class="comm-name">Malkajgiri</div>
           <div class="comm-sub">Malkajgiri Police Commissionerate</div>
         </div>
-        <div class="comm-card" onclick="selectComm(this,'Future City')">
+        <div class="comm-card" onclick="selectComm(this,'Future City','FUTURE_CITY')">
           <div class="comm-name">Future City</div>
           <div class="comm-sub">Future City Commissionerate</div>
         </div>
@@ -1010,10 +1011,11 @@
     document.getElementById('complaintType').value = val;
   }
 
-  function selectComm(el, val) {
+  function selectComm(el, val, key = '') {
     document.querySelectorAll('.comm-card').forEach(card => card.classList.remove('selected'));
     el.classList.add('selected');
     document.getElementById('commissionerate').value = val;
+    document.getElementById('commissionerateKey').value = key || commissionerateKeyFromName(val);
   }
 
   function toggleRespondent() {
@@ -1396,6 +1398,7 @@
     document.querySelectorAll('.comm-card').forEach(card => card.classList.remove('selected'));
     document.getElementById('complaintType').value = '';
     document.getElementById('commissionerate').value = '';
+    document.getElementById('commissionerateKey').value = '';
     document.getElementById('mobileHint').textContent = '';
     document.getElementById('altmobileHint').textContent = '';
     document.getElementById('receipt').style.display = 'none';
@@ -1470,6 +1473,57 @@
   function getCurrentTimeISO() {
     return new Date().toISOString();
   }
+  const COMMISSIONERATE_ALIASES = {
+    HYDERABAD: 'HYDERABAD',
+    HYDEBRABAD: 'HYDERABAD',
+    CYBERABAD: 'CYBERABAD',
+    MALKAJGIRI: 'MALKAJGIRI',
+    MALKAGIRI: 'MALKAJGIRI',
+    FUTURE_CITY: 'FUTURE_CITY',
+    FUTURECITY: 'FUTURE_CITY',
+  };
+
+  function commissionerateKeyFromName(name = '') {
+    const normalized = String(name)
+      .trim()
+      .toUpperCase()
+      .replace(/[^A-Z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '')
+      .replace(/_?(COMMISSIONERATE|COMMISIONERATE|COMMISSIONARATE|COMMISIONARATE|COMMISIONARITE|COMMISSIONARITE)$/g, '')
+      .replace(/^_+|_+$/g, '');
+
+    if (!normalized) return '';
+
+    return COMMISSIONERATE_ALIASES[normalized] || normalized;
+  }
+
+  async function fetchCommissionerateMobile(commissionerateValue) {
+    const commissionerateKey = commissionerateKeyFromName(commissionerateValue);
+
+    if (!commissionerateKey) {
+      throw new Error('Invalid commissionerate selected');
+    }
+
+    const response = await authFetch(
+      `${API_BASE_URL}/complaints/commissionerate-contact/${encodeURIComponent(commissionerateKey)}`
+    );
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Unable to fetch commissionerate mobile number');
+    }
+
+    const mobile = String(result?.data?.mobile || '').trim();
+
+    if (!isValidMobile(mobile)) {
+      throw new Error('Commissionerate mobile number is invalid or not configured');
+    }
+
+    return {
+      mobile,
+      commissionerate: result?.data?.commissionerate || commissionerateValue,
+    };
+  }
 
   const previousRenderReceipt = typeof renderReceipt === 'function' ? renderReceipt : null;
   const previousResetForm = typeof resetForm === 'function' ? resetForm : null;
@@ -1488,6 +1542,8 @@
           mobile: payload.complainant.mobile,
           name: payload.complainant.firstName,
           location: payload.address.offenceLocation,
+          commissionerate: payload.complaint.commissionerate,
+          commissionerateKey: g('commissionerateKey'),
           time: getCurrentTime(),
           sent: false
         };
@@ -1514,15 +1570,14 @@
       showMessage('Error submitting complaint', true);
     }
   };
-
-  window.sendWhatsApp = function sendWhatsApp() {
+  window.sendWhatsApp = async function sendWhatsApp() {
     if (latestComplaint === null) {
       showMessage('No complaint data found', true);
       return;
     }
 
-    if (!isValidMobile(latestComplaint.mobile)) {
-      showMessage('Invalid mobile number', true);
+    if (!latestComplaint.commissionerate && !latestComplaint.commissionerateKey) {
+      showMessage('Commissionerate is missing in complaint data', true);
       return;
     }
 
@@ -1533,12 +1588,24 @@
       'Booth'
     );
 
-    const phone = `91${latestComplaint.mobile}`;
+    let commissionerateContact;
+    try {
+      commissionerateContact = await fetchCommissionerateMobile(
+        latestComplaint.commissionerateKey || latestComplaint.commissionerate
+      );
+    } catch (error) {
+      showMessage(error.message || 'Unable to fetch commissionerate mobile number', true);
+      return;
+    }
+
+    const phone = `91${commissionerateContact.mobile}`;
 
     const message =
       `Complaint ID: ${latestComplaint.applicationNumber}\n` +
       `Name: ${latestComplaint.name}\n` +
+      `Complainant Mobile: ${latestComplaint.mobile}\n` +
       `Booth: ${boothName}\n` +
+      `Commissionerate: ${commissionerateContact.commissionerate}\n` +
       `Location: ${latestComplaint.location}\n` +
       `Time: ${latestComplaint.time}\n\n` +
       'Your complaint has been successfully registered. Telangana Police will respond shortly.';
@@ -1547,6 +1614,7 @@
     const whatsappURL = `https://wa.me/${phone}?text=${encodedMessage}`;
 
     window.open(whatsappURL, '_blank', 'noopener');
+    showMessage(`Opening WhatsApp for ${commissionerateContact.commissionerate} (+91 ${commissionerateContact.mobile})`);
   };
 
   window.markAsSent = function markAsSent() {
@@ -1614,3 +1682,5 @@
 </script>
 </body>
 </html>
+
+
