@@ -856,7 +856,6 @@
 
 <div id="toast">OK <span id="toastMsg">Done</span></div>
 
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script>
   const API_BASE_URL = (
     window.WSW_API_BASE_URL ||
@@ -1414,7 +1413,6 @@
 <script>
   // WhatsApp integration flow (implemented from provided pseudocode)
   let latestComplaint = null;
-  let latestComplaintPayload = null;
   let whatsappWarningTimer = null;
 
   function isValidMobile(mobile) {
@@ -1475,114 +1473,6 @@
   function getCurrentTimeISO() {
     return new Date().toISOString();
   }
-
-  function valueOrDash(value) {
-    const text = String(value == null ? '' : value).trim();
-    return text || '-';
-  }
-
-  function buildPdfFileName(applicationNumber) {
-    const safeApplicationNumber = String(applicationNumber || 'complaint')
-      .replace(/[^a-zA-Z0-9_-]/g, '_')
-      .replace(/^_+|_+$/g, '');
-    return `Complaint_${safeApplicationNumber || 'complaint'}.pdf`;
-  }
-
-  function downloadBlob(blob, filename) {
-    if (!blob) return;
-    const blobUrl = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = blobUrl;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
-  }
-
-  function createComplaintPdfBlob({ complaint, payload, boothName, commissionerateContact }) {
-    const jsPdfConstructor = window.jspdf?.jsPDF;
-    if (!jsPdfConstructor) {
-      throw new Error('Unable to load PDF generator. Please refresh and try again.');
-    }
-
-    const doc = new jsPdfConstructor({ unit: 'mm', format: 'a4' });
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const marginX = 14;
-    const topMargin = 14;
-    const bottomMargin = 14;
-    const maxWidth = pageWidth - marginX * 2;
-    const lineHeight = 5.5;
-    let y = topMargin;
-
-    const ensureSpace = (requiredHeight = lineHeight) => {
-      if (y + requiredHeight > pageHeight - bottomMargin) {
-        doc.addPage();
-        y = topMargin;
-      }
-    };
-
-    const writeLines = (lines, options = {}) => {
-      const fontStyle = options.bold ? 'bold' : 'normal';
-      const fontSize = options.fontSize || 10;
-      doc.setFont('helvetica', fontStyle);
-      doc.setFontSize(fontSize);
-      const wrappedLines = Array.isArray(lines) ? lines : doc.splitTextToSize(String(lines), maxWidth);
-      ensureSpace(wrappedLines.length * lineHeight + 1);
-      doc.text(wrappedLines, marginX, y);
-      y += wrappedLines.length * lineHeight + 1;
-    };
-
-    const writeField = (label, value) => {
-      const text = `${label}: ${valueOrDash(value)}`;
-      writeLines(doc.splitTextToSize(text, maxWidth));
-    };
-
-    const complainant = payload?.complainant || {};
-    const address = payload?.address || {};
-    const complaintData = payload?.complaint || {};
-    const officer = payload?.officer || {};
-
-    writeLines('Telangana Police - Complaint Acknowledgement', { bold: true, fontSize: 14 });
-    writeField('Application Number', complaint?.applicationNumber);
-    writeField('Generated On', new Date().toLocaleString('en-IN', { dateStyle: 'long', timeStyle: 'medium' }));
-    writeField('Commissionerate', commissionerateContact?.commissionerate || complaint?.commissionerate);
-    writeField('Commissionerate Mobile', commissionerateContact?.mobile ? `+91 ${commissionerateContact.mobile}` : '');
-    writeField('Booth', boothName);
-
-    y += 2;
-    writeLines('Complainant Details', { bold: true, fontSize: 12 });
-    writeField('Name', [complainant.firstName, complainant.surname].filter(Boolean).join(' '));
-    writeField('Mobile', complainant.mobile ? `+91 ${complainant.mobile}` : '');
-    writeField('Alternate Mobile', complainant.alternateMobile ? `+91 ${complainant.alternateMobile}` : '');
-    writeField('Gender', complainant.gender);
-    writeField('Date of Birth', complainant.dateOfBirth);
-    writeField('Occupation', complainant.occupation);
-
-    y += 1;
-    writeLines('Complaint Details', { bold: true, fontSize: 12 });
-    writeField('Complaint Type', complaintData.complaintType);
-    writeField('Nature of Petition', complaintData.naturePetition);
-    writeField('Offence Date', complaintData.offenceDate || address.offenceDate);
-    writeField('Offence Location', complaintData.offenceLocation || address.offenceLocation);
-    writeField('Description', complaintData.description || complaintData.voiceText);
-
-    y += 1;
-    writeLines('Officer Details', { bold: true, fontSize: 12 });
-    writeField('Officer Name', officer.name || boothName);
-    writeField('Officer Mobile', officer.mobile ? `+91 ${officer.mobile}` : '');
-
-    y += 1;
-    writeLines('Address Snapshot', { bold: true, fontSize: 12 });
-    writeField('District', address.district);
-    writeField('City', address.city);
-    writeField('Police Station', address.station);
-    writeField('Pincode', address.pincode);
-
-    return doc.output('blob');
-  }
-
   const COMMISSIONERATE_ALIASES = {
     HYDERABAD: 'HYDERABAD',
     HYDEBRABAD: 'HYDERABAD',
@@ -1657,7 +1547,6 @@
           time: getCurrentTime(),
           sent: false
         };
-        latestComplaintPayload = payload;
 
         if (previousRenderReceipt) {
           previousRenderReceipt(applicationNumber, latestComplaint.time);
@@ -1719,26 +1608,13 @@
       `Commissionerate: ${commissionerateContact.commissionerate}\n` +
       `Location: ${latestComplaint.location}\n` +
       `Time: ${latestComplaint.time}\n\n` +
-      'Your complaint has been successfully registered. Telangana Police will respond shortly.';
+      'A complaint has been registered under your commissionerate. Please review it as soon as possible.';
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${phone}?text=${encodedMessage}`;
-    const pdfFileName = buildPdfFileName(latestComplaint.applicationNumber);
-
-    try {
-      const pdfBlob = createComplaintPdfBlob({
-        complaint: latestComplaint,
-        payload: latestComplaintPayload,
-        boothName,
-        commissionerateContact
-      });
-      downloadBlob(pdfBlob, pdfFileName);
-    } catch (error) {
-      showMessage(error.message || 'Unable to generate complaint PDF. Continuing with WhatsApp message only.', true);
-    }
 
     window.open(whatsappURL, '_blank', 'noopener');
-    showMessage(`WhatsApp opened for ${commissionerateContact.commissionerate} (+91 ${commissionerateContact.mobile}). PDF downloaded as ${pdfFileName}; attach it in chat.`);
+    showMessage(`Opening WhatsApp for ${commissionerateContact.commissionerate} (+91 ${commissionerateContact.mobile})`);
   };
 
   window.markAsSent = function markAsSent() {
@@ -1763,7 +1639,6 @@
       previousResetForm();
     }
     latestComplaint = null;
-    latestComplaintPayload = null;
     if (whatsappWarningTimer) {
       clearTimeout(whatsappWarningTimer);
       whatsappWarningTimer = null;
@@ -1781,7 +1656,7 @@
       forwardBtn.id = 'forwardWhatsAppBtn';
       forwardBtn.className = 'btn';
       forwardBtn.type = 'button';
-      forwardBtn.textContent = 'Forward via WhatsApp + PDF';
+      forwardBtn.textContent = 'Forward via WhatsApp';
       forwardBtn.style.background = '#25d366';
       forwardBtn.style.color = '#fff';
       forwardBtn.onclick = sendWhatsApp;
@@ -1807,5 +1682,4 @@
 </script>
 </body>
 </html>
-
 
