@@ -1526,11 +1526,19 @@
       return;
     }
 
+    const boothSession = typeof getBoothSession === 'function' ? getBoothSession() : null;
+    const boothName = (
+      boothSession?.user?.username ||
+      document.getElementById('officerName')?.value?.trim() ||
+      'Booth'
+    );
+
     const phone = `91${latestComplaint.mobile}`;
 
     const message =
       `Complaint ID: ${latestComplaint.applicationNumber}\n` +
       `Name: ${latestComplaint.name}\n` +
+      `Booth: ${boothName}\n` +
       `Location: ${latestComplaint.location}\n` +
       `Time: ${latestComplaint.time}\n\n` +
       'Your complaint has been successfully registered. Telangana Police will respond shortly.';
