@@ -1207,8 +1207,9 @@
       const item = allComplaints[index];
       if (!item) return;
       const fullItem = await fetchComplaintDetail(item._id);
+      const complaintId = fullItem?._id || item?._id || item?.id || item?.complaint?._id || item?.complaint?.id;
       sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
-      window.open('complaint-view.html', '_blank', 'noopener');
+      window.open(`complaint-view.html${complaintId ? `?id=${encodeURIComponent(complaintId)}` : ''}`, '_blank', 'noopener');
     }
 
     function filterTable() {
