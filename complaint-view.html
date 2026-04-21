@@ -94,7 +94,7 @@
   .receipt-header {
     background: var(--navy);
     color: #ffffff;
-    padding: 20px 24px;
+    padding: 18px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -103,8 +103,8 @@
   }
 
   .receipt-kicker {
-    font-size: 12px;
-    letter-spacing: 1px;
+    font-size: 11px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     color: rgba(255,255,255,0.58);
     margin-bottom: 4px;
@@ -120,19 +120,21 @@
   .app-no {
     background: var(--gold);
     color: var(--navy);
-    padding: 7px 16px;
+    padding: 8px 16px;
     border-radius: 999px;
     font-size: 13px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.9px;
   }
 
   .receipt-body {
-    padding: 24px;
+    padding: 18px 20px 16px;
   }
 
   .receipt-section {
-    margin-bottom: 24px;
+    margin-bottom: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .receipt-section:last-child {
@@ -142,16 +144,16 @@
   .receipt-section h3 {
     font-family: Georgia, "Times New Roman", serif;
     color: var(--navy-mid);
-    font-size: 20px;
+    font-size: 16px;
     border-bottom: 1px solid var(--cream-dark);
-    padding-bottom: 6px;
-    margin-bottom: 14px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   .receipt-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px 20px;
+    gap: 10px 16px;
   }
 
   .receipt-field {
@@ -159,43 +161,43 @@
   }
 
   .rf-label {
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.85px;
     color: var(--muted);
     font-weight: 600;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
 
   .rf-val {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--ink);
     font-weight: 500;
-    line-height: 1.55;
+    line-height: 1.4;
     word-break: break-word;
     white-space: pre-wrap;
   }
 
   .receipt-text {
-    margin-top: 14px;
+    margin-top: 10px;
   }
 
   .comm-badge {
     display: inline-block;
     background: var(--navy);
     color: #ffffff;
-    padding: 6px 16px;
+    padding: 6px 14px;
     border-radius: 999px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    margin-top: 8px;
-    letter-spacing: 0.5px;
+    margin-top: 6px;
+    letter-spacing: 0.35px;
   }
 
   .receipt-footer {
     background: var(--cream);
-    padding: 14px 24px;
-    font-size: 13px;
+    padding: 10px 20px;
+    font-size: 11px;
     color: var(--muted);
     border-top: 1px solid var(--border);
     display: flex;
@@ -446,9 +448,9 @@
   }
   .receipt-header { background: var(--gov-navy); }
   .receipt-title, .receipt-section h3 { font-family: "Noto Serif", serif; }
-  .receipt-title { font-size: 20px; font-weight: 700; }
-  .receipt-section h3 { font-size: 17px; color: var(--gov-navy-mid); }
-  .rf-val { font-size: 14px; }
+  .receipt-title { font-size: 18px; font-weight: 700; }
+  .receipt-section h3 { font-size: 15px; color: var(--gov-navy-mid); }
+  .rf-val { font-size: 13px; }
   .receipt-footer { font-size: 12px; }
   .empty-state { border-radius: 6px; padding: 48px; }
   .status-badge {
@@ -520,9 +522,142 @@
     .nav-links, .nav-right, .top-bar-right { display: none; }
   }
   @media print {
-    .top-bar, .tricolor, .gov-header, .nav-bar, .breadcrumb-bar, .gov-footer { display: none !important; }
-    .receipt { border: 1.5px solid #333; }
-    .receipt-header { background: #003087 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page {
+      size: A4 portrait;
+      margin: 5mm;
+    }
+
+    html, body {
+      width: 210mm;
+      min-height: 297mm;
+      background: #ffffff !important;
+      font-size: 10pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .top-bar, .tricolor, .gov-header, .nav-bar, .breadcrumb-bar, .gov-footer, .page-header { display: none !important; }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #main, .page-shell {
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .receipt {
+      width: 100%;
+      min-height: calc(297mm - 10mm);
+      border: 1.2px solid #254f98;
+      border-radius: 0;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .receipt-header {
+      background: #123f91 !important;
+      color: #fff !important;
+      padding: 8mm 8mm 5mm !important;
+      align-items: flex-start;
+      gap: 5mm;
+    }
+
+    .receipt-kicker {
+      font-size: 7.4pt;
+      letter-spacing: 0.9pt;
+      color: rgba(255,255,255,.72) !important;
+      margin-bottom: 1.2mm;
+    }
+
+    .receipt-title {
+      font-size: 14pt !important;
+      line-height: 1.14;
+      letter-spacing: 0.1pt;
+    }
+
+    .app-no {
+      background: #d4a406 !important;
+      color: #0f2f73 !important;
+      padding: 2.4mm 4.8mm !important;
+      font-size: 8.8pt;
+      font-weight: 700;
+      align-self: flex-start;
+    }
+
+    .receipt-body {
+      flex: 1;
+      padding: 5mm 8mm 4mm !important;
+    }
+
+    .receipt-section {
+      margin-bottom: 4mm !important;
+    }
+
+    .receipt-section h3 {
+      font-size: 11.5pt !important;
+      padding-bottom: 1.2mm;
+      margin-bottom: 2mm;
+      border-bottom: 0.5px solid #c7d3e6;
+    }
+
+    .receipt-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 2mm 4mm !important;
+    }
+
+    .rf-label {
+      font-size: 6.8pt !important;
+      letter-spacing: 0.75pt;
+      margin-bottom: 0.5mm;
+      color: #40566f !important;
+    }
+
+    .rf-val {
+      font-size: 9.1pt !important;
+      line-height: 1.18 !important;
+      color: #10243b !important;
+    }
+
+    .receipt-text {
+      margin-top: 1.5mm !important;
+    }
+
+    .receipt-text .rf-label {
+      margin-bottom: 0.6mm !important;
+    }
+
+    .receipt-text .rf-val {
+      font-size: 8.5pt !important;
+      line-height: 1.16 !important;
+    }
+
+    .status-badge {
+      padding: 1.1mm 2.6mm;
+      font-size: 6.9pt;
+      border-radius: 2px;
+    }
+
+    .comm-badge {
+      background: #123f91 !important;
+      color: #fff !important;
+      font-size: 8pt !important;
+      padding: 1.8mm 4mm !important;
+      margin-top: 1mm !important;
+    }
+
+    .receipt-footer {
+      margin-top: auto;
+      background: #eef3fa !important;
+      border-top: 0.5px solid #c7d3e6;
+      padding: 2.6mm 8mm !important;
+      font-size: 7.2pt !important;
+      color: #44607f !important;
+    }
   }
 </style>
 </head>
@@ -630,7 +765,16 @@
 </footer>
 
 <script>
+  const API_BASE_URL = (
+    window.WSW_API_BASE_URL ||
+    document.querySelector('meta[name="wsw-api-base-url"]')?.content ||
+    'http://127.0.0.1:4000/api'
+  ).replace(/\/$/, '');
   const STORAGE_KEY = 'wsw-selected-complaint';
+  const SHARED_STORAGE_KEY = 'wsw-selected-complaint-shared';
+  const ADMIN_SESSION_KEY = 'wsw-admin-session';
+  const SUB_SESSION_KEY = 'wsw-sub-session';
+  let authToken = null;
 
   function esc(value) {
     return String(value)
@@ -684,12 +828,157 @@
     });
   }
 
-  function getComplaint() {
+  function getComplaintIdentifier(item) {
+    if (!item || typeof item !== 'object') return '';
+    return String(
+      item._id ||
+      item.id ||
+      item.uuid ||
+      item.complaintId ||
+      item.complaintUUID ||
+      item.complaintUuid ||
+      item.complaint?._id ||
+      item.complaint?.id ||
+      item.complaint?.uuid ||
+      item.complaint?.complaintId ||
+      item.complaint?.complaintUUID ||
+      item.complaint?.complaintUuid ||
+      ''
+    ).trim();
+  }
+
+  function readStoredComplaint(key) {
     try {
-      return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+      const item = JSON.parse(key === SHARED_STORAGE_KEY ? localStorage.getItem(key) || 'null' : sessionStorage.getItem(key) || 'null');
+      return item && typeof item === 'object' ? item : null;
     } catch {
       return null;
     }
+  }
+
+  function getComplaint() {
+    const requestedComplaintId = getComplaintIdFromUrl();
+    const matchesRequest = item => {
+      if (!item) return false;
+      if (!requestedComplaintId) return true;
+      return getComplaintIdentifier(item) === requestedComplaintId;
+    };
+
+    const sessionComplaint = readStoredComplaint(STORAGE_KEY);
+    if (matchesRequest(sessionComplaint)) {
+      return sessionComplaint;
+    }
+
+    const sharedComplaint = readStoredComplaint(SHARED_STORAGE_KEY);
+    if (matchesRequest(sharedComplaint)) {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(sharedComplaint));
+      localStorage.removeItem(SHARED_STORAGE_KEY);
+      return sharedComplaint;
+    }
+
+    try {
+      if (requestedComplaintId && sessionComplaint) {
+        sessionStorage.removeItem(STORAGE_KEY);
+      }
+      if (requestedComplaintId && sharedComplaint) {
+        localStorage.removeItem(SHARED_STORAGE_KEY);
+      }
+    } catch {
+      return null;
+    }
+
+    return null;
+  }
+
+  function getStoredSession(key) {
+    try {
+      const session = JSON.parse(sessionStorage.getItem(key) || 'null');
+      if (!session || typeof session !== 'object') return null;
+      return session;
+    } catch {
+      return null;
+    }
+  }
+
+  function getActiveSession() {
+    return getStoredSession(ADMIN_SESSION_KEY) || getStoredSession(SUB_SESSION_KEY);
+  }
+
+  function setActiveSession(session) {
+    const adminSession = getStoredSession(ADMIN_SESSION_KEY);
+    const subSession = getStoredSession(SUB_SESSION_KEY);
+
+    authToken = session?.token || authToken;
+
+    if (adminSession) {
+      sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ user: session?.user || session }));
+      return;
+    }
+
+    if (subSession) {
+      sessionStorage.setItem(SUB_SESSION_KEY, JSON.stringify({ user: session?.user || session }));
+      return;
+    }
+
+    sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ user: session?.user || session }));
+  }
+
+  async function refreshSession() {
+    const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+      method: 'POST',
+      credentials: 'include'
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.message || 'Session expired');
+    setActiveSession(result.data);
+    return result.data;
+  }
+
+  async function getAccessToken() {
+    if (authToken) return authToken;
+    const session = await refreshSession();
+    return session.token;
+  }
+
+  async function authFetch(url, options = {}) {
+    const token = await getAccessToken();
+    let response = await fetch(url, {
+      ...options,
+      credentials: 'include',
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` }
+    });
+
+    if (response.status !== 401) return response;
+
+    authToken = null;
+    const nextToken = await getAccessToken();
+    return fetch(url, {
+      ...options,
+      credentials: 'include',
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${nextToken}` }
+    });
+  }
+
+  function getComplaintIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return String(params.get('id') || '').trim();
+  }
+
+  function shouldAutoPrint() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('print') === '1';
+  }
+
+  async function fetchComplaintById(id) {
+    const response = await authFetch(`${API_BASE_URL}/dashboard/complaints/${encodeURIComponent(id)}`);
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Unable to load complaint');
+    }
+
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(result.data));
+    return result.data;
   }
 
   function renderComplaint(item) {
@@ -805,12 +1094,16 @@
         </div>
       </div>
     `;
+
+    if (shouldAutoPrint()) {
+      setTimeout(() => window.print(), 250);
+    }
   }
 
-  function renderEmptyState() {
+  function renderEmptyState(message = 'No complaint details were found for this page.') {
     document.getElementById('content').innerHTML = `
       <div class="empty-state">
-        No complaint details were found for this page.
+        ${esc(message)}
       </div>
     `;
     document.getElementById('printBtn').style.display = 'none';
@@ -820,12 +1113,26 @@
 
   document.getElementById('printBtn').addEventListener('click', () => window.print());
 
-  const complaint = getComplaint();
-  if (complaint) {
-    renderComplaint(complaint);
-  } else {
-    renderEmptyState();
-  }
+  (async function initComplaintView() {
+    const storedComplaint = getComplaint();
+    if (storedComplaint) {
+      renderComplaint(storedComplaint);
+      return;
+    }
+
+    const complaintId = getComplaintIdFromUrl();
+    if (!complaintId) {
+      renderEmptyState();
+      return;
+    }
+
+    try {
+      const complaint = await fetchComplaintById(complaintId);
+      renderComplaint(complaint);
+    } catch (error) {
+      renderEmptyState(error?.message || 'No complaint details were found for this page.');
+    }
+  })();
 </script>
 </body>
 </html>
