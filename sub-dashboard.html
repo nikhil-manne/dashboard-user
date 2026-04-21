@@ -1208,8 +1208,20 @@
       if (!item) return;
       const fullItem = await fetchComplaintDetail(item._id);
       const complaintId = fullItem?._id || item?._id || item?.id || item?.complaint?._id || item?.complaint?.id;
+      const session = getSession();
+      const complaintWindow = window.open('about:blank', '_blank');
+
+      if (!complaintWindow) {
+        throw new Error('Popup blocked. Please allow popups and try again.');
+      }
+
       sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
-      window.open(`complaint-view.html${complaintId ? `?id=${encodeURIComponent(complaintId)}` : ''}`, '_blank', 'noopener');
+      complaintWindow.sessionStorage.setItem(COMPLAINT_VIEW_KEY, JSON.stringify(fullItem));
+      if (session) {
+        complaintWindow.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+      }
+      complaintWindow.opener = null;
+      complaintWindow.location.replace(`complaint-view.html${complaintId ? `?id=${encodeURIComponent(complaintId)}` : ''}`);
     }
 
     function filterTable() {
