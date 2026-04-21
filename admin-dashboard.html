@@ -1601,6 +1601,7 @@
     if (!item) return;
     const fullItem = await fetchComplaintDetail(item._id);
     const serializedComplaint = JSON.stringify(fullItem);
+    const complaintId = fullItem?._id || item?._id || item?.id || item?.complaint?._id || item?.complaint?.id;
     const complaintWindow = window.open('about:blank', '_blank');
 
     if (!complaintWindow) {
@@ -1610,7 +1611,7 @@
     sessionStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
     complaintWindow.sessionStorage.setItem(COMPLAINT_VIEW_KEY, serializedComplaint);
     complaintWindow.opener = null;
-    complaintWindow.location.replace('complaint-view.html');
+    complaintWindow.location.replace(`complaint-view.html${complaintId ? `?id=${encodeURIComponent(complaintId)}` : ''}`);
   }
 
   function setDetailModalState(isOpen) {
