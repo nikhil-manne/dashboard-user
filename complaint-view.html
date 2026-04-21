@@ -911,16 +911,16 @@
     authToken = session?.token || authToken;
 
     if (adminSession) {
-      sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ user: session?.user || session }));
+      sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
       return;
     }
 
     if (subSession) {
-      sessionStorage.setItem(SUB_SESSION_KEY, JSON.stringify({ user: session?.user || session }));
+      sessionStorage.setItem(SUB_SESSION_KEY, JSON.stringify(session));
       return;
     }
 
-    sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ user: session?.user || session }));
+    sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
   }
 
   async function refreshSession() {
@@ -935,6 +935,11 @@
   }
 
   async function getAccessToken() {
+    const activeSessionToken = getActiveSession()?.token;
+    if (activeSessionToken) {
+      authToken = activeSessionToken;
+      return activeSessionToken;
+    }
     if (authToken) return authToken;
     const session = await refreshSession();
     return session.token;
