@@ -1393,6 +1393,40 @@
   ).replace(/\/$/, '');
   const STORAGE_KEY = 'wsw-admin-session';
   const COMPLAINT_VIEW_KEY = 'wsw-selected-complaint';
+  const COMMISSIONERATE_OPTIONS = [
+    { key: 'HYDERABAD', label: 'Hyderabad' },
+    { key: 'CYBERABAD', label: 'Cyberabad' },
+    { key: 'MALKAJGIRI', label: 'Malkajgiri' },
+    { key: 'FUTURE_CITY', label: 'Future City' },
+    { key: 'WARANGAL', label: 'Warangal' },
+    { key: 'KARIMNAGAR', label: 'Karimnagar' },
+    { key: 'NIZAMABAD', label: 'Nizamabad' },
+    { key: 'KHAMMAM', label: 'Khammam' },
+    { key: 'RAMAGUNDAM', label: 'Ramagundam' },
+    { key: 'SIDDIPET', label: 'Siddipet' }
+  ];
+  const COMMISSIONERATE_ALIASES = {
+    HYDERABAD: 'HYDERABAD',
+    HYDEBRABAD: 'HYDERABAD',
+    HYDERBAD: 'HYDERABAD',
+    CYBERABAD: 'CYBERABAD',
+    MALKAJGIRI: 'MALKAJGIRI',
+    MALKAGIRI: 'MALKAJGIRI',
+    FUTURE_CITY: 'FUTURE_CITY',
+    FUTURECITY: 'FUTURE_CITY',
+    WARANGAL: 'WARANGAL',
+    WARANGALPOLICE: 'WARANGAL',
+    KARIMNAGAR: 'KARIMNAGAR',
+    KARIMNAGARPOLICE: 'KARIMNAGAR',
+    NIZAMABAD: 'NIZAMABAD',
+    NIZAMABADPOLICE: 'NIZAMABAD',
+    KHAMMAM: 'KHAMMAM',
+    KHAMMAMPOLICE: 'KHAMMAM',
+    RAMAGUNDAM: 'RAMAGUNDAM',
+    RAMAGUNDAMPOLICE: 'RAMAGUNDAM',
+    SIDDIPET: 'SIDDIPET',
+    SIDDIPETPOLICE: 'SIDDIPET'
+  };
   let allComplaints = [];
   let commissionerateCredentials = [];
   let boothCredentials = [];
@@ -1507,7 +1541,17 @@
   }
 
   function commissionerateKeyFromName(name = '') {
-    return String(name).trim().toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    const normalized = String(name)
+      .trim()
+      .toUpperCase()
+      .replace(/[^A-Z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '')
+      .replace(/_?(COMMISSIONERATE|COMMISIONERATE|COMMISSIONARATE|COMMISIONARATE|COMMISIONARITE|COMMISSIONARITE|POLICE)$/g, '')
+      .replace(/^_+|_+$/g, '');
+
+    if (!normalized) return '';
+
+    return COMMISSIONERATE_ALIASES[normalized] || normalized;
   }
 
   function syncCommissionerateMobileField() {
@@ -1868,8 +1912,13 @@
   function populateFilter(items) {
     const sel = document.getElementById('commissionerateFilter');
     const cur = sel.value;
+    const itemMap = new Map((items || []).map(i => [commissionerateKeyFromName(i.label), i.count]));
     sel.innerHTML = '<option value="">All commissionerates</option>' +
-      items.map(i => `<option value="${esc(i.label)}">${esc(i.label)}</option>`).join('');
+      COMMISSIONERATE_OPTIONS.map(i => {
+        const count = itemMap.get(i.key);
+        const countLabel = Number.isFinite(count) ? ` (${count})` : '';
+        return `<option value="${esc(i.key)}">${esc(i.label)}${countLabel}</option>`;
+      }).join('');
     sel.value = cur;
   }
 
@@ -1877,9 +1926,12 @@
     const q = document.getElementById('searchInput').value.trim().toLowerCase();
     const comm = document.getElementById('commissionerateFilter').value;
     const filtered = allComplaints.filter(item => {
-      const mc = !comm || item.complaint.commissionerate === comm;
+      const complaintCommissionerate = item?.complaint?.commissionerate || '';
+      const complaintCommissionerateKey = commissionerateKeyFromName(complaintCommissionerate);
+      const mc = !comm || complaintCommissionerateKey === comm;
       const hay = [
         item.complaint.applicationNumber, item.complaint.commissionerate,
+        complaintCommissionerateKey,
         item.complainant.firstName, item.complainant.surname,
         item.complainant.mobile, item.complaint.complaintType,
         item.complaint.naturePetition, item.complaint.offenceLocation
@@ -2156,3 +2208,4 @@
 </script>
 </body>
 </html>
+
