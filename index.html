@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Women Safety Wing | Telangana Police</title>
+  <title>Smart Public Complaint Kiosk System | Women Safety Wing, Telangana Police</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
@@ -63,10 +63,7 @@
     }
 
     /* ===== TRICOLOR STRIPE ===== */
-    .tricolor {
-      display: flex;
-      height: var(--stripe-h);
-    }
+    .tricolor { display: flex; height: var(--stripe-h); }
     .tricolor div { flex: 1; }
     .tricolor .saffron { background: var(--gov-saffron); }
     .tricolor .white   { background: var(--gov-white); }
@@ -90,346 +87,516 @@
       min-width: 320px;
     }
     .header-logo {
-      width: 62px;
-      height: 62px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      overflow: hidden;
+      width: 62px; height: 62px; flex-shrink: 0;
+      border-radius: 50%; overflow: hidden;
       border: 1px solid var(--gov-border);
       background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
-    .header-logo img {
-      width: 54px;
-      height: 54px;
-      object-fit: contain;
-      display: block;
-    }
+    .header-logo img { width: 54px; height: 54px; object-fit: contain; display: block; }
     .gov-titles { flex: 1; min-width: 280px; }
     .gov-titles .ministry {
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 11px; font-weight: 600;
       color: var(--gov-text-muted);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      letter-spacing: 0.5px; text-transform: uppercase;
     }
     .gov-titles h1 {
       font-family: 'Noto Serif', serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--gov-navy);
-      line-height: 1.2;
-      margin: 2px 0;
+      font-size: 20px; font-weight: 700;
+      color: var(--gov-navy); line-height: 1.2; margin: 2px 0;
     }
-    .gov-titles .subtitle {
-      font-size: 12px;
-      color: var(--gov-text-muted);
-    }
+    .gov-titles .subtitle { font-size: 12px; color: var(--gov-text-muted); }
     .header-right {
       margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     }
     .header-badge {
       background: var(--gov-navy);
-      color: #fff;
-      padding: 8px 14px;
-      border-radius: 3px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      text-align: center;
-      line-height: 1.4;
+      color: #fff; padding: 8px 14px; border-radius: 3px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; text-align: center; line-height: 1.4;
     }
     .helpline-box {
       border: 1px solid var(--gov-red);
-      border-radius: 3px;
-      padding: 7px 12px;
-      text-align: center;
-      background: #fff5f5;
+      border-radius: 3px; padding: 7px 12px;
+      text-align: center; background: #fff5f5;
     }
     .helpline-box .number {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--gov-red);
-      display: block;
-      line-height: 1;
+      font-size: 20px; font-weight: 700; color: var(--gov-red);
+      display: block; line-height: 1;
     }
     .helpline-box small {
-      font-size: 10px;
-      color: var(--gov-text-muted);
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
+      font-size: 10px; color: var(--gov-text-muted);
+      letter-spacing: 0.4px; text-transform: uppercase;
     }
 
     /* ===== NAVIGATION BAR ===== */
     .nav-bar {
-      background: var(--gov-navy);
-      color: #fff;
-      display: flex;
-      align-items: center;
+      background: var(--gov-navy); color: #fff;
+      display: flex; align-items: center;
       border-bottom: 3px solid var(--gov-gold);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
     }
     .nav-home {
-      background: var(--gov-gold);
-      color: #1a1a1a;
-      padding: 12px 18px;
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      white-space: nowrap;
-      text-decoration: none;
+      background: var(--gov-gold); color: #1a1a1a;
+      padding: 12px 18px; font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; cursor: pointer;
+      white-space: nowrap; text-decoration: none;
     }
-    .nav-links {
-      display: flex;
-      list-style: none;
-      height: 100%;
-    }
+    .nav-links { display: flex; list-style: none; height: 100%; }
     .nav-links li a, .nav-links li button {
-      display: flex;
-      align-items: center;
-      padding: 13px 16px;
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.88);
-      text-decoration: none;
-      background: none;
-      border: none;
-      cursor: pointer;
+      display: flex; align-items: center;
+      padding: 13px 16px; font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,0.88); text-decoration: none;
+      background: none; border: none; cursor: pointer;
       border-right: 1px solid rgba(255,255,255,0.1);
-      transition: background 0.15s, color 0.15s;
-      white-space: nowrap;
+      transition: background 0.15s, color 0.15s; white-space: nowrap;
     }
     .nav-links li a:hover, .nav-links li button:hover {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
+      background: rgba(255,255,255,0.1); color: #fff;
     }
-    .nav-links li.active a, .nav-links li.active button {
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      border-bottom: 3px solid var(--gov-gold);
-    }
-    .nav-right {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
+    .nav-links li.active a { background: rgba(255,255,255,0.15); color: #fff; border-bottom: 3px solid var(--gov-gold); }
+    .nav-right { margin-left: auto; display: flex; align-items: center; }
     .nav-btn {
-      padding: 12px 14px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.7);
-      cursor: pointer;
-      border-left: 1px solid rgba(255,255,255,0.1);
-      background: none;
-      border-top: none;
-      border-right: none;
-      border-bottom: none;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: background 0.15s;
+      padding: 12px 16px; font-size: 12px; color: rgba(255,255,255,0.7);
+      cursor: pointer; border-left: 1px solid rgba(255,255,255,0.1);
+      background: none; border-top: none; border-right: none; border-bottom: none;
+      display: flex; align-items: center; gap: 5px; transition: background 0.15s;
+      text-decoration: none; font-weight: 600; letter-spacing: 0.3px;
     }
     .nav-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
 
     /* ===== BREADCRUMB ===== */
     .breadcrumb-bar {
-      background: var(--gov-bg-alt);
-      border-bottom: 1px solid var(--gov-border);
-      padding: 7px 20px;
-      font-size: 12px;
-      color: var(--gov-text-muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      background: var(--gov-bg-alt); border-bottom: 1px solid var(--gov-border);
+      padding: 7px 20px; font-size: 12px; color: var(--gov-text-muted);
+      display: flex; align-items: center; gap: 6px;
     }
     .breadcrumb-bar a { color: var(--gov-navy); text-decoration: none; }
     .breadcrumb-bar a:hover { text-decoration: underline; }
     .breadcrumb-bar .sep { opacity: 0.5; }
     .breadcrumb-current { color: var(--gov-text); font-weight: 500; }
 
-    /* ===== MAIN CONTENT ===== */
-    .content-shell {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    /* ===== INFO STRIP ===== */
-    .info-strip {
-      background: #e8f0fe;
-      border: 1px solid #b8cef0;
-      border-left: 4px solid var(--gov-navy);
-      border-radius: 2px;
-      padding: 10px 16px;
-      font-size: 13px;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      color: var(--gov-navy-dark);
-    }
-    .info-strip .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
-
-    /* ===== STAT CARDS ===== */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-    .stat-card {
-      background: var(--gov-white);
-      border: 1px solid var(--gov-border);
-      border-top: 3px solid var(--gov-navy);
-      border-radius: 3px;
-      padding: 14px 16px;
-      text-align: center;
-    }
-    .stat-card.green  { border-top-color: var(--gov-green); }
-    .stat-card.gold   { border-top-color: var(--gov-gold); }
-    .stat-card.red    { border-top-color: var(--gov-red); }
-    .stat-card .num {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--gov-navy);
-      display: block;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-card.green .num { color: var(--gov-green); }
-    .stat-card.gold  .num { color: var(--gov-gold); }
-    .stat-card.red   .num { color: var(--gov-red); }
-    .stat-card .label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--gov-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: block;
-      margin-bottom: 3px;
-    }
-    .stat-card .desc {
-      font-size: 11px;
-      color: var(--gov-text-muted);
-    }
-
-    /* ===== MAIN LAYOUT ===== */
-    .portal-layout {
-      display: block;
-    }
-
-    .gov-btn {
-      display: block;
-      width: auto;
-      padding: 9px 14px;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'Noto Sans', sans-serif;
-      text-align: center;
-      border-radius: 2px;
-      cursor: pointer;
-      text-decoration: none;
-      border: 1px solid transparent;
-      transition: all 0.15s;
-    }
-    .gov-btn-primary {
-      background: var(--gov-navy);
-      color: #fff;
-      border-color: var(--gov-navy-dark);
-    }
-    .gov-btn-primary:hover { background: var(--gov-navy-dark); }
-    .gov-btn-outline {
-      background: #fff;
-      color: var(--gov-navy);
-      border-color: var(--gov-navy);
-    }
-    .gov-btn-outline:hover { background: #eef2fb; }
-
-    .home-panel {
-      background: var(--gov-white);
-      border: 1px solid var(--gov-border);
-      border-radius: 3px;
-      padding: 28px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-    }
-
     /* ===== FOOTER ===== */
-    .gov-footer {
-      background: var(--gov-navy-dark);
-      color: rgba(255,255,255,0.75);
-      margin-top: 32px;
-    }
+    .gov-footer { background: var(--gov-navy-dark); color: rgba(255,255,255,0.75); margin-top: 32px; }
     .footer-top {
       border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding: 20px;
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
+      padding: 20px; display: flex; gap: 40px; flex-wrap: wrap;
     }
     .footer-brand { flex: 1; min-width: 200px; }
-    .footer-brand h3 {
-      font-family: 'Noto Serif', serif;
-      font-size: 16px;
-      color: #fff;
-      margin-bottom: 6px;
-    }
+    .footer-brand h3 { font-family: 'Noto Serif', serif; font-size: 16px; color: #fff; margin-bottom: 6px; }
     .footer-brand p { font-size: 12px; line-height: 1.6; max-width: 320px; }
     .footer-links-group { min-width: 160px; }
     .footer-links-group h4 {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--gov-gold);
-      margin-bottom: 10px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--gov-gold); margin-bottom: 10px;
     }
     .footer-links-group ul { list-style: none; }
     .footer-links-group ul li { margin-bottom: 5px; }
     .footer-links-group ul li a {
-      font-size: 12px;
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      transition: color 0.15s;
+      font-size: 12px; color: rgba(255,255,255,0.65);
+      text-decoration: none; transition: color 0.15s;
     }
     .footer-links-group ul li a:hover { color: #fff; text-decoration: underline; }
     .footer-bottom {
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      font-size: 11px;
+      padding: 12px 20px; display: flex; justify-content: space-between;
+      align-items: center; gap: 12px; flex-wrap: wrap; font-size: 11px;
     }
     .footer-bottom a { color: rgba(255,255,255,0.55); text-decoration: none; }
     .footer-bottom a:hover { color: #fff; }
 
-    /* ===== MOBILE ===== */
-    .mobile-note { display: none; }
+    /* ===== HOME PAGE STYLES ===== */
+
+    /* HERO BANNER */
+    .hero-banner {
+      background: linear-gradient(135deg, #001f5c 0%, #003087 55%, #0a3d8f 100%);
+      color: #fff; padding: 0; position: relative; overflow: hidden;
+    }
+    .hero-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 50px 28px 42px;
+      display: flex; align-items: flex-start;
+      gap: 40px; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .hero-text { flex: 1; min-width: 300px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(200,150,12,0.18);
+      border: 1px solid rgba(200,150,12,0.45);
+      color: #f5d97a; border-radius: 2px;
+      padding: 5px 12px; font-size: 11px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hero-eyebrow .dot {
+      width: 7px; height: 7px; background: #f5d97a; border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-text h2 {
+      font-family: 'Noto Serif', serif;
+      font-size: 36px; font-weight: 700; line-height: 1.18;
+      margin: 0 0 8px; color: #fff;
+    }
+    .hero-text h2 span { color: #f5d97a; }
+    .hero-sub {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.55);
+      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px;
+    }
+    .hero-text p {
+      font-size: 15px; color: rgba(255,255,255,0.82);
+      line-height: 1.78; max-width: 640px; margin: 0 0 26px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-btn {
+      padding: 11px 22px; font-size: 13px; font-weight: 700;
+      border-radius: 2px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 7px;
+      letter-spacing: 0.3px; border: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .hero-btn-primary { background: #c8960c; color: #000; border-color: #c8960c; }
+    .hero-btn-primary:hover { background: #a67a09; }
+    .hero-btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.45); }
+    .hero-btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+    .hero-sidebar {
+      display: flex; flex-direction: column; gap: 12px; flex-shrink: 0;
+    }
+    .emergency-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 4px; padding: 13px 20px;
+      text-align: center; min-width: 155px;
+    }
+    .emergency-card .ec-num {
+      font-size: 30px; font-weight: 800;
+      display: block; line-height: 1; margin-bottom: 4px;
+    }
+    .emergency-card .ec-num.red { color: #ff6b6b; }
+    .emergency-card .ec-num.gold { color: #f5d97a; }
+    .emergency-card small {
+      font-size: 11px; color: rgba(255,255,255,0.6);
+      text-transform: uppercase; letter-spacing: 0.6px;
+    }
+
+    /* KIOSK FLOW VISUAL STRIP */
+    .kiosk-flow-strip {
+      background: var(--gov-navy-dark);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 0;
+    }
+    .kiosk-flow-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 28px;
+    }
+    .kiosk-flow-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      margin-bottom: 14px; text-align: center;
+    }
+    .flow-steps {
+      display: flex; align-items: stretch;
+      gap: 0; position: relative;
+    }
+    .flow-step {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 3px;
+      padding: 14px 10px 12px;
+      text-align: center;
+      position: relative;
+    }
+    .flow-step + .flow-step {
+      margin-left: 0;
+    }
+    .flow-arrow {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 8px; color: rgba(255,255,255,0.3); font-size: 18px;
+      flex-shrink: 0;
+    }
+    .flow-step-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--gov-gold); color: #000;
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 8px;
+    }
+    .flow-step-icon { font-size: 22px; display: block; margin-bottom: 6px; }
+    .flow-step h5 {
+      font-size: 11px; font-weight: 700; color: #fff;
+      text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px;
+    }
+    .flow-step p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--gov-navy); color: #fff; padding: 20px 0;
+    }
+    .stats-bar-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 28px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    }
+    .stat-item {
+      text-align: center; padding: 10px 8px;
+      border-right: 1px solid rgba(255,255,255,0.12);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item .si-num {
+      font-size: 28px; font-weight: 800;
+      display: block; line-height: 1; margin-bottom: 5px; color: #f5d97a;
+    }
+    .stat-item .si-label {
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.6px; color: rgba(255,255,255,0.7); line-height: 1.4;
+    }
+
+    /* SECTION WRAPPERS */
+    .home-section { padding: 44px 0; border-bottom: 1px solid #dde3ec; }
+    .home-section:last-child { border-bottom: none; }
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    .section-heading {
+      display: flex; align-items: flex-end;
+      gap: 16px; margin-bottom: 28px;
+      padding-bottom: 14px; border-bottom: 2px solid var(--gov-border);
+    }
+    .section-heading-left { flex: 1; }
+    .section-tag {
+      font-size: 10px; font-weight: 700; color: var(--gov-saffron);
+      letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 5px;
+    }
+    .section-heading h3 {
+      font-family: 'Noto Serif', serif; font-size: 22px;
+      font-weight: 700; color: var(--gov-navy); margin: 0;
+    }
+    .section-heading p { font-size: 13px; color: var(--gov-text-muted); margin: 5px 0 0; }
+
+    /* HOW IT WORKS — DETAILED STEPS */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .how-card {
+      background: #fff; border: 1px solid var(--gov-border);
+      border-radius: 3px; padding: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-top: 3px solid var(--gov-navy);
+      position: relative;
+    }
+    .how-card.green  { border-top-color: var(--gov-green); }
+    .how-card.gold   { border-top-color: var(--gov-gold); }
+    .how-card.red    { border-top-color: var(--gov-red); }
+    .how-card.purple { border-top-color: #6b21a8; }
+    .how-card.teal   { border-top-color: #0e7490; }
+    .how-card-num {
+      position: absolute; top: 14px; right: 16px;
+      font-size: 36px; font-weight: 800;
+      color: rgba(0,48,135,0.07); line-height: 1;
+      font-family: 'Noto Serif', serif;
+    }
+    .how-card-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+    .how-card h4 { font-size: 14px; font-weight: 700; color: var(--gov-navy); margin: 0 0 8px; }
+    .how-card p { font-size: 12px; color: var(--gov-text-muted); line-height: 1.7; }
+    .how-card .step-badge {
+      display: inline-block; background: var(--gov-navy);
+      color: #fff; font-size: 10px; font-weight: 700;
+      padding: 2px 7px; border-radius: 2px; letter-spacing: 0.6px;
+      margin-bottom: 8px; text-transform: uppercase;
+    }
+    .how-card.green  .step-badge { background: var(--gov-green); }
+    .how-card.gold   .step-badge { background: var(--gov-gold); color: #000; }
+    .how-card.red    .step-badge { background: var(--gov-red); }
+    .how-card.purple .step-badge { background: #6b21a8; }
+    .how-card.teal   .step-badge { background: #0e7490; }
+
+    /* KEY FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .feat-card {
+      background: #fff; border: 1px solid var(--gov-border);
+      border-radius: 3px; padding: 18px 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .feat-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .feat-card h4 { font-size: 13px; font-weight: 700; color: var(--gov-navy); margin: 0 0 6px; }
+    .feat-card p { font-size: 11px; color: var(--gov-text-muted); line-height: 1.6; }
+
+    /* SYSTEM ARCHITECTURE */
+    .arch-diagram {
+      background: #fff; border: 1px solid var(--gov-border);
+      border-radius: 3px; padding: 24px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    }
+    .arch-row {
+      display: flex; align-items: stretch; gap: 0;
+      margin-bottom: 16px;
+    }
+    .arch-row:last-child { margin-bottom: 0; }
+    .arch-node {
+      flex: 1; background: #f0f4f8;
+      border: 1px solid var(--gov-border);
+      border-radius: 3px; padding: 14px 12px;
+      text-align: center; font-size: 12px;
+      font-weight: 600; color: var(--gov-navy-dark);
+    }
+    .arch-node.primary {
+      background: var(--gov-navy); color: #fff;
+      border-color: var(--gov-navy-dark);
+    }
+    .arch-node.gold {
+      background: #fefce8; border-color: var(--gov-gold);
+      color: #7c5600;
+    }
+    .arch-node.green {
+      background: #f0fdf4; border-color: var(--gov-green);
+      color: #14532d;
+    }
+    .arch-node.red {
+      background: #fff5f5; border-color: var(--gov-red);
+      color: var(--gov-red);
+    }
+    .arch-node small { display: block; font-size: 10px; font-weight: 400; opacity: 0.75; margin-top: 3px; }
+    .arch-connector {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 10px; font-size: 18px; color: var(--gov-text-muted); flex-shrink: 0;
+    }
+    .arch-connector.down {
+      display: flex; align-items: center; justify-content: center;
+      height: 20px; font-size: 18px; color: var(--gov-text-muted);
+      margin: -4px auto; width: 40px;
+    }
+    .arch-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--gov-text-muted);
+      text-align: center; margin-bottom: 10px;
+    }
+
+    /* ABOUT / WSW SECTION */
+    .about-2col {
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: start;
+    }
+    .about-text p { font-size: 14px; line-height: 1.85; color: var(--gov-text); margin-bottom: 14px; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-highlight {
+      background: #e8f0fe; border-left: 4px solid var(--gov-navy);
+      padding: 14px 16px; font-size: 13px; line-height: 1.7;
+      color: var(--gov-navy-dark); border-radius: 0 3px 3px 0; margin-top: 16px;
+    }
+    .wsw-initiative-list { display: flex; flex-direction: column; gap: 10px; }
+    .wsw-item {
+      background: #fff; border: 1px solid var(--gov-border);
+      border-left: 4px solid var(--gov-navy); border-radius: 2px; padding: 12px 14px;
+    }
+    .wsw-item.green { border-left-color: var(--gov-green); }
+    .wsw-item.gold { border-left-color: var(--gov-gold); }
+    .wsw-item.red { border-left-color: var(--gov-red); }
+    .wsw-item.purple { border-left-color: #6b21a8; }
+    .wsw-item strong { display: block; font-size: 12px; color: var(--gov-navy); margin-bottom: 2px; }
+    .wsw-item span { font-size: 11px; color: var(--gov-text-muted); line-height: 1.5; }
+
+    /* PORTAL ACCESS */
+    .portal-access-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .portal-card {
+      background: #fff; border: 1px solid var(--gov-border);
+      border-radius: 3px; padding: 22px;
+      text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    }
+    .portal-card-icon { font-size: 32px; display: block; margin-bottom: 10px; }
+    .portal-card h4 { font-size: 16px; font-weight: 700; color: var(--gov-navy); margin: 0 0 8px; }
+    .portal-card p { font-size: 13px; color: var(--gov-text-muted); line-height: 1.6; margin-bottom: 16px; }
+    .portal-card-btn {
+      display: inline-block; padding: 9px 20px;
+      background: var(--gov-navy); color: #fff;
+      font-size: 12px; font-weight: 700; border-radius: 2px;
+      text-decoration: none; letter-spacing: 0.4px;
+      text-transform: uppercase; transition: background 0.15s;
+    }
+    .portal-card-btn:hover { background: var(--gov-navy-dark); }
+    .portal-card-btn.gold { background: var(--gov-gold); color: #000; }
+    .portal-card-btn.gold:hover { background: #a67a09; color: #fff; }
+    .portal-card-btn.green { background: var(--gov-green); }
+    .portal-card-btn.green:hover { background: #0d6606; }
+
+    /* LEADERSHIP */
+    .leadership-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .leader-card {
+      background: #fff; border: 1px solid var(--gov-border);
+      border-radius: 3px; padding: 22px;
+      display: flex; gap: 18px; align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .leader-photo {
+      width: 96px; height: 118px; flex-shrink: 0;
+      border-radius: 4px; overflow: hidden;
+      border: 1px solid var(--gov-border);
+      background: #eef2f7;
+    }
+    .leader-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .leader-info .designation {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--gov-saffron); margin-bottom: 4px;
+    }
+    .leader-info h4 {
+      font-family: 'Noto Serif', serif; font-size: 16px;
+      color: var(--gov-navy); margin: 0 0 3px; font-weight: 700;
+    }
+    .leader-info .rank { font-size: 12px; color: var(--gov-text-muted); font-weight: 500; line-height: 1.5; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .contact-block {
+      background: #fff; border: 1px solid var(--gov-border);
+      border-radius: 3px; padding: 20px;
+    }
+    .contact-block h4 { font-size: 14px; font-weight: 700; color: var(--gov-navy); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--gov-border); }
+    .contact-row { margin-bottom: 10px; font-size: 13px; color: var(--gov-text); line-height: 1.55; }
+    .contact-row strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gov-text-muted); font-weight: 700; margin-bottom: 2px; }
+    .contact-row a { color: var(--gov-navy); text-decoration: none; }
+    .contact-row a:hover { text-decoration: underline; }
+    .helpline-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .hl-card { background: #f7f9fc; border: 1px solid var(--gov-border); border-radius: 3px; padding: 10px 8px; text-align: center; }
+    .hl-card .hl-num { font-size: 20px; font-weight: 800; display: block; line-height: 1; margin-bottom: 3px; }
+    .hl-card .hl-num.red { color: var(--gov-red); }
+    .hl-card .hl-num.blue { color: var(--gov-navy); }
+    .hl-card .hl-num.green { color: var(--gov-green); }
+    .hl-card small { font-size: 10px; color: var(--gov-text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+
+    /* NOTICE BOX */
+    .notice-box {
+      background: #e8f0fe; border: 1px solid #b8cef0;
+      border-left: 4px solid var(--gov-navy);
+      padding: 12px 16px; font-size: 13px;
+      color: var(--gov-navy-dark); border-radius: 2px; margin-top: 16px;
+    }
 
     @media (max-width: 1100px) {
-      .portal-layout { display: block; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .how-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar-inner { grid-template-columns: repeat(3, 1fr); }
     }
-    @media (max-width: 640px) {
-      .gov-header { flex-direction: column; gap: 12px; }
-      .header-right { margin-left: 0; width: 100%; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 700px) {
+      .how-grid, .features-grid, .portal-access-grid,
+      .leadership-grid, .contact-grid, .about-2col { grid-template-columns: 1fr; }
+      .hero-text h2 { font-size: 24px; }
+      .flow-steps { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+      .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
       .nav-links { display: none; }
-      iframe { display: none; }
-      .mobile-note { display: block; }
-      .iframe-container { padding: 12px; }
     }
   </style>
 </head>
@@ -441,6 +608,7 @@
     <a href="#main" class="skip-link">Skip to Content</a>
     <a href="https://www.telangana.gov.in/">Telangana Government</a>
     <a href="https://tspolice.gov.in/">Telangana Police</a>
+    <a href="https://womensafetywing.telangana.gov.in/" target="_blank" rel="noopener">Women Safety Wing</a>
   </div>
   <div class="top-bar-right">
     <a href="#">हिं</a>
@@ -460,12 +628,12 @@
 <header class="gov-header">
   <div class="header-brand">
     <div class="header-logo">
-      <img src="assets/logo.png" alt="Women Safety Wing logo">
+      <img src="assets/logo.png" alt="Women Safety Wing, Telangana Police">
     </div>
     <div class="gov-titles">
-      <div class="ministry">Government of Telangana — Home Department</div>
-      <h1>Women Safety Wing</h1>
-      <div class="subtitle">Telangana Police | Integrated Complaint Management Portal</div>
+      <div class="ministry">Government of Telangana — Home Department | Women Safety Wing</div>
+      <h1>Smart Public Complaint Kiosk System</h1>
+      <div class="subtitle">Integrated Complaint Management Portal &nbsp;|&nbsp; Telangana Police</div>
     </div>
   </div>
   <div class="header-right">
@@ -473,38 +641,23 @@
       <span class="number">100</span>
       <small>Police Helpline</small>
     </div>
-    <div class="header-badge">UNIFIED<br>PORTAL</div>
+    <div class="header-badge">KIOSK<br>PORTAL</div>
   </div>
 </header>
 
 <!-- NAVIGATION BAR -->
 <nav class="nav-bar" id="main-nav" role="navigation" aria-label="Main navigation">
-  <a class="nav-home" href="index.html">Home</a>
-  <ul class="nav-links" id="navLinks">
-    <li id="nav-booth">
-      <a href="booth-dashboard.html">Register Complaint</a>
-    </li>
-    <li id="nav-sub">
-      <a href="sub-dashboard.html">Commissionerate Login</a>
-    </li>
-    <li id="nav-admin">
-      <a href="admin-dashboard.html">Admin Login</a>
-    </li>
-    <li>
-      <a href="track-page.html">Track Status</a>
-    </li>
-    <li>
-      <a href="#about">About</a>
-    </li>
-    <li>
-      <a href="#leadership">Leadership</a>
-    </li>
-    <li>
-      <a href="#contact">Contact</a>
-    </li>
+  <a class="nav-home" href="index.html">🏠 Home</a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#portals">Access Portals</a></li>
+    <li><a href="#wsw">Women Safety Wing</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <a class="nav-btn" id="openTab" href="booth-dashboard.html" target="_blank" rel="noopener">Open Complaint Portal</a>
+    <a class="nav-btn" href="booth-dashboard.html" target="_blank" rel="noopener">📋 File a Complaint</a>
   </div>
 </nav>
 
@@ -514,716 +667,238 @@
   <span class="sep">›</span>
   <a href="#">Women Safety Wing</a>
   <span class="sep">›</span>
-  <span class="breadcrumb-current">Home Preview</span>
+  <span class="breadcrumb-current">Smart Public Complaint Kiosk System</span>
 </div>
 
-<!-- HOME PAGE STYLES -->
-<style>
-  /* HERO BANNER */
-  .hero-banner {
-    background: linear-gradient(135deg, #001f5c 0%, #003087 50%, #0a3d8f 100%);
-    color: #fff;
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-banner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
-  }
-  .hero-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 48px 28px 40px;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
-  }
-  .hero-text { flex: 1; min-width: 300px; }
-  .hero-eyebrow {
-    display: inline-block;
-    background: rgba(200,150,12,0.2);
-    border: 1px solid rgba(200,150,12,0.5);
-    color: #f5d97a;
-    border-radius: 2px;
-    padding: 4px 12px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .hero-text h2 {
-    font-family: 'Noto Serif', serif;
-    font-size: 34px;
-    font-weight: 700;
-    line-height: 1.18;
-    margin: 0 0 14px;
-    color: #fff;
-  }
-  .hero-text p {
-    font-size: 15px;
-    color: rgba(255,255,255,0.82);
-    line-height: 1.75;
-    max-width: 620px;
-    margin: 0 0 24px;
-  }
-  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .hero-btn {
-    padding: 11px 22px;
-    font-size: 13px;
-    font-weight: 700;
-    border-radius: 2px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    letter-spacing: 0.3px;
-    border: 2px solid transparent;
-    transition: all 0.15s;
-  }
-  .hero-btn-primary { background: #c8960c; color: #000; border-color: #c8960c; }
-  .hero-btn-primary:hover { background: #a67a09; }
-  .hero-btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.5); }
-  .hero-btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
-  .hero-badges {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex-shrink: 0;
-  }
-  .emergency-card {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 4px;
-    padding: 14px 20px;
-    text-align: center;
-    min-width: 160px;
-  }
-  .emergency-card .ec-num {
-    font-size: 32px;
-    font-weight: 800;
-    display: block;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .emergency-card .ec-num.red { color: #ff6b6b; }
-  .emergency-card .ec-num.gold { color: #f5d97a; }
-  .emergency-card small { font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.6px; }
-
-  /* SECTION WRAPPERS */
-  .home-section {
-    padding: 42px 0;
-    border-bottom: 1px solid #dde3ec;
-  }
-  .home-section:last-child { border-bottom: none; }
-  .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
-  .section-heading {
-    display: flex;
-    align-items: flex-end;
-    gap: 16px;
-    margin-bottom: 28px;
-    padding-bottom: 14px;
-    border-bottom: 2px solid var(--gov-border);
-  }
-  .section-heading-left { flex: 1; }
-  .section-tag {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--gov-saffron);
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-  }
-  .section-heading h3 {
-    font-family: 'Noto Serif', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--gov-navy);
-    margin: 0;
-  }
-  .section-heading p {
-    font-size: 13px;
-    color: var(--gov-text-muted);
-    margin: 5px 0 0;
-  }
-
-  /* ABOUT SECTION */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    align-items: start;
-  }
-  .about-text p {
-    font-size: 14px;
-    line-height: 1.85;
-    color: var(--gov-text);
-    margin-bottom: 14px;
-  }
-  .about-text p:last-child { margin-bottom: 0; }
-  .about-highlight {
-    background: #e8f0fe;
-    border-left: 4px solid var(--gov-navy);
-    padding: 14px 16px;
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--gov-navy-dark);
-    border-radius: 0 3px 3px 0;
-    margin-top: 16px;
-  }
-  .initiative-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .initiative-item {
-    background: #fff;
-    border: 1px solid var(--gov-border);
-    border-left: 4px solid var(--gov-navy);
-    border-radius: 2px;
-    padding: 13px 16px;
-  }
-  .initiative-item.green { border-left-color: var(--gov-green); }
-  .initiative-item.gold { border-left-color: var(--gov-gold); }
-  .initiative-item.red { border-left-color: var(--gov-red); }
-  .initiative-item strong { display: block; font-size: 13px; color: var(--gov-navy); margin-bottom: 3px; }
-  .initiative-item span { font-size: 12px; color: var(--gov-text-muted); line-height: 1.5; }
-
-  /* STATS BAR */
-  .stats-hero {
-    background: var(--gov-navy);
-    color: #fff;
-    padding: 22px 0;
-  }
-  .stats-hero-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 28px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0;
-  }
-  .stat-hero-item {
-    text-align: center;
-    padding: 10px 8px;
-    border-right: 1px solid rgba(255,255,255,0.12);
-  }
-  .stat-hero-item:last-child { border-right: none; }
-  .stat-hero-item .sh-num {
-    font-size: 30px;
-    font-weight: 800;
-    display: block;
-    line-height: 1;
-    margin-bottom: 5px;
-    color: #f5d97a;
-  }
-  .stat-hero-item .sh-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: rgba(255,255,255,0.75);
-    line-height: 1.4;
-  }
-
-  /* LEADERSHIP SECTION */
-  .leadership-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  .leader-card {
-    background: #fff;
-    border: 1px solid var(--gov-border);
-    border-radius: 3px;
-    padding: 22px;
-    display: flex;
-    gap: 18px;
-    align-items: flex-start;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .leader-photo {
-    width: 108px;
-    height: 132px;
-    flex-shrink: 0;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid var(--gov-border);
-    background: #eef2f7;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
-  }
-  .leader-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-  .leader-info {}
-  .leader-info .designation {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--gov-saffron);
-    margin-bottom: 4px;
-  }
-  .leader-info h4 {
-    font-family: 'Noto Serif', serif;
-    font-size: 17px;
-    color: var(--gov-navy);
-    margin: 0 0 3px;
-    font-weight: 700;
-  }
-  .leader-info .rank {
-    font-size: 12px;
-    color: var(--gov-text-muted);
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-  .leader-info p {
-    font-size: 12px;
-    color: var(--gov-text-muted);
-    line-height: 1.65;
-  }
-  .leader-contact {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .leader-contact a, .leader-contact span {
-    font-size: 12px;
-    color: var(--gov-navy);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .leader-contact a:hover { text-decoration: underline; }
-
-  /* PROGRAMME CARDS */
-  .programme-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .prog-card {
-    background: #fff;
-    border: 1px solid var(--gov-border);
-    border-radius: 3px;
-    border-top: 3px solid var(--gov-navy);
-    padding: 18px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  }
-  .prog-card.green { border-top-color: var(--gov-green); }
-  .prog-card.gold { border-top-color: var(--gov-gold); }
-  .prog-card.red { border-top-color: var(--gov-red); }
-  .prog-card.purple { border-top-color: #6b21a8; }
-  .prog-card.teal { border-top-color: #0e7490; }
-  .prog-card h4 {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gov-navy);
-    margin: 0 0 7px;
-  }
-  .prog-card p {
-    font-size: 12px;
-    color: var(--gov-text-muted);
-    line-height: 1.65;
-  }
-
-  /* MOTIVE / WHY SECTION */
-  .motive-section { background: #f7f9fc; }
-  .motive-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .motive-card {
-    background: #fff;
-    border: 1px solid var(--gov-border);
-    border-radius: 3px;
-    padding: 20px;
-  }
-  .motive-num {
-    font-size: 36px;
-    font-weight: 800;
-    color: #000;
-    font-family: 'Noto Serif', serif;
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .motive-card h4 { font-size: 14px; font-weight: 700; color: var(--gov-navy); margin: 0 0 8px; }
-  .motive-card p { font-size: 12px; color: var(--gov-text-muted); line-height: 1.65; }
-
-  /* PORTAL ACCESS CARDS */
-  .portal-access-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .portal-card {
-    background: #fff;
-    border: 1px solid var(--gov-border);
-    border-radius: 3px;
-    padding: 22px;
-    text-align: center;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-  }
-  .portal-card h4 { font-size: 16px; font-weight: 700; color: var(--gov-navy); margin: 0 0 8px; }
-  .portal-card p { font-size: 13px; color: var(--gov-text-muted); line-height: 1.6; margin-bottom: 16px; }
-  .portal-card-btn {
-    display: inline-block;
-    padding: 9px 20px;
-    background: var(--gov-navy);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    border-radius: 2px;
-    text-decoration: none;
-    letter-spacing: 0.3px;
-    transition: background 0.15s;
-  }
-  .portal-card-btn:hover { background: var(--gov-navy-dark); }
-  .portal-card-btn.gold { background: var(--gov-gold); color: #000; }
-  .portal-card-btn.gold:hover { background: #a67a09; }
-  .portal-card-btn.green { background: var(--gov-green); }
-  .portal-card-btn.green:hover { background: #0e6606; }
-
-  /* CONTACT SECTION */
-  .contact-section { background: #fff; }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 24px;
-  }
-  .contact-block {
-    background: var(--gov-bg);
-    border: 1px solid var(--gov-border);
-    border-radius: 3px;
-    padding: 20px;
-  }
-  .contact-block h4 {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-    color: var(--gov-navy);
-    margin: 0 0 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--gov-border);
-  }
-  .contact-row {
-    display: block;
-    margin-bottom: 12px;
-  }
-  .contact-row:last-child { margin-bottom: 0; }
-  .contact-row-text { font-size: 13px; color: var(--gov-text); line-height: 1.55; }
-  .contact-row-text strong { display: block; font-size: 11px; color: var(--gov-text-muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
-  .contact-row-text a { color: var(--gov-navy); text-decoration: none; }
-  .contact-row-text a:hover { text-decoration: underline; }
-  .helpline-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .hl-card {
-    background: #fff;
-    border: 1px solid var(--gov-border);
-    border-radius: 3px;
-    padding: 11px 13px;
-    text-align: center;
-  }
-  .hl-card .hl-num { font-size: 22px; font-weight: 800; color: var(--gov-red); display: block; line-height: 1; margin-bottom: 4px; }
-  .hl-card .hl-num.blue { color: var(--gov-navy); }
-  .hl-card .hl-num.green { color: var(--gov-green); }
-  .hl-card small { font-size: 10px; color: var(--gov-text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
-
-  /* ANNOUNCEMENT TICKER */
-  .announcement-bar {
-    background: #fffbea;
-    border: 1px solid #f0d060;
-    border-left: 4px solid var(--gov-gold);
-    padding: 10px 16px;
-    font-size: 13px;
-    color: #5b4b18;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 0;
-  }
-  .announcement-bar strong { flex-shrink: 0; }
-
-  @media (max-width: 900px) {
-    .about-grid, .leadership-grid, .contact-grid { grid-template-columns: 1fr; }
-    .programme-grid, .portal-access-grid, .motive-grid { grid-template-columns: 1fr 1fr; }
-    .stats-hero-inner { grid-template-columns: repeat(3, 1fr); }
-    .hero-text h2 { font-size: 26px; }
-    .leader-card { align-items: center; }
-    .header-brand { min-width: 100%; }
-  }
-  @media (max-width: 600px) {
-    .programme-grid, .portal-access-grid, .motive-grid { grid-template-columns: 1fr; }
-    .stats-hero-inner { grid-template-columns: repeat(2, 1fr); }
-    .helpline-grid { grid-template-columns: 1fr 1fr; }
-    .leader-card {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .leader-photo {
-      width: 100%;
-      max-width: 220px;
-      height: 260px;
-    }
-  }
-</style>
-
-<!-- MAIN CONTENT -->
 <main id="main">
-
-  <!-- ANNOUNCEMENT BAR -->
-  <div class="announcement-bar">
-    <strong>Notice:</strong>
-    <span>This is the Integrated Complaint Management Portal for Women Safety Wing, Telangana Police. Unauthorized access is a punishable offence under the IT Act, 2000. &nbsp;|&nbsp; For emergencies, dial <strong>100</strong> immediately.</span>
-  </div>
 
   <!-- HERO BANNER -->
   <div class="hero-banner">
     <div class="hero-inner">
       <div class="hero-text">
-        <div class="hero-eyebrow">Government of Telangana &mdash; Home Department</div>
-        <h2>Women Safety Wing<br>Telangana Police</h2>
-        <p>A dedicated department of Telangana State Police committed to the safety, dignity, and empowerment of every woman and child across the state. Standing alongside every woman — through prevention, protection, and prosecution.</p>
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          Women Safety Wing Initiative — Telangana Police
+        </div>
+        <div class="hero-sub">Smart Public Complaint Kiosk System</div>
+        <h2>File a Complaint.<br><span>Without Visiting</span> a Police Station.</h2>
+        <p>Digitally connected kiosks placed across key city locations enable citizens to quickly report issues, receive a printed acknowledgement with a unique tracking ID, and monitor resolution — all in real time. Designed as part of the Women Safety Wing's mission to make complaint filing accessible, transparent, and swift.</p>
         <div class="hero-actions">
-          <a href="booth-dashboard.html" class="hero-btn hero-btn-primary">Register a Complaint</a>
-          <a href="track-page.html" class="hero-btn hero-btn-outline">Track Complaint Status</a>
+          <a href="booth-dashboard.html" class="hero-btn hero-btn-primary">📋 Register a Complaint</a>
+          <a href="track-page.html" class="hero-btn hero-btn-outline">🔍 Track Complaint Status</a>
         </div>
       </div>
-      <div class="hero-badges">
+      <div class="hero-sidebar">
         <div class="emergency-card">
           <span class="ec-num red">100</span>
           <small>Police Emergency</small>
         </div>
         <div class="emergency-card">
-          <span class="ec-num gold">1098</span>
-          <small>Child Helpline</small>
+          <span class="ec-num gold">112</span>
+          <small>National Emergency</small>
         </div>
         <div class="emergency-card">
-          <span class="ec-num" style="color:#7dd3fc;font-size:22px;">87126 56858</span>
-          <small>WhatsApp Helpline</small>
+          <span class="ec-num" style="color:#7dd3fc;font-size:18px;">87126 56858</span>
+          <small>WSW WhatsApp</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- KIOSK FLOW STRIP -->
+    <div class="kiosk-flow-strip">
+      <div class="kiosk-flow-inner">
+        <div class="kiosk-flow-label">Kiosk Complaint Journey at a Glance</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-step-num">1</div>
+            <span class="flow-step-icon">🖥️</span>
+            <h5>Walk to Kiosk</h5>
+            <p>Citizen approaches kiosk at public location</p>
+          </div>
+          <div class="flow-arrow">›</div>
+          <div class="flow-step">
+            <div class="flow-step-num">2</div>
+            <span class="flow-step-icon">📂</span>
+            <h5>Select Category</h5>
+            <p>Choose complaint type from simple interface</p>
+          </div>
+          <div class="flow-arrow">›</div>
+          <div class="flow-step">
+            <div class="flow-step-num">3</div>
+            <span class="flow-step-icon">✍️</span>
+            <h5>Enter Details</h5>
+            <p>Fill in details (or get assisted by an officer)</p>
+          </div>
+          <div class="flow-arrow">›</div>
+          <div class="flow-step">
+            <div class="flow-step-num">4</div>
+            <span class="flow-step-icon">☁️</span>
+            <h5>Submitted</h5>
+            <p>Data instantly sent to centralized backend server</p>
+          </div>
+          <div class="flow-arrow">›</div>
+          <div class="flow-step">
+            <div class="flow-step-num">5</div>
+            <span class="flow-step-icon">🔀</span>
+            <h5>Auto-Routed</h5>
+            <p>Forwarded to the appropriate department</p>
+          </div>
+          <div class="flow-arrow">›</div>
+          <div class="flow-step">
+            <div class="flow-step-num">6</div>
+            <span class="flow-step-icon">🖨️</span>
+            <h5>Receipt Printed</h5>
+            <p>Acknowledgement with unique Tracking ID issued</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- STATS BAR -->
-  <div class="stats-hero">
-    <div class="stats-hero-inner">
-      <div class="stat-hero-item">
-        <span class="sh-num">33</span>
-        <span class="sh-label">Districts Covered</span>
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat-item">
+        <span class="si-num">33</span>
+        <span class="si-label">Districts Covered</span>
       </div>
-      <div class="stat-hero-item">
-        <span class="sh-num">10</span>
-        <span class="sh-label">Commissionerates</span>
+      <div class="stat-item">
+        <span class="si-num">10</span>
+        <span class="si-label">Commissionerates</span>
       </div>
-      <div class="stat-hero-item">
-        <span class="sh-num">341+</span>
-        <span class="sh-label">SHE Teams Active</span>
+      <div class="stat-item">
+        <span class="si-num">341+</span>
+        <span class="si-label">SHE Teams Active</span>
       </div>
-      <div class="stat-hero-item">
-        <span class="sh-num">12+</span>
-        <span class="sh-label">Bharosa Centres</span>
+      <div class="stat-item">
+        <span class="si-num">12+</span>
+        <span class="si-label">Bharosa Centres</span>
       </div>
-      <div class="stat-hero-item">
-        <span class="sh-num">2014</span>
-        <span class="sh-label">SHE Teams Founded</span>
+      <div class="stat-item">
+        <span class="si-num">9AM-9PM</span>
+        <span class="si-label">Booth Availability</span>
       </div>
     </div>
   </div>
 
-  <!-- ABOUT THE PROGRAMME -->
-  <section class="home-section" id="about">
+  <!-- HOW IT WORKS -->
+  <section class="home-section" id="how-it-works">
     <div class="section-inner">
       <div class="section-heading">
         <div class="section-heading-left">
-          <div class="section-tag">About the Programme</div>
-          <h3>About Women Safety Wing, Telangana</h3>
-          <p>Who we are, our history, and our mandate</p>
+          <div class="section-tag">Project Overview</div>
+          <h3>How the Smart Kiosk System Works</h3>
+          <p>A step-by-step breakdown of the end-to-end complaint lifecycle</p>
         </div>
       </div>
-      <div class="about-grid">
-        <div class="about-text">
-          <p>The <strong>Women Safety Wing (WSW)</strong> is a fully dedicated department of the Telangana State Police, working round the clock to ensure the safety, dignity, and empowerment of women and children across the state. Carved out from the Women Protection Cell, CID, the WSW operates from independent premises with its own cadre strength and a very specific mandate.</p>
-          <p>The Wing handles investigation into all crimes against women — including prevention of trafficking, sexual offences, domestic violence, NRI-related issues, cybercrime, and juvenile matters. It brings together law enforcement, legal support, psychological counselling, and medical aid under a single institutional umbrella.</p>
-          <p>The Wing was formally established on <strong>8 March 2018</strong> — International Women's Day — reflecting the Government of Telangana's commitment to giving women's safety a dedicated, institutional, and empowered response mechanism. Today, WSW operates multiple specialized modules including SHE Teams, Bharosa Centres, Cyber Module, Anti-Human Trafficking Unit, NRI Cell, and the Missing Persons Monitoring Cell.</p>
-          <div class="about-highlight">
-            <strong>Establishment:</strong> Women Safety Wing was officially established on <strong>8 March 2018</strong>, carved out from the Women Protection Cell, CID of Telangana Police. India's first Child Friendly Court was also set up on 7 April 2018 in Hyderabad City.
-          </div>
+      <div class="how-grid">
+
+        <div class="how-card">
+          <div class="how-card-num">01</div>
+          <span class="step-badge">Step 1</span>
+          <span class="how-card-icon">📍</span>
+          <h4>Kiosks at Key City Locations</h4>
+          <p>Digitally connected kiosks are placed across strategic public locations — bus stations, markets, government offices, and public squares — ensuring accessibility for every citizen without requiring them to travel to a police station.</p>
         </div>
-        <div class="initiative-list">
-          <div class="initiative-item">
-            <div>
-              <strong>SHE Teams — Est. 24 October 2014</strong>
-              <span>Plain-clothes women police officers deployed at public spaces to prevent and act against harassment. Pioneering initiative in India, now with 341+ active teams statewide.</span>
-            </div>
-          </div>
-          <div class="initiative-item green">
-            <div>
-              <strong>Bharosa Centres — Integrated Support</strong>
-              <span>One-stop crisis centres for survivors of sexual violence and domestic abuse, offering medical, legal, psychological, and shelter support under one roof. Operational in 12+ districts.</span>
-            </div>
-          </div>
-          <div class="initiative-item gold">
-            <div>
-              <strong>Cyber Module &amp; CybHER</strong>
-              <span>Dedicated cybercrime support for women — from online harassment and stalking to matrimonial fraud. CybHER launched 15 July 2020 to handle digital crimes against women and children.</span>
-            </div>
-          </div>
-          <div class="initiative-item red">
-            <div>
-              <strong>Anti-Human Trafficking Unit (AHTU)</strong>
-              <span>Specialized units to detect, investigate, and rescue victims of human trafficking across Telangana and coordinate with national agencies.</span>
-            </div>
-          </div>
-          <div class="initiative-item">
-            <div>
-              <strong>NRI Women Safety Cell — Est. 17 July 2019</strong>
-              <span>Handles cases of crimes against women by NRI spouses or relatives, including matrimonial fraud, desertion, and cross-border domestic violence.</span>
-            </div>
-          </div>
+
+        <div class="how-card green">
+          <div class="how-card-num">02</div>
+          <span class="step-badge">Step 2</span>
+          <span class="how-card-icon">🗂️</span>
+          <h4>Select a Complaint Category</h4>
+          <p>At the kiosk, the citizen selects a complaint category from a clearly organized menu — covering harassment, domestic violence, cybercrime, missing persons, public safety, and more — guiding them through a structured intake process.</p>
         </div>
+
+        <div class="how-card gold">
+          <div class="how-card-num">03</div>
+          <span class="step-badge">Step 3</span>
+          <span class="how-card-icon">🧑‍💼</span>
+          <h4>Enter Details or Get Officer Assistance</h4>
+          <p>Citizens enter complaint details through a simple, intuitive interface. An assigned officer at the kiosk location is available to assist those who need help — ensuring no one is turned away due to literacy or language barriers.</p>
+        </div>
+
+        <div class="how-card red">
+          <div class="how-card-num">04</div>
+          <span class="step-badge">Step 4</span>
+          <span class="how-card-icon">⚡</span>
+          <h4>Instant Submission to Central Backend</h4>
+          <p>Upon submission, complaint data is instantly transmitted to a centralized backend server. The server processes, logs, timestamps, and validates the complaint in real time — creating a permanent, immutable record of the grievance.</p>
+        </div>
+
+        <div class="how-card purple">
+          <div class="how-card-num">05</div>
+          <span class="step-badge">Step 5</span>
+          <span class="how-card-icon">🔀</span>
+          <h4>Auto-Routing to Appropriate Department</h4>
+          <p>The system intelligently routes each complaint to the correct police or administrative department based on the complaint's location and category — eliminating manual sorting, reducing response delays, and ensuring no complaint falls through the cracks.</p>
+        </div>
+
+        <div class="how-card teal">
+          <div class="how-card-num">06</div>
+          <span class="step-badge">Step 6</span>
+          <span class="how-card-icon">🖨️</span>
+          <h4>Printed Acknowledgement & Tracking ID</h4>
+          <p>A physical receipt is immediately printed for the citizen, containing a unique Tracking ID. This enables follow-up at any time through the online tracking portal or at any kiosk — ensuring full transparency and accountability.</p>
+        </div>
+
+        <div class="how-card" style="border-top-color:#e05c1a;">
+          <div class="how-card-num">07</div>
+          <span class="step-badge" style="background:#e05c1a;">Step 7</span>
+          <span class="how-card-icon">📊</span>
+          <h4>Real-Time Dashboard for Authorities</h4>
+          <p>Police officers, commissionerate staff, and administrators can monitor, respond to, and manage complaints in real time through role-based dashboards — enabling faster resolution, escalation management, and statewide oversight.</p>
+        </div>
+
+        <div class="how-card green" style="border-top-color:#0e7490;">
+          <div class="how-card-num">08</div>
+          <span class="step-badge" style="background:#0e7490;">Step 8</span>
+          <span class="how-card-icon">🔍</span>
+          <h4>Citizen Complaint Tracking</h4>
+          <p>Citizens can check complaint status at any time using their Tracking ID — through the web portal or at a kiosk — receiving real-time status updates as their complaint moves through review, investigation, and resolution stages.</p>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- WHY THIS PROGRAMME -->
-  <section class="home-section motive-section" id="motive">
+  <!-- KEY FEATURES -->
+  <section class="home-section" id="features" style="background:#f7f9fc;">
     <div class="section-inner">
       <div class="section-heading">
         <div class="section-heading-left">
-          <div class="section-tag">Why This Programme</div>
-          <h3>Motive &amp; Objectives of Women Safety Wing</h3>
-          <p>The mandate that drives every initiative</p>
+          <div class="section-tag">Key Features</div>
+          <h3>What Makes This System Unique</h3>
+          <p>Built for accessibility, speed, and accountability across Telangana</p>
         </div>
       </div>
-      <div class="motive-grid">
-        <div class="motive-card">
-          <div class="motive-num">01</div>
-          <h4>Dedicated Institutional Response</h4>
-          <p>Prior to WSW, women's safety cases were handled by general police divisions without specialized training, resources, or focus. The Wing was created to provide a dedicated, sensitive, and expert response to crimes against women and children — eliminating procedural gaps and ensuring survivor-centric processes.</p>
+      <div class="features-grid">
+        <div class="feat-card">
+          <span class="feat-icon">🏙️</span>
+          <h4>Citywide Kiosk Network</h4>
+          <p>Kiosks deployed at high-footfall public locations — eliminating the barrier of physically reaching a police station.</p>
         </div>
-        <div class="motive-card">
-          <div class="motive-num">02</div>
-          <h4>Prevention Before Prosecution</h4>
-          <p>The WSW adopts a proactive stance — through SHE Teams in public hotspots, Safety Clubs in schools and colleges, and community awareness programmes — the Wing works to prevent crimes from occurring in the first place, rather than merely reacting after the fact.</p>
+        <div class="feat-card">
+          <span class="feat-icon">🔖</span>
+          <h4>Unique Tracking ID</h4>
+          <p>Every complaint receives a printed acknowledgement with a unique ID for transparent follow-up and status tracking.</p>
         </div>
-        <div class="motive-card">
-          <div class="motive-num">03</div>
-          <h4>Holistic Survivor Support</h4>
-          <p>Bharosa Centres provide integrated support — legal advice, medical examination, psychological counselling, shelter, and police assistance — ensuring that a survivor never has to navigate the system alone. The approach treats rehabilitation and empowerment as equally important as justice.</p>
+        <div class="feat-card">
+          <span class="feat-icon">🔀</span>
+          <h4>Intelligent Auto-Routing</h4>
+          <p>Complaints are automatically directed to the appropriate department based on category and geographic location.</p>
         </div>
-        <div class="motive-card">
-          <div class="motive-num">04</div>
-          <h4>Technology as an Enabler</h4>
-          <p>From the T-Safe app and Hawkeye platform to the SHE Team mobile application and the Integrated Complaint Portal, WSW leverages digital tools to make women's safety accessible, traceable, and accountable — lowering barriers to reporting and improving response times.</p>
+        <div class="feat-card">
+          <span class="feat-icon">👩‍💼</span>
+          <h4>Officer-Assisted Filing</h4>
+          <p>On-site officers assist citizens who need help — ensuring the system is inclusive and accessible to all.</p>
         </div>
-        <div class="motive-card">
-          <div class="motive-num">05</div>
-          <h4>Accountability &amp; Transparency</h4>
-          <p>This Integrated Complaint Management Portal was developed to ensure that every complaint filed at a Booth is tracked through commissionerate review and administrative oversight — creating an auditable, transparent system with end-to-end accountability from registration to resolution.</p>
-        </div>
-        <div class="motive-card">
-          <div class="motive-num">06</div>
-          <h4>Empowerment Through Awareness</h4>
-          <p>An aware citizen is an empowered citizen. WSW runs safety clubs, CybHER awareness sessions, and community outreach to equip women and children with the knowledge to identify risks, access legal rights, and seek timely help — building a culture of safety from the ground up.</p>
-        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- PROGRAMMES & INITIATIVES -->
-  <section class="home-section" id="programmes">
-    <div class="section-inner">
-      <div class="section-heading">
-        <div class="section-heading-left">
-          <div class="section-tag">Programmes &amp; Initiatives</div>
-          <h3>Key Modules of Women Safety Wing</h3>
-          <p>Specialized units working to protect, prevent, and empower</p>
-        </div>
-      </div>
-      <div class="programme-grid">
-        <div class="prog-card">
-          <h4>SHE Teams</h4>
-          <p>Plain-clothes women police officers at public hotspots — markets, bus stands, colleges — to deter, detect and act against sexual harassment and eve-teasing. Operational since October 2014.</p>
-        </div>
-        <div class="prog-card green">
-          <h4>Bharosa Centres</h4>
-          <p>Integrated one-stop support centres for survivors of sexual violence and domestic abuse, providing medical, legal, psychological and shelter services in 12+ districts of Telangana.</p>
-        </div>
-        <div class="prog-card gold">
-          <h4>Cyber Module &amp; CybHER</h4>
-          <p>Handles online harassment, stalking, cyberbullying, and digital crimes against women and children. CybHER specifically addresses cyber safety awareness for women and girls.</p>
-        </div>
-        <div class="prog-card red">
-          <h4>Anti-Human Trafficking Unit</h4>
-          <p>Specialized investigation units that work to prevent trafficking, conduct rescue operations, rehabilitate victims, and prosecute perpetrators of human trafficking.</p>
-        </div>
-        <div class="prog-card purple">
-          <h4>Domestic Violence Module</h4>
-          <p>Dedicated officers and support staff trained in domestic violence response. Includes CDEW — Centre for Development and Empowerment of Women — for survivors' reintegration.</p>
-        </div>
-        <div class="prog-card teal">
-          <h4>NRI Cell &amp; Sahas</h4>
-          <p>NRI Cell handles cross-border matrimonial crimes. Sahas focuses on workplace sexual harassment prevention and the POSH Act. Both are nationally recognized models.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- LEADERSHIP SECTION -->
-  <section class="home-section" id="leadership" style="background:#f7f9fc;">
-    <div class="section-inner">
-      <div class="section-heading">
-        <div class="section-heading-left">
-          <div class="section-tag">Leadership</div>
-          <h3>Senior Officers &mdash; Women Safety Wing</h3>
-          <p>The officials guiding the Women Safety Wing, Telangana Police</p>
-        </div>
-      </div>
-      <div class="leadership-grid">
-        <div class="leader-card">
-          <div class="leader-photo">
-            <img src="assets/dgp.png" alt="Sri B. Shivadhar Reddy, IPS">
-          </div>
-          <div class="leader-info">
-            <div class="designation">Director General of Police</div>
-            <h4>Sri B. Shivadhar Reddy, IPS</h4>
-            <div class="rank">Director General of Police</div>
-          </div>
-        </div>
-        <div class="leader-card">
-          <div class="leader-photo">
-            <img src="assets/adgp.png" alt="Ms. Charu Sinha, IPS">
-          </div>
-          <div class="leader-info">
-            <div class="designation">Additional Director General of Police</div>
-            <h4>Ms. Charu Sinha, IPS</h4>
-            <div class="rank">Addl. Director General of Police, CID, Telangana, Hyd. (FAC) Addl. Director General of Police Women Safety, SHE Teams &amp; Bharosa, Hyd.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   <!-- PORTAL ACCESS -->
-  <section class="home-section" id="portals">
+  <section class="home-section" id="portals" style="background:#f7f9fc;">
     <div class="section-inner">
       <div class="section-heading">
         <div class="section-heading-left">
@@ -1234,68 +909,142 @@
       </div>
       <div class="portal-access-grid">
         <div class="portal-card">
+          <span class="portal-card-icon">📋</span>
           <h4>Register a Complaint</h4>
-          <p>Citizens and Booth officers can file a new complaint, attach supporting information, and receive an official acknowledgement receipt for tracking.</p>
+          <p>Citizens and Booth officers can file a new complaint, attach supporting information, and receive an official acknowledgement receipt with a unique Tracking ID.</p>
           <a href="booth-dashboard.html" class="portal-card-btn gold">Open Complaint Portal</a>
         </div>
         <div class="portal-card">
+          <span class="portal-card-icon">🏛️</span>
           <h4>Commissionerate Login</h4>
           <p>Authorized Commissionerate officers can log in to view, review, and act on complaints routed to their jurisdiction from across the state.</p>
           <a href="sub-dashboard.html" class="portal-card-btn">Commissionerate Access</a>
         </div>
         <div class="portal-card">
+          <span class="portal-card-icon">🛡️</span>
           <h4>Admin Dashboard</h4>
           <p>Central administrators can access statewide complaint data with full filter controls, status tracking, and administrative oversight across all commissionerates.</p>
           <a href="admin-dashboard.html" class="portal-card-btn green">Admin Access</a>
         </div>
       </div>
-      <div style="margin-top:16px;background:#e8f0fe;border:1px solid #b8cef0;border-left:4px solid var(--gov-navy);padding:12px 16px;font-size:13px;color:var(--gov-navy-dark);border-radius:2px;">
+      <div class="notice-box">
         <strong>Authorized Access Only:</strong> Commissionerate and Admin portals are restricted to authorized Telangana Police personnel. Unauthorized access is a punishable offence under the Information Technology Act, 2000.
       </div>
     </div>
   </section>
 
-  <!-- CONTACT US -->
-  <section class="home-section contact-section" id="contact" style="background:#f0f4f8;">
+  <!-- WOMEN SAFETY WING — INSTITUTIONAL CONTEXT -->
+  <section class="home-section" id="wsw">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div class="section-heading-left">
+          <div class="section-tag">Under the Aegis of</div>
+          <h3>Women Safety Wing, Telangana Police</h3>
+          <p>The institutional framework behind the Smart Kiosk System</p>
+        </div>
+      </div>
+      <div class="about-2col">
+        <div class="about-text">
+          <p>The <strong>Smart Public Complaint Kiosk System</strong> is developed and deployed as a flagship technology initiative of the <strong>Women Safety Wing (WSW), Telangana Police</strong>. The Wing is a fully dedicated department of the Telangana State Police committed to the safety, dignity, and empowerment of women and children across the state.</p>
+          <p>By placing public-facing kiosks at key city locations, the WSW extends its reach beyond police stations and helpline numbers — making complaint filing accessible for every citizen regardless of digital literacy, mobility, or location. The system directly supports the Wing's mandate of <em>Prevention, Protection, and Prosecution</em>.</p>
+          <p>The WSW was formally established on <strong>8 March 2018</strong> — International Women's Day — and operates multiple specialized modules including SHE Teams, Bharosa Centres, the Cyber Module (CybHER), Anti-Human Trafficking Units, the NRI Women Safety Cell, and now the Smart Kiosk Complaint Network.</p>
+          <div class="about-highlight">
+            <strong>Official Website:</strong> For the full Women Safety Wing portal, resources, laws, and support services, visit <a href="https://womensafetywing.telangana.gov.in/" target="_blank" rel="noopener">womensafetywing.telangana.gov.in</a>
+          </div>
+        </div>
+        <div class="wsw-initiative-list">
+          <div class="wsw-item">
+            <strong>SHE Teams — Est. 24 October 2014</strong>
+            <span>Plain-clothes women police officers at public spaces preventing harassment. 341+ active teams statewide — India's pioneering initiative.</span>
+          </div>
+          <div class="wsw-item green">
+            <strong>Bharosa Centres — One-Stop Support</strong>
+            <span>Integrated crisis centres for survivors offering medical, legal, psychological, and shelter support under one roof. Operational in 12+ districts.</span>
+          </div>
+          <div class="wsw-item gold">
+            <strong>Cyber Module &amp; CybHER</strong>
+            <span>Dedicated cybercrime support for women — online harassment, stalking, matrimonial fraud. CybHER launched 15 July 2020.</span>
+          </div>
+          <div class="wsw-item red">
+            <strong>Anti-Human Trafficking Unit (AHTU)</strong>
+            <span>Specialized units to detect, investigate, and rescue victims of trafficking across Telangana.</span>
+          </div>
+          <div class="wsw-item purple">
+            <strong>NRI Women Safety Cell — Est. 17 July 2019</strong>
+            <span>Handles crimes against women by NRI spouses, including matrimonial fraud, desertion, and cross-border domestic violence.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section class="home-section" id="leadership" style="background:#f7f9fc;">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div class="section-heading-left">
+          <div class="section-tag">Leadership</div>
+          <h3>Senior Officers — Women Safety Wing</h3>
+          <p>The officials guiding the Women Safety Wing and its technology initiatives</p>
+        </div>
+      </div>
+      <div class="leadership-grid">
+        <div class="leader-card">
+          <div class="leader-photo">
+            <img src="assets/dgp.png" alt="Sri B. Shivadhar Reddy, IPS">
+          </div>
+          <div class="leader-info">
+            <div class="designation">Director General of Police</div>
+            <h4>Sri B. Shivadhar Reddy, IPS</h4>
+            <div class="rank">Director General of Police, Telangana State Police</div>
+          </div>
+        </div>
+        <div class="leader-card">
+          <div class="leader-photo">
+            <img src="assets/adgp.png" alt="Ms. Charu Sinha, IPS">
+          </div>
+          <div class="leader-info">
+            <div class="designation">Additional Director General of Police</div>
+            <h4>Ms. Charu Sinha, IPS</h4>
+            <div class="rank">Addl. DGP, CID, Telangana (FAC) &amp; Addl. DGP Women Safety, SHE Teams &amp; Bharosa, Hyderabad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="home-section" id="contact" style="background:#f0f4f8;">
     <div class="section-inner">
       <div class="section-heading">
         <div class="section-heading-left">
           <div class="section-tag">Contact Us</div>
           <h3>Get in Touch — Women Safety Wing</h3>
-          <p>Reach us for complaints, inquiries, or support</p>
+          <p>For complaints, inquiries, or kiosk-related support</p>
         </div>
       </div>
       <div class="contact-grid">
         <div class="contact-block">
           <h4>Headquarters</h4>
           <div class="contact-row">
-            <div class="contact-row-text">
-              <strong>Address</strong>
-              Women Safety Wing, Telangana State Police,<br>
-              CID Buildings, Hyderabad,<br>
-              Telangana — 500 004
-            </div>
+            <strong>Address</strong>
+            Women Safety Wing, Telangana State Police,<br>
+            CID Buildings, Hyderabad,<br>
+            Telangana — 500 004
           </div>
           <div class="contact-row">
-            <div class="contact-row-text">
-              <strong>WhatsApp Helpline</strong>
-              <a href="https://wa.me/918712656858">+91 87126 56858</a>
-            </div>
+            <strong>WhatsApp Helpline</strong>
+            <a href="https://wa.me/918712656858">+91 87126 56858</a>
           </div>
           <div class="contact-row">
-            <div class="contact-row-text">
-              <strong>Official Email</strong>
-              <a href="mailto:wsw@tspolice.gov.in">wsw@tspolice.gov.in</a>
-            </div>
+            <strong>Official Email</strong>
+            <a href="mailto:wsw@tspolice.gov.in">wsw@tspolice.gov.in</a>
           </div>
           <div class="contact-row">
-            <div class="contact-row-text">
-              <strong>Official Website</strong>
-              <a href="https://womensafetywing.telangana.gov.in/" target="_blank" rel="noopener">womensafetywing.telangana.gov.in</a>
-            </div>
+            <strong>Official Website</strong>
+            <a href="https://womensafetywing.telangana.gov.in/" target="_blank" rel="noopener">womensafetywing.telangana.gov.in</a>
           </div>
         </div>
-
         <div class="contact-block">
           <h4>Emergency Helplines</h4>
           <div class="helpline-grid">
@@ -1316,39 +1065,20 @@
               <small>Cybercrime</small>
             </div>
           </div>
-          <div style="margin-top:12px;">
-            <div class="contact-row">
-              <div class="contact-row-text">
-                <strong>T-Safe App</strong>
-                Download the T-Safe Women Safety App on Android &amp; iOS for quick emergency access and location sharing.
-              </div>
-            </div>
+          <div class="contact-row" style="margin-top:12px;">
+            <strong>T-Safe App</strong>
+            Download the T-Safe Women Safety App on Android &amp; iOS for quick emergency access and live location sharing.
           </div>
         </div>
-
         <div class="contact-block">
           <h4>Quick Links</h4>
-          <div class="contact-row">
-            <div class="contact-row-text"><a href="booth-dashboard.html">File a New Complaint</a></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-row-text"><a href="track-page.html">Track Complaint Status</a></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/get-help-by-location/" target="_blank" rel="noopener">Find Nearest Bharosa Centre</a></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/women-safety-laws-downloads/" target="_blank" rel="noopener">Women Safety Laws &amp; Downloads</a></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/volunteering-opportunities/" target="_blank" rel="noopener">Volunteering Opportunities</a></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-row-text"><a href="https://tspolice.gov.in/" target="_blank" rel="noopener">Telangana State Police</a></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-row-text"><a href="https://www.telangana.gov.in/" target="_blank" rel="noopener">Government of Telangana</a></div>
-          </div>
+          <div class="contact-row"><a href="booth-dashboard.html">📋 File a New Complaint</a></div>
+          <div class="contact-row"><a href="track-page.html">🔍 Track Complaint Status</a></div>
+          <div class="contact-row"><a href="admin-dashboard.html">🛡️ Admin Dashboard</a></div>
+          <div class="contact-row"><a href="sub-dashboard.html">🏛️ Commissionerate Login</a></div>
+          <div class="contact-row"><a href="https://womensafetywing.telangana.gov.in/get-help-by-location/" target="_blank" rel="noopener">📍 Find Nearest Bharosa Centre</a></div>
+          <div class="contact-row"><a href="https://womensafetywing.telangana.gov.in/women-safety-laws-downloads/" target="_blank" rel="noopener">⚖️ Women Safety Laws &amp; Downloads</a></div>
+          <div class="contact-row"><a href="https://tspolice.gov.in/" target="_blank" rel="noopener">🌐 Telangana State Police</a></div>
         </div>
       </div>
     </div>
@@ -1360,38 +1090,41 @@
 <footer class="gov-footer">
   <div class="footer-top">
     <div class="footer-brand">
-      <h3>Women Safety Wing</h3>
-      <p>Telangana Police, Government of Telangana.<br>
-         Committed to the safety and security of women across the state.</p>
-      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,0.5);">
+      <h3>Smart Public Complaint Kiosk System</h3>
+      <p>A Women Safety Wing Initiative — Telangana Police, Government of Telangana.<br>
+         Making complaint filing accessible, transparent, and accountable for every citizen.</p>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,0.45);">
         Last Updated: <span id="lastUpdated"></span>
       </div>
     </div>
     <div class="footer-links-group">
-      <h4>Quick Links</h4>
+      <h4>Complaint Portal</h4>
       <ul>
         <li><a href="booth-dashboard.html">File a Complaint</a></li>
         <li><a href="track-page.html">Track Your Complaint</a></li>
         <li><a href="#">Download Acknowledgement</a></li>
-        <li><a href="#">Contact a Station</a></li>
+        <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
+        <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
-      <h4>Helplines</h4>
+      <h4>Emergency Helplines</h4>
       <ul>
-        <li><a href="#">Women Helpline — 1098</a></li>
+        <li><a href="#">Women Helpline — 1091</a></li>
         <li><a href="#">Police — 100</a></li>
         <li><a href="#">Emergency — 112</a></li>
         <li><a href="#">Cybercrime — 1930</a></li>
+        <li><a href="#">Child Helpline — 1098</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
-      <h4>Policies</h4>
+      <h4>More Information</h4>
       <ul>
+        <li><a href="https://womensafetywing.telangana.gov.in/" target="_blank" rel="noopener">Women Safety Wing</a></li>
+        <li><a href="https://tspolice.gov.in/" target="_blank" rel="noopener">Telangana Police</a></li>
+        <li><a href="https://www.telangana.gov.in/" target="_blank" rel="noopener">Govt. of Telangana</a></li>
         <li><a href="#">Privacy Policy</a></li>
         <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Accessibility Statement</a></li>
-        <li><a href="#">RTI Information</a></li>
       </ul>
     </div>
   </div>
@@ -1400,16 +1133,15 @@
     <span>
       <a href="#">Site Map</a> &nbsp;|&nbsp;
       <a href="#">Feedback</a> &nbsp;|&nbsp;
-      <a href="#">Contact Us</a>
+      <a href="#contact">Contact Us</a>
     </span>
   </div>
 </footer>
 
 <script>
-  // Footer year & date
   const now = new Date();
   document.getElementById('footerYear').textContent = now.getFullYear();
-  document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'});
+  document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'});
 </script>
 </body>
 </html>
