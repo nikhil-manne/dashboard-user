@@ -496,6 +496,15 @@
     <li>
       <a href="track-page.html">&#128506; Track Status</a>
     </li>
+    <li>
+      <a href="#about">&#9432; About</a>
+    </li>
+    <li>
+      <a href="#leadership">&#128100; Leadership</a>
+    </li>
+    <li>
+      <a href="#contact">&#9993; Contact</a>
+    </li>
   </ul>
   <div class="nav-right">
     <a class="nav-btn" id="openTab" href="booth-dashboard.html" target="_blank" rel="noopener">&#128279; Register Complaint</a>
@@ -511,76 +520,859 @@
   <span class="breadcrumb-current">Home Preview</span>
 </div>
 
+<!-- HOME PAGE STYLES -->
+<style>
+  /* HERO BANNER */
+  .hero-banner {
+    background: linear-gradient(135deg, #001f5c 0%, #003087 50%, #0a3d8f 100%);
+    color: #fff;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-text { flex: 1; min-width: 300px; }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(200,150,12,0.2);
+    border: 1px solid rgba(200,150,12,0.5);
+    color: #f5d97a;
+    border-radius: 2px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero-text h2 {
+    font-family: 'Noto Serif', serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.18;
+    margin: 0 0 14px;
+    color: #fff;
+  }
+  .hero-text p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.75;
+    max-width: 620px;
+    margin: 0 0 24px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-btn {
+    padding: 11px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    letter-spacing: 0.3px;
+    border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .hero-btn-primary { background: #c8960c; color: #000; border-color: #c8960c; }
+  .hero-btn-primary:hover { background: #a67a09; }
+  .hero-btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.5); }
+  .hero-btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+  .hero-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .emergency-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 4px;
+    padding: 14px 20px;
+    text-align: center;
+    min-width: 160px;
+  }
+  .emergency-card .ec-num {
+    font-size: 32px;
+    font-weight: 800;
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .emergency-card .ec-num.red { color: #ff6b6b; }
+  .emergency-card .ec-num.gold { color: #f5d97a; }
+  .emergency-card small { font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.6px; }
+
+  /* SECTION WRAPPERS */
+  .home-section {
+    padding: 42px 0;
+    border-bottom: 1px solid #dde3ec;
+  }
+  .home-section:last-child { border-bottom: none; }
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  .section-heading {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--gov-border);
+  }
+  .section-heading-left { flex: 1; }
+  .section-tag {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gov-saffron);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .section-heading h3 {
+    font-family: 'Noto Serif', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gov-navy);
+    margin: 0;
+  }
+  .section-heading p {
+    font-size: 13px;
+    color: var(--gov-text-muted);
+    margin: 5px 0 0;
+  }
+
+  /* ABOUT SECTION */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--gov-text);
+    margin-bottom: 14px;
+  }
+  .about-text p:last-child { margin-bottom: 0; }
+  .about-highlight {
+    background: #e8f0fe;
+    border-left: 4px solid var(--gov-navy);
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--gov-navy-dark);
+    border-radius: 0 3px 3px 0;
+    margin-top: 16px;
+  }
+  .initiative-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .initiative-item {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-left: 4px solid var(--gov-navy);
+    border-radius: 2px;
+    padding: 13px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .initiative-item.green { border-left-color: var(--gov-green); }
+  .initiative-item.gold { border-left-color: var(--gov-gold); }
+  .initiative-item.red { border-left-color: var(--gov-red); }
+  .initiative-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .initiative-item strong { display: block; font-size: 13px; color: var(--gov-navy); margin-bottom: 3px; }
+  .initiative-item span { font-size: 12px; color: var(--gov-text-muted); line-height: 1.5; }
+
+  /* STATS BAR */
+  .stats-hero {
+    background: var(--gov-navy);
+    color: #fff;
+    padding: 22px 0;
+  }
+  .stats-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+  }
+  .stat-hero-item {
+    text-align: center;
+    padding: 10px 8px;
+    border-right: 1px solid rgba(255,255,255,0.12);
+  }
+  .stat-hero-item:last-child { border-right: none; }
+  .stat-hero-item .sh-num {
+    font-size: 30px;
+    font-weight: 800;
+    display: block;
+    line-height: 1;
+    margin-bottom: 5px;
+    color: #f5d97a;
+  }
+  .stat-hero-item .sh-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.4;
+  }
+
+  /* LEADERSHIP SECTION */
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .leader-card {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-radius: 3px;
+    padding: 22px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .leader-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #003087, #0a3d8f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    border: 3px solid var(--gov-border);
+    color: #fff;
+  }
+  .leader-info {}
+  .leader-info .designation {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gov-saffron);
+    margin-bottom: 4px;
+  }
+  .leader-info h4 {
+    font-family: 'Noto Serif', serif;
+    font-size: 17px;
+    color: var(--gov-navy);
+    margin: 0 0 3px;
+    font-weight: 700;
+  }
+  .leader-info .rank {
+    font-size: 12px;
+    color: var(--gov-text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .leader-info p {
+    font-size: 12px;
+    color: var(--gov-text-muted);
+    line-height: 1.65;
+  }
+  .leader-contact {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .leader-contact a, .leader-contact span {
+    font-size: 12px;
+    color: var(--gov-navy);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .leader-contact a:hover { text-decoration: underline; }
+
+  /* PROGRAMME CARDS */
+  .programme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .prog-card {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-radius: 3px;
+    border-top: 3px solid var(--gov-navy);
+    padding: 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .prog-card.green { border-top-color: var(--gov-green); }
+  .prog-card.gold { border-top-color: var(--gov-gold); }
+  .prog-card.red { border-top-color: var(--gov-red); }
+  .prog-card.purple { border-top-color: #6b21a8; }
+  .prog-card.teal { border-top-color: #0e7490; }
+  .prog-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+  .prog-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gov-navy);
+    margin: 0 0 7px;
+  }
+  .prog-card p {
+    font-size: 12px;
+    color: var(--gov-text-muted);
+    line-height: 1.65;
+  }
+
+  /* MOTIVE / WHY SECTION */
+  .motive-section { background: #f7f9fc; }
+  .motive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .motive-card {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-radius: 3px;
+    padding: 20px;
+  }
+  .motive-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: #e8edf4;
+    font-family: 'Noto Serif', serif;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .motive-card h4 { font-size: 14px; font-weight: 700; color: var(--gov-navy); margin: 0 0 8px; }
+  .motive-card p { font-size: 12px; color: var(--gov-text-muted); line-height: 1.65; }
+
+  /* PORTAL ACCESS CARDS */
+  .portal-access-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .portal-card {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-radius: 3px;
+    padding: 22px;
+    text-align: center;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .portal-card-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+  .portal-card h4 { font-size: 16px; font-weight: 700; color: var(--gov-navy); margin: 0 0 8px; }
+  .portal-card p { font-size: 13px; color: var(--gov-text-muted); line-height: 1.6; margin-bottom: 16px; }
+  .portal-card-btn {
+    display: inline-block;
+    padding: 9px 20px;
+    background: var(--gov-navy);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: background 0.15s;
+  }
+  .portal-card-btn:hover { background: var(--gov-navy-dark); }
+  .portal-card-btn.gold { background: var(--gov-gold); color: #000; }
+  .portal-card-btn.gold:hover { background: #a67a09; }
+  .portal-card-btn.green { background: var(--gov-green); }
+  .portal-card-btn.green:hover { background: #0e6606; }
+
+  /* CONTACT SECTION */
+  .contact-section { background: #fff; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+  .contact-block {
+    background: var(--gov-bg);
+    border: 1px solid var(--gov-border);
+    border-radius: 3px;
+    padding: 20px;
+  }
+  .contact-block h4 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--gov-navy);
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gov-border);
+  }
+  .contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .contact-row:last-child { margin-bottom: 0; }
+  .contact-row-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .contact-row-text { font-size: 13px; color: var(--gov-text); line-height: 1.55; }
+  .contact-row-text strong { display: block; font-size: 11px; color: var(--gov-text-muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
+  .contact-row-text a { color: var(--gov-navy); text-decoration: none; }
+  .contact-row-text a:hover { text-decoration: underline; }
+  .helpline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .hl-card {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-radius: 3px;
+    padding: 11px 13px;
+    text-align: center;
+  }
+  .hl-card .hl-num { font-size: 22px; font-weight: 800; color: var(--gov-red); display: block; line-height: 1; margin-bottom: 4px; }
+  .hl-card .hl-num.blue { color: var(--gov-navy); }
+  .hl-card .hl-num.green { color: var(--gov-green); }
+  .hl-card small { font-size: 10px; color: var(--gov-text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+
+  /* ANNOUNCEMENT TICKER */
+  .announcement-bar {
+    background: #fffbea;
+    border: 1px solid #f0d060;
+    border-left: 4px solid var(--gov-gold);
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #5b4b18;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+  .announcement-bar strong { flex-shrink: 0; }
+
+  @media (max-width: 900px) {
+    .about-grid, .leadership-grid, .contact-grid { grid-template-columns: 1fr; }
+    .programme-grid, .portal-access-grid, .motive-grid { grid-template-columns: 1fr 1fr; }
+    .stats-hero-inner { grid-template-columns: repeat(3, 1fr); }
+    .hero-text h2 { font-size: 26px; }
+  }
+  @media (max-width: 600px) {
+    .programme-grid, .portal-access-grid, .motive-grid { grid-template-columns: 1fr; }
+    .stats-hero-inner { grid-template-columns: repeat(2, 1fr); }
+    .helpline-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
 <!-- MAIN CONTENT -->
 <main id="main">
-  <div class="content-shell">
 
-    <!-- INFO STRIP -->
-    <div class="info-strip">
-      <span class="icon">&#9432;</span>
-      <span>
-        <strong>Unified Portal Notice:</strong> This is the integrated entry point for the Women Safety Wing Complaint Management System. Select the appropriate portal below based on your role. Unauthorized access is prohibited under IT Act 2000.
-      </span>
-    </div>
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
+    <strong>&#128226; Notice:</strong>
+    <span>This is the Integrated Complaint Management Portal for Women Safety Wing, Telangana Police. Unauthorized access is a punishable offence under the IT Act, 2000. &nbsp;|&nbsp; For emergencies, dial <strong>100</strong> immediately.</span>
+  </div>
 
-    <!-- STATS -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <span class="num">3</span>
-        <span class="label">Active Portals</span>
-        <span class="desc">Booth, Commissionerate &amp; Admin</span>
-      </div>
-      <div class="stat-card green">
-        <span class="num">10</span>
-          <span class="label">Commissionerates</span>
-          <span class="desc">Telangana state</span>
-      </div>
-      <div class="stat-card gold">
-        <span class="num">9AM-9PM</span>
-        <span class="label">Booth Availability</span>
-        <span class="desc">Available in Hotspot Places</span>
-      </div>
-      <div class="stat-card red">
-        <span class="num">100</span>
-        <span class="label">Police Helpline</span>
-        <span class="desc">Contact for further issues</span>
-      </div>
-    </div>
-
-    <!-- LAYOUT -->
-    <div class="portal-layout">
-      <section class="home-panel">
-        <div style="max-width:1120px;margin:0 auto;">
-          <section style="background:linear-gradient(135deg,#003087 0%,#0a3d8f 60%,#1a5ab5 100%);color:#fff;border-radius:24px;padding:38px;box-shadow:0 24px 60px rgba(0,48,135,0.18);margin-bottom:22px;">
-            <div style="display:inline-block;background:rgba(245,230,176,0.18);border:1px solid rgba(245,230,176,0.34);color:#f5e6b0;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700;letter-spacing:0.7px;text-transform:uppercase;margin-bottom:16px;">Women Safety Wing Telangana Police</div>
-            <h2 style="margin:0 0 12px;font-size:40px;line-height:1.08;font-family:'Noto Serif',serif;">Safer reporting, faster routing, stronger support.</h2>
-            <p style="margin:0;max-width:720px;color:rgba(255,255,255,0.84);line-height:1.7;font-size:15px;">
-              This portal connects citizen complaint registration, commissionerate-level review,
-              and central administrative monitoring into one unified Women Safety Wing experience.
-            </p>
-          </section>
-          <section style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;">
-            <article style="background:#fff;border:1px solid #c5cdd8;border-radius:20px;padding:20px;box-shadow:0 12px 28px rgba(26,35,50,0.08);">
-              <strong style="display:block;font-size:18px;color:#003087;margin-bottom:8px;">Register Complaint</strong>
-              <span style="color:#4a5568;line-height:1.65;font-size:14px;">Start a new complaint submission and generate the acknowledgement receipt.</span>
-            </article>
-            <article style="background:#fff;border:1px solid #c5cdd8;border-radius:20px;padding:20px;box-shadow:0 12px 28px rgba(26,35,50,0.08);">
-              <strong style="display:block;font-size:18px;color:#003087;margin-bottom:8px;">Commissionerate Access</strong>
-              <span style="color:#4a5568;line-height:1.65;font-size:14px;">Authorized Commissionerate users can view complaints assigned to their own area.</span>
-            </article>
-            <article style="background:#fff;border:1px solid #c5cdd8;border-radius:20px;padding:20px;box-shadow:0 12px 28px rgba(26,35,50,0.08);">
-              <strong style="display:block;font-size:18px;color:#003087;margin-bottom:8px;">Admin Monitoring</strong>
-              <span style="color:#4a5568;line-height:1.65;font-size:14px;">Central administrators can review all complaints with filters and statewide visibility.</span>
-            </article>
-          </section>
-          <div style="margin-top:18px;background:#fff8e1;border:1px solid #e7d7a1;border-radius:18px;padding:18px 20px;color:#5b4b18;line-height:1.65;font-size:14px;">
-            Use the top navigation to open any portal directly. To start citizen filing immediately, click <strong>Register Complaint</strong>.
-          </div>
+  <!-- HERO BANNER -->
+  <div class="hero-banner">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-eyebrow">&#127988;&#8205;&#9760;&#65039; Government of Telangana &mdash; Home Department</div>
+        <h2>Women Safety Wing<br>Telangana Police</h2>
+        <p>A dedicated department of Telangana State Police committed to the safety, dignity, and empowerment of every woman and child across the state. Standing alongside every woman — through prevention, protection, and prosecution.</p>
+        <div class="hero-actions">
+          <a href="booth-dashboard.html" class="hero-btn hero-btn-primary">&#128203; Register a Complaint</a>
+          <a href="track-page.html" class="hero-btn hero-btn-outline">&#128506; Track Complaint Status</a>
         </div>
-      </section>
-
+      </div>
+      <div class="hero-badges">
+        <div class="emergency-card">
+          <span class="ec-num red">100</span>
+          <small>Police Emergency</small>
+        </div>
+        <div class="emergency-card">
+          <span class="ec-num gold">1098</span>
+          <small>Child Helpline</small>
+        </div>
+        <div class="emergency-card">
+          <span class="ec-num" style="color:#7dd3fc;font-size:22px;">87126 56858</span>
+          <small>WhatsApp Helpline</small>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-hero">
+    <div class="stats-hero-inner">
+      <div class="stat-hero-item">
+        <span class="sh-num">33</span>
+        <span class="sh-label">Districts Covered</span>
+      </div>
+      <div class="stat-hero-item">
+        <span class="sh-num">10</span>
+        <span class="sh-label">Commissionerates</span>
+      </div>
+      <div class="stat-hero-item">
+        <span class="sh-num">341+</span>
+        <span class="sh-label">SHE Teams Active</span>
+      </div>
+      <div class="stat-hero-item">
+        <span class="sh-num">12+</span>
+        <span class="sh-label">Bharosa Centres</span>
+      </div>
+      <div class="stat-hero-item">
+        <span class="sh-num">2014</span>
+        <span class="sh-label">SHE Teams Founded</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT THE PROGRAMME -->
+  <section class="home-section" id="about">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div class="section-heading-left">
+          <div class="section-tag">About the Programme</div>
+          <h3>About Women Safety Wing, Telangana</h3>
+          <p>Who we are, our history, and our mandate</p>
+        </div>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>The <strong>Women Safety Wing (WSW)</strong> is a fully dedicated department of the Telangana State Police, working round the clock to ensure the safety, dignity, and empowerment of women and children across the state. Carved out from the Women Protection Cell, CID, the WSW operates from independent premises with its own cadre strength and a very specific mandate.</p>
+          <p>The Wing handles investigation into all crimes against women — including prevention of trafficking, sexual offences, domestic violence, NRI-related issues, cybercrime, and juvenile matters. It brings together law enforcement, legal support, psychological counselling, and medical aid under a single institutional umbrella.</p>
+          <p>The Wing was formally established on <strong>8 March 2018</strong> — International Women's Day — reflecting the Government of Telangana's commitment to giving women's safety a dedicated, institutional, and empowered response mechanism. Today, WSW operates multiple specialized modules including SHE Teams, Bharosa Centres, Cyber Module, Anti-Human Trafficking Unit, NRI Cell, and the Missing Persons Monitoring Cell.</p>
+          <div class="about-highlight">
+            &#128204; <strong>Establishment:</strong> Women Safety Wing was officially established on <strong>8 March 2018</strong>, carved out from the Women Protection Cell, CID of Telangana Police. India's first Child Friendly Court was also set up on 7 April 2018 in Hyderabad City.
+          </div>
+        </div>
+        <div class="initiative-list">
+          <div class="initiative-item">
+            <span class="initiative-icon">&#128101;</span>
+            <div>
+              <strong>SHE Teams — Est. 24 October 2014</strong>
+              <span>Plain-clothes women police officers deployed at public spaces to prevent and act against harassment. Pioneering initiative in India, now with 341+ active teams statewide.</span>
+            </div>
+          </div>
+          <div class="initiative-item green">
+            <span class="initiative-icon">&#127968;</span>
+            <div>
+              <strong>Bharosa Centres — Integrated Support</strong>
+              <span>One-stop crisis centres for survivors of sexual violence and domestic abuse, offering medical, legal, psychological, and shelter support under one roof. Operational in 12+ districts.</span>
+            </div>
+          </div>
+          <div class="initiative-item gold">
+            <span class="initiative-icon">&#128187;</span>
+            <div>
+              <strong>Cyber Module &amp; CybHER</strong>
+              <span>Dedicated cybercrime support for women — from online harassment and stalking to matrimonial fraud. CybHER launched 15 July 2020 to handle digital crimes against women and children.</span>
+            </div>
+          </div>
+          <div class="initiative-item red">
+            <span class="initiative-icon">&#127758;</span>
+            <div>
+              <strong>Anti-Human Trafficking Unit (AHTU)</strong>
+              <span>Specialized units to detect, investigate, and rescue victims of human trafficking across Telangana and coordinate with national agencies.</span>
+            </div>
+          </div>
+          <div class="initiative-item">
+            <span class="initiative-icon">&#128222;</span>
+            <div>
+              <strong>NRI Women Safety Cell — Est. 17 July 2019</strong>
+              <span>Handles cases of crimes against women by NRI spouses or relatives, including matrimonial fraud, desertion, and cross-border domestic violence.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THIS PROGRAMME -->
+  <section class="home-section motive-section" id="motive">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div class="section-heading-left">
+          <div class="section-tag">Why This Programme</div>
+          <h3>Motive &amp; Objectives of Women Safety Wing</h3>
+          <p>The mandate that drives every initiative</p>
+        </div>
+      </div>
+      <div class="motive-grid">
+        <div class="motive-card">
+          <div class="motive-num">01</div>
+          <h4>Dedicated Institutional Response</h4>
+          <p>Prior to WSW, women's safety cases were handled by general police divisions without specialized training, resources, or focus. The Wing was created to provide a dedicated, sensitive, and expert response to crimes against women and children — eliminating procedural gaps and ensuring survivor-centric processes.</p>
+        </div>
+        <div class="motive-card">
+          <div class="motive-num">02</div>
+          <h4>Prevention Before Prosecution</h4>
+          <p>The WSW adopts a proactive stance — through SHE Teams in public hotspots, Safety Clubs in schools and colleges, and community awareness programmes — the Wing works to prevent crimes from occurring in the first place, rather than merely reacting after the fact.</p>
+        </div>
+        <div class="motive-card">
+          <div class="motive-num">03</div>
+          <h4>Holistic Survivor Support</h4>
+          <p>Bharosa Centres provide integrated support — legal advice, medical examination, psychological counselling, shelter, and police assistance — ensuring that a survivor never has to navigate the system alone. The approach treats rehabilitation and empowerment as equally important as justice.</p>
+        </div>
+        <div class="motive-card">
+          <div class="motive-num">04</div>
+          <h4>Technology as an Enabler</h4>
+          <p>From the T-Safe app and Hawkeye platform to the SHE Team mobile application and the Integrated Complaint Portal, WSW leverages digital tools to make women's safety accessible, traceable, and accountable — lowering barriers to reporting and improving response times.</p>
+        </div>
+        <div class="motive-card">
+          <div class="motive-num">05</div>
+          <h4>Accountability &amp; Transparency</h4>
+          <p>This Integrated Complaint Management Portal was developed to ensure that every complaint filed at a Booth is tracked through commissionerate review and administrative oversight — creating an auditable, transparent system with end-to-end accountability from registration to resolution.</p>
+        </div>
+        <div class="motive-card">
+          <div class="motive-num">06</div>
+          <h4>Empowerment Through Awareness</h4>
+          <p>An aware citizen is an empowered citizen. WSW runs safety clubs, CybHER awareness sessions, and community outreach to equip women and children with the knowledge to identify risks, access legal rights, and seek timely help — building a culture of safety from the ground up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMMES & INITIATIVES -->
+  <section class="home-section" id="programmes">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div class="section-heading-left">
+          <div class="section-tag">Programmes &amp; Initiatives</div>
+          <h3>Key Modules of Women Safety Wing</h3>
+          <p>Specialized units working to protect, prevent, and empower</p>
+        </div>
+      </div>
+      <div class="programme-grid">
+        <div class="prog-card">
+          <span class="prog-icon">&#128101;</span>
+          <h4>SHE Teams</h4>
+          <p>Plain-clothes women police officers at public hotspots — markets, bus stands, colleges — to deter, detect and act against sexual harassment and eve-teasing. Operational since October 2014.</p>
+        </div>
+        <div class="prog-card green">
+          <span class="prog-icon">&#127968;</span>
+          <h4>Bharosa Centres</h4>
+          <p>Integrated one-stop support centres for survivors of sexual violence and domestic abuse, providing medical, legal, psychological and shelter services in 12+ districts of Telangana.</p>
+        </div>
+        <div class="prog-card gold">
+          <span class="prog-icon">&#128187;</span>
+          <h4>Cyber Module &amp; CybHER</h4>
+          <p>Handles online harassment, stalking, cyberbullying, and digital crimes against women and children. CybHER specifically addresses cyber safety awareness for women and girls.</p>
+        </div>
+        <div class="prog-card red">
+          <span class="prog-icon">&#9940;</span>
+          <h4>Anti-Human Trafficking Unit</h4>
+          <p>Specialized investigation units that work to prevent trafficking, conduct rescue operations, rehabilitate victims, and prosecute perpetrators of human trafficking.</p>
+        </div>
+        <div class="prog-card purple">
+          <span class="prog-icon">&#127968;</span>
+          <h4>Domestic Violence Module</h4>
+          <p>Dedicated officers and support staff trained in domestic violence response. Includes CDEW — Centre for Development and Empowerment of Women — for survivors' reintegration.</p>
+        </div>
+        <div class="prog-card teal">
+          <span class="prog-icon">&#127758;</span>
+          <h4>NRI Cell &amp; Sahas</h4>
+          <p>NRI Cell handles cross-border matrimonial crimes. Sahas focuses on workplace sexual harassment prevention and the POSH Act. Both are nationally recognized models.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP SECTION -->
+  <section class="home-section" id="leadership" style="background:#f7f9fc;">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div class="section-heading-left">
+          <div class="section-tag">Leadership</div>
+          <h3>Senior Officers &mdash; Women Safety Wing</h3>
+          <p>The officials guiding the Women Safety Wing, Telangana Police</p>
+        </div>
+      </div>
+      <div class="leadership-grid">
+        <div class="leader-card">
+          <div class="leader-avatar" style="background:linear-gradient(135deg,#7c2d12,#b45309);">&#128100;</div>
+          <div class="leader-info">
+            <div class="designation">Director General of Police</div>
+            <h4>Sri B. Shivadhar Reddy, IPS</h4>
+            <div class="rank">Director General of Police</div>
+          </div>
+        </div>
+        <div class="leader-card">
+          <div class="leader-avatar" style="background:linear-gradient(135deg,#0f766e,#0e7490);">&#128100;</div>
+          <div class="leader-info">
+            <div class="designation">Additional Director General of Police</div>
+            <h4>Ms. Charu Sinha, IPS</h4>
+            <div class="rank">Addl. Director General of Police, CID, Telangana, Hyd. (FAC) Addl. Director General of Police Women Safety, SHE Teams &amp; Bharosa, Hyd.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- PORTAL ACCESS -->
+  <section class="home-section" id="portals">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div class="section-heading-left">
+          <div class="section-tag">Integrated Complaint Portal</div>
+          <h3>Access the Complaint Management System</h3>
+          <p>Select your portal based on your authorised role</p>
+        </div>
+      </div>
+      <div class="portal-access-grid">
+        <div class="portal-card">
+          <span class="portal-card-icon">&#128203;</span>
+          <h4>Register a Complaint</h4>
+          <p>Citizens and Booth officers can file a new complaint, attach supporting information, and receive an official acknowledgement receipt for tracking.</p>
+          <a href="booth-dashboard.html" class="portal-card-btn gold">Open Complaint Portal</a>
+        </div>
+        <div class="portal-card">
+          <span class="portal-card-icon">&#128196;</span>
+          <h4>Commissionerate Login</h4>
+          <p>Authorized Commissionerate officers can log in to view, review, and act on complaints routed to their jurisdiction from across the state.</p>
+          <a href="sub-dashboard.html" class="portal-card-btn">Commissionerate Access</a>
+        </div>
+        <div class="portal-card">
+          <span class="portal-card-icon">&#9776;</span>
+          <h4>Admin Dashboard</h4>
+          <p>Central administrators can access statewide complaint data with full filter controls, status tracking, and administrative oversight across all commissionerates.</p>
+          <a href="admin-dashboard.html" class="portal-card-btn green">Admin Access</a>
+        </div>
+      </div>
+      <div style="margin-top:16px;background:#e8f0fe;border:1px solid #b8cef0;border-left:4px solid var(--gov-navy);padding:12px 16px;font-size:13px;color:var(--gov-navy-dark);border-radius:2px;">
+        &#9432; <strong>Authorized Access Only:</strong> Commissionerate and Admin portals are restricted to authorized Telangana Police personnel. Unauthorized access is a punishable offence under the Information Technology Act, 2000.
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT US -->
+  <section class="home-section contact-section" id="contact" style="background:#f0f4f8;">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div class="section-heading-left">
+          <div class="section-tag">Contact Us</div>
+          <h3>Get in Touch — Women Safety Wing</h3>
+          <p>Reach us for complaints, inquiries, or support</p>
+        </div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-block">
+          <h4>&#127968; Headquarters</h4>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#128205;</span>
+            <div class="contact-row-text">
+              <strong>Address</strong>
+              Women Safety Wing, Telangana State Police,<br>
+              CID Buildings, Hyderabad,<br>
+              Telangana — 500 004
+            </div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#128222;</span>
+            <div class="contact-row-text">
+              <strong>WhatsApp Helpline</strong>
+              <a href="https://wa.me/918712656858">+91 87126 56858</a>
+            </div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#9993;</span>
+            <div class="contact-row-text">
+              <strong>Official Email</strong>
+              <a href="mailto:wsw@tspolice.gov.in">wsw@tspolice.gov.in</a>
+            </div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#127760;</span>
+            <div class="contact-row-text">
+              <strong>Official Website</strong>
+              <a href="https://womensafetywing.telangana.gov.in/" target="_blank" rel="noopener">womensafetywing.telangana.gov.in</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-block">
+          <h4>&#128222; Emergency Helplines</h4>
+          <div class="helpline-grid">
+            <div class="hl-card">
+              <span class="hl-num red">100</span>
+              <small>Police Emergency</small>
+            </div>
+            <div class="hl-card">
+              <span class="hl-num blue">112</span>
+              <small>National Emergency</small>
+            </div>
+            <div class="hl-card">
+              <span class="hl-num green">1098</span>
+              <small>Child Helpline</small>
+            </div>
+            <div class="hl-card">
+              <span class="hl-num blue">1930</span>
+              <small>Cybercrime</small>
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <div class="contact-row">
+              <span class="contact-row-icon">&#128242;</span>
+              <div class="contact-row-text">
+                <strong>T-Safe App</strong>
+                Download the T-Safe Women Safety App on Android &amp; iOS for quick emergency access and location sharing.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-block">
+          <h4>&#128279; Quick Links</h4>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#128203;</span>
+            <div class="contact-row-text"><a href="booth-dashboard.html">File a New Complaint</a></div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#128506;</span>
+            <div class="contact-row-text"><a href="track-page.html">Track Complaint Status</a></div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#127760;</span>
+            <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/get-help-by-location/" target="_blank" rel="noopener">Find Nearest Bharosa Centre</a></div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#128196;</span>
+            <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/women-safety-laws-downloads/" target="_blank" rel="noopener">Women Safety Laws &amp; Downloads</a></div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#128101;</span>
+            <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/volunteering-opportunities/" target="_blank" rel="noopener">Volunteering Opportunities</a></div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#127968;</span>
+            <div class="contact-row-text"><a href="https://tspolice.gov.in/" target="_blank" rel="noopener">Telangana State Police</a></div>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-icon">&#127988;</span>
+            <div class="contact-row-text"><a href="https://www.telangana.gov.in/" target="_blank" rel="noopener">Government of Telangana</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- FOOTER -->
