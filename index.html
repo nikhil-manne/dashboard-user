@@ -714,8 +714,26 @@
     border-radius: 3px;
     padding: 22px;
     display: flex;
+    gap: 18px;
     align-items: flex-start;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .leader-photo {
+    width: 108px;
+    height: 132px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--gov-border);
+    background: #eef2f7;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+  }
+  .leader-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
   }
   .leader-info {}
   .leader-info .designation {
@@ -918,11 +936,21 @@
     .programme-grid, .portal-access-grid, .motive-grid { grid-template-columns: 1fr 1fr; }
     .stats-hero-inner { grid-template-columns: repeat(3, 1fr); }
     .hero-text h2 { font-size: 26px; }
+    .leader-card { align-items: center; }
   }
   @media (max-width: 600px) {
     .programme-grid, .portal-access-grid, .motive-grid { grid-template-columns: 1fr; }
     .stats-hero-inner { grid-template-columns: repeat(2, 1fr); }
     .helpline-grid { grid-template-columns: 1fr 1fr; }
+    .leader-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .leader-photo {
+      width: 100%;
+      max-width: 220px;
+      height: 260px;
+    }
   }
 </style>
 
@@ -1141,6 +1169,9 @@
       </div>
       <div class="leadership-grid">
         <div class="leader-card">
+          <div class="leader-photo">
+            <img src="assets/dgp.png" alt="Sri B. Shivadhar Reddy, IPS">
+          </div>
           <div class="leader-info">
             <div class="designation">Director General of Police</div>
             <h4>Sri B. Shivadhar Reddy, IPS</h4>
@@ -1148,6 +1179,9 @@
           </div>
         </div>
         <div class="leader-card">
+          <div class="leader-photo">
+            <img src="assets/adgp.png" alt="Ms. Charu Sinha, IPS">
+          </div>
           <div class="leader-info">
             <div class="designation">Additional Director General of Police</div>
             <h4>Ms. Charu Sinha, IPS</h4>
