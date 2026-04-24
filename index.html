@@ -82,6 +82,31 @@
       gap: 20px;
       flex-wrap: wrap;
     }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      min-width: 320px;
+    }
+    .header-logo {
+      width: 62px;
+      height: 62px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--gov-border);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-logo img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      display: block;
+    }
     .gov-titles { flex: 1; min-width: 280px; }
     .gov-titles .ministry {
       font-size: 11px;
@@ -433,10 +458,15 @@
 
 <!-- OFFICIAL HEADER -->
 <header class="gov-header">
-  <div class="gov-titles">
+  <div class="header-brand">
+    <div class="header-logo">
+      <img src="assets/logo.png" alt="Women Safety Wing logo">
+    </div>
+    <div class="gov-titles">
       <div class="ministry">Government of Telangana — Home Department</div>
       <h1>Women Safety Wing</h1>
       <div class="subtitle">Telangana Police | Integrated Complaint Management Portal</div>
+    </div>
   </div>
   <div class="header-right">
     <div class="helpline-box">
@@ -937,6 +967,7 @@
     .stats-hero-inner { grid-template-columns: repeat(3, 1fr); }
     .hero-text h2 { font-size: 26px; }
     .leader-card { align-items: center; }
+    .header-brand { min-width: 100%; }
   }
   @media (max-width: 600px) {
     .programme-grid, .portal-access-grid, .motive-grid { grid-template-columns: 1fr; }
