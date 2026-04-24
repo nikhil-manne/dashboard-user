@@ -82,33 +82,7 @@
       gap: 20px;
       flex-wrap: wrap;
     }
-    .gov-header .logo-block {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .emblem-circle {
-      width: 68px;
-      height: 68px;
-      background: var(--gov-white);
-      border: 2px solid var(--gov-border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .emblem-circle img {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-    }
-    .emblem-svg {
-      width: 56px;
-      height: 56px;
-    }
-    .gov-titles { flex: 1; }
+    .gov-titles { flex: 1; min-width: 280px; }
     .gov-titles .ministry {
       font-size: 11px;
       font-weight: 600;
@@ -187,7 +161,6 @@
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 6px;
       cursor: pointer;
       white-space: nowrap;
       text-decoration: none;
@@ -200,7 +173,6 @@
     .nav-links li a, .nav-links li button {
       display: flex;
       align-items: center;
-      gap: 5px;
       padding: 13px 16px;
       font-size: 13px;
       font-weight: 500;
@@ -461,15 +433,10 @@
 
 <!-- OFFICIAL HEADER -->
 <header class="gov-header">
-  <div class="logo-block">
-    <div class="emblem-circle">
-      <img src="assets/logo.png" alt="Women Safety Wing logo">
-    </div>
-    <div class="gov-titles">
+  <div class="gov-titles">
       <div class="ministry">Government of Telangana — Home Department</div>
       <h1>Women Safety Wing</h1>
       <div class="subtitle">Telangana Police | Integrated Complaint Management Portal</div>
-    </div>
   </div>
   <div class="header-right">
     <div class="helpline-box">
@@ -482,32 +449,32 @@
 
 <!-- NAVIGATION BAR -->
 <nav class="nav-bar" id="main-nav" role="navigation" aria-label="Main navigation">
-  <a class="nav-home" href="index.html">&#8962; Home</a>
+  <a class="nav-home" href="index.html">Home</a>
   <ul class="nav-links" id="navLinks">
     <li id="nav-booth">
-      <a href="booth-dashboard.html">&#128203; Register Complaint</a>
+      <a href="booth-dashboard.html">Register Complaint</a>
     </li>
     <li id="nav-sub">
-      <a href="sub-dashboard.html">&#128196; Commissionerate login</a>
+      <a href="sub-dashboard.html">Commissionerate Login</a>
     </li>
     <li id="nav-admin">
-      <a href="admin-dashboard.html">&#9776; Admin login</a>
+      <a href="admin-dashboard.html">Admin Login</a>
     </li>
     <li>
-      <a href="track-page.html">&#128506; Track Status</a>
+      <a href="track-page.html">Track Status</a>
     </li>
     <li>
-      <a href="#about">&#9432; About</a>
+      <a href="#about">About</a>
     </li>
     <li>
-      <a href="#leadership">&#128100; Leadership</a>
+      <a href="#leadership">Leadership</a>
     </li>
     <li>
-      <a href="#contact">&#9993; Contact</a>
+      <a href="#contact">Contact</a>
     </li>
   </ul>
   <div class="nav-right">
-    <a class="nav-btn" id="openTab" href="booth-dashboard.html" target="_blank" rel="noopener">&#128279; Register Complaint</a>
+    <a class="nav-btn" id="openTab" href="booth-dashboard.html" target="_blank" rel="noopener">Open Complaint Portal</a>
   </div>
 </nav>
 
@@ -692,14 +659,10 @@
     border-left: 4px solid var(--gov-navy);
     border-radius: 2px;
     padding: 13px 16px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
   }
   .initiative-item.green { border-left-color: var(--gov-green); }
   .initiative-item.gold { border-left-color: var(--gov-gold); }
   .initiative-item.red { border-left-color: var(--gov-red); }
-  .initiative-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
   .initiative-item strong { display: block; font-size: 13px; color: var(--gov-navy); margin-bottom: 3px; }
   .initiative-item span { font-size: 12px; color: var(--gov-text-muted); line-height: 1.5; }
 
@@ -751,22 +714,8 @@
     border-radius: 3px;
     padding: 22px;
     display: flex;
-    gap: 18px;
     align-items: flex-start;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .leader-avatar {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #003087, #0a3d8f);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    flex-shrink: 0;
-    border: 3px solid var(--gov-border);
-    color: #fff;
   }
   .leader-info {}
   .leader-info .designation {
@@ -830,7 +779,6 @@
   .prog-card.red { border-top-color: var(--gov-red); }
   .prog-card.purple { border-top-color: #6b21a8; }
   .prog-card.teal { border-top-color: #0e7490; }
-  .prog-icon { font-size: 26px; margin-bottom: 10px; display: block; }
   .prog-card h4 {
     font-size: 14px;
     font-weight: 700;
@@ -881,7 +829,6 @@
     text-align: center;
     box-shadow: 0 1px 6px rgba(0,0,0,0.07);
   }
-  .portal-card-icon { font-size: 36px; margin-bottom: 12px; display: block; }
   .portal-card h4 { font-size: 16px; font-weight: 700; color: var(--gov-navy); margin: 0 0 8px; }
   .portal-card p { font-size: 13px; color: var(--gov-text-muted); line-height: 1.6; margin-bottom: 16px; }
   .portal-card-btn {
@@ -926,13 +873,10 @@
     border-bottom: 1px solid var(--gov-border);
   }
   .contact-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    display: block;
     margin-bottom: 12px;
   }
   .contact-row:last-child { margin-bottom: 0; }
-  .contact-row-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
   .contact-row-text { font-size: 13px; color: var(--gov-text); line-height: 1.55; }
   .contact-row-text strong { display: block; font-size: 11px; color: var(--gov-text-muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
   .contact-row-text a { color: var(--gov-navy); text-decoration: none; }
@@ -987,7 +931,7 @@
 
   <!-- ANNOUNCEMENT BAR -->
   <div class="announcement-bar">
-    <strong>&#128226; Notice:</strong>
+    <strong>Notice:</strong>
     <span>This is the Integrated Complaint Management Portal for Women Safety Wing, Telangana Police. Unauthorized access is a punishable offence under the IT Act, 2000. &nbsp;|&nbsp; For emergencies, dial <strong>100</strong> immediately.</span>
   </div>
 
@@ -995,12 +939,12 @@
   <div class="hero-banner">
     <div class="hero-inner">
       <div class="hero-text">
-        <div class="hero-eyebrow">&#127988;&#8205;&#9760;&#65039; Government of Telangana &mdash; Home Department</div>
+        <div class="hero-eyebrow">Government of Telangana &mdash; Home Department</div>
         <h2>Women Safety Wing<br>Telangana Police</h2>
         <p>A dedicated department of Telangana State Police committed to the safety, dignity, and empowerment of every woman and child across the state. Standing alongside every woman — through prevention, protection, and prosecution.</p>
         <div class="hero-actions">
-          <a href="booth-dashboard.html" class="hero-btn hero-btn-primary">&#128203; Register a Complaint</a>
-          <a href="track-page.html" class="hero-btn hero-btn-outline">&#128506; Track Complaint Status</a>
+          <a href="booth-dashboard.html" class="hero-btn hero-btn-primary">Register a Complaint</a>
+          <a href="track-page.html" class="hero-btn hero-btn-outline">Track Complaint Status</a>
         </div>
       </div>
       <div class="hero-badges">
@@ -1062,40 +1006,35 @@
           <p>The Wing handles investigation into all crimes against women — including prevention of trafficking, sexual offences, domestic violence, NRI-related issues, cybercrime, and juvenile matters. It brings together law enforcement, legal support, psychological counselling, and medical aid under a single institutional umbrella.</p>
           <p>The Wing was formally established on <strong>8 March 2018</strong> — International Women's Day — reflecting the Government of Telangana's commitment to giving women's safety a dedicated, institutional, and empowered response mechanism. Today, WSW operates multiple specialized modules including SHE Teams, Bharosa Centres, Cyber Module, Anti-Human Trafficking Unit, NRI Cell, and the Missing Persons Monitoring Cell.</p>
           <div class="about-highlight">
-            &#128204; <strong>Establishment:</strong> Women Safety Wing was officially established on <strong>8 March 2018</strong>, carved out from the Women Protection Cell, CID of Telangana Police. India's first Child Friendly Court was also set up on 7 April 2018 in Hyderabad City.
+            <strong>Establishment:</strong> Women Safety Wing was officially established on <strong>8 March 2018</strong>, carved out from the Women Protection Cell, CID of Telangana Police. India's first Child Friendly Court was also set up on 7 April 2018 in Hyderabad City.
           </div>
         </div>
         <div class="initiative-list">
           <div class="initiative-item">
-            <span class="initiative-icon">&#128101;</span>
             <div>
               <strong>SHE Teams — Est. 24 October 2014</strong>
               <span>Plain-clothes women police officers deployed at public spaces to prevent and act against harassment. Pioneering initiative in India, now with 341+ active teams statewide.</span>
             </div>
           </div>
           <div class="initiative-item green">
-            <span class="initiative-icon">&#127968;</span>
             <div>
               <strong>Bharosa Centres — Integrated Support</strong>
               <span>One-stop crisis centres for survivors of sexual violence and domestic abuse, offering medical, legal, psychological, and shelter support under one roof. Operational in 12+ districts.</span>
             </div>
           </div>
           <div class="initiative-item gold">
-            <span class="initiative-icon">&#128187;</span>
             <div>
               <strong>Cyber Module &amp; CybHER</strong>
               <span>Dedicated cybercrime support for women — from online harassment and stalking to matrimonial fraud. CybHER launched 15 July 2020 to handle digital crimes against women and children.</span>
             </div>
           </div>
           <div class="initiative-item red">
-            <span class="initiative-icon">&#127758;</span>
             <div>
               <strong>Anti-Human Trafficking Unit (AHTU)</strong>
               <span>Specialized units to detect, investigate, and rescue victims of human trafficking across Telangana and coordinate with national agencies.</span>
             </div>
           </div>
           <div class="initiative-item">
-            <span class="initiative-icon">&#128222;</span>
             <div>
               <strong>NRI Women Safety Cell — Est. 17 July 2019</strong>
               <span>Handles cases of crimes against women by NRI spouses or relatives, including matrimonial fraud, desertion, and cross-border domestic violence.</span>
@@ -1163,32 +1102,26 @@
       </div>
       <div class="programme-grid">
         <div class="prog-card">
-          <span class="prog-icon">&#128101;</span>
           <h4>SHE Teams</h4>
           <p>Plain-clothes women police officers at public hotspots — markets, bus stands, colleges — to deter, detect and act against sexual harassment and eve-teasing. Operational since October 2014.</p>
         </div>
         <div class="prog-card green">
-          <span class="prog-icon">&#127968;</span>
           <h4>Bharosa Centres</h4>
           <p>Integrated one-stop support centres for survivors of sexual violence and domestic abuse, providing medical, legal, psychological and shelter services in 12+ districts of Telangana.</p>
         </div>
         <div class="prog-card gold">
-          <span class="prog-icon">&#128187;</span>
           <h4>Cyber Module &amp; CybHER</h4>
           <p>Handles online harassment, stalking, cyberbullying, and digital crimes against women and children. CybHER specifically addresses cyber safety awareness for women and girls.</p>
         </div>
         <div class="prog-card red">
-          <span class="prog-icon">&#9940;</span>
           <h4>Anti-Human Trafficking Unit</h4>
           <p>Specialized investigation units that work to prevent trafficking, conduct rescue operations, rehabilitate victims, and prosecute perpetrators of human trafficking.</p>
         </div>
         <div class="prog-card purple">
-          <span class="prog-icon">&#127968;</span>
           <h4>Domestic Violence Module</h4>
           <p>Dedicated officers and support staff trained in domestic violence response. Includes CDEW — Centre for Development and Empowerment of Women — for survivors' reintegration.</p>
         </div>
         <div class="prog-card teal">
-          <span class="prog-icon">&#127758;</span>
           <h4>NRI Cell &amp; Sahas</h4>
           <p>NRI Cell handles cross-border matrimonial crimes. Sahas focuses on workplace sexual harassment prevention and the POSH Act. Both are nationally recognized models.</p>
         </div>
@@ -1208,7 +1141,6 @@
       </div>
       <div class="leadership-grid">
         <div class="leader-card">
-          <div class="leader-avatar" style="background:linear-gradient(135deg,#7c2d12,#b45309);">&#128100;</div>
           <div class="leader-info">
             <div class="designation">Director General of Police</div>
             <h4>Sri B. Shivadhar Reddy, IPS</h4>
@@ -1216,7 +1148,6 @@
           </div>
         </div>
         <div class="leader-card">
-          <div class="leader-avatar" style="background:linear-gradient(135deg,#0f766e,#0e7490);">&#128100;</div>
           <div class="leader-info">
             <div class="designation">Additional Director General of Police</div>
             <h4>Ms. Charu Sinha, IPS</h4>
@@ -1238,26 +1169,23 @@
       </div>
       <div class="portal-access-grid">
         <div class="portal-card">
-          <span class="portal-card-icon">&#128203;</span>
           <h4>Register a Complaint</h4>
           <p>Citizens and Booth officers can file a new complaint, attach supporting information, and receive an official acknowledgement receipt for tracking.</p>
           <a href="booth-dashboard.html" class="portal-card-btn gold">Open Complaint Portal</a>
         </div>
         <div class="portal-card">
-          <span class="portal-card-icon">&#128196;</span>
           <h4>Commissionerate Login</h4>
           <p>Authorized Commissionerate officers can log in to view, review, and act on complaints routed to their jurisdiction from across the state.</p>
           <a href="sub-dashboard.html" class="portal-card-btn">Commissionerate Access</a>
         </div>
         <div class="portal-card">
-          <span class="portal-card-icon">&#9776;</span>
           <h4>Admin Dashboard</h4>
           <p>Central administrators can access statewide complaint data with full filter controls, status tracking, and administrative oversight across all commissionerates.</p>
           <a href="admin-dashboard.html" class="portal-card-btn green">Admin Access</a>
         </div>
       </div>
       <div style="margin-top:16px;background:#e8f0fe;border:1px solid #b8cef0;border-left:4px solid var(--gov-navy);padding:12px 16px;font-size:13px;color:var(--gov-navy-dark);border-radius:2px;">
-        &#9432; <strong>Authorized Access Only:</strong> Commissionerate and Admin portals are restricted to authorized Telangana Police personnel. Unauthorized access is a punishable offence under the Information Technology Act, 2000.
+        <strong>Authorized Access Only:</strong> Commissionerate and Admin portals are restricted to authorized Telangana Police personnel. Unauthorized access is a punishable offence under the Information Technology Act, 2000.
       </div>
     </div>
   </section>
@@ -1274,9 +1202,8 @@
       </div>
       <div class="contact-grid">
         <div class="contact-block">
-          <h4>&#127968; Headquarters</h4>
+          <h4>Headquarters</h4>
           <div class="contact-row">
-            <span class="contact-row-icon">&#128205;</span>
             <div class="contact-row-text">
               <strong>Address</strong>
               Women Safety Wing, Telangana State Police,<br>
@@ -1285,21 +1212,18 @@
             </div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#128222;</span>
             <div class="contact-row-text">
               <strong>WhatsApp Helpline</strong>
               <a href="https://wa.me/918712656858">+91 87126 56858</a>
             </div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#9993;</span>
             <div class="contact-row-text">
               <strong>Official Email</strong>
               <a href="mailto:wsw@tspolice.gov.in">wsw@tspolice.gov.in</a>
             </div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#127760;</span>
             <div class="contact-row-text">
               <strong>Official Website</strong>
               <a href="https://womensafetywing.telangana.gov.in/" target="_blank" rel="noopener">womensafetywing.telangana.gov.in</a>
@@ -1308,7 +1232,7 @@
         </div>
 
         <div class="contact-block">
-          <h4>&#128222; Emergency Helplines</h4>
+          <h4>Emergency Helplines</h4>
           <div class="helpline-grid">
             <div class="hl-card">
               <span class="hl-num red">100</span>
@@ -1329,7 +1253,6 @@
           </div>
           <div style="margin-top:12px;">
             <div class="contact-row">
-              <span class="contact-row-icon">&#128242;</span>
               <div class="contact-row-text">
                 <strong>T-Safe App</strong>
                 Download the T-Safe Women Safety App on Android &amp; iOS for quick emergency access and location sharing.
@@ -1339,33 +1262,26 @@
         </div>
 
         <div class="contact-block">
-          <h4>&#128279; Quick Links</h4>
+          <h4>Quick Links</h4>
           <div class="contact-row">
-            <span class="contact-row-icon">&#128203;</span>
             <div class="contact-row-text"><a href="booth-dashboard.html">File a New Complaint</a></div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#128506;</span>
             <div class="contact-row-text"><a href="track-page.html">Track Complaint Status</a></div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#127760;</span>
             <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/get-help-by-location/" target="_blank" rel="noopener">Find Nearest Bharosa Centre</a></div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#128196;</span>
             <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/women-safety-laws-downloads/" target="_blank" rel="noopener">Women Safety Laws &amp; Downloads</a></div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#128101;</span>
             <div class="contact-row-text"><a href="https://womensafetywing.telangana.gov.in/volunteering-opportunities/" target="_blank" rel="noopener">Volunteering Opportunities</a></div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#127968;</span>
             <div class="contact-row-text"><a href="https://tspolice.gov.in/" target="_blank" rel="noopener">Telangana State Police</a></div>
           </div>
           <div class="contact-row">
-            <span class="contact-row-icon">&#127988;</span>
             <div class="contact-row-text"><a href="https://www.telangana.gov.in/" target="_blank" rel="noopener">Government of Telangana</a></div>
           </div>
         </div>
