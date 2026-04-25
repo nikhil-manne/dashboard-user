@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Public Booth Complaint System | Women Safety Wing, Telangana Police</title>
+  <title>Smart Public Booth Complaint System | Women Safety Wing, Telangana Police</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
@@ -144,6 +144,9 @@
       white-space: nowrap; text-decoration: none;
     }
     .nav-links { display: flex; list-style: none; height: 100%; }
+    .nav-links li {
+      position: relative;
+    }
     .nav-links li a, .nav-links li button {
       display: flex; align-items: center;
       padding: 13px 16px; font-size: 13px; font-weight: 500;
@@ -156,6 +159,52 @@
       background: rgba(255,255,255,0.1); color: #fff;
     }
     .nav-links li.active a { background: rgba(255,255,255,0.15); color: #fff; border-bottom: 3px solid var(--gov-gold); }
+    .nav-dropdown > a::after {
+      content: '▾';
+      font-size: 10px;
+      margin-left: 7px;
+      opacity: 0.8;
+    }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 230px;
+      list-style: none;
+      background: #fff;
+      border: 1px solid var(--gov-border);
+      border-top: 3px solid var(--gov-gold);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+      z-index: 150;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-links .nav-dropdown-menu li a {
+      color: var(--gov-text);
+      background: #fff;
+      border-right: none;
+      border-bottom: 1px solid #eef1f5;
+      padding: 11px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      justify-content: flex-start;
+    }
+    .nav-links .nav-dropdown-menu li:last-child a {
+      border-bottom: none;
+    }
+    .nav-links .nav-dropdown-menu li a:hover,
+    .nav-links .nav-dropdown-menu li a:focus {
+      color: var(--gov-navy);
+      background: #f0f4f8;
+    }
     .nav-right { margin-left: auto; display: flex; align-items: center; }
     .nav-btn {
       padding: 12px 16px; font-size: 12px; color: rgba(255,255,255,0.7);
@@ -632,7 +681,7 @@
     </div>
     <div class="gov-titles">
       <div class="ministry">Government of Telangana — Home Department | Women Safety Wing</div>
-      <h1>Kisok-booth Complaint Portal</h1>
+      <h1>Smart Public Booth Complaint System</h1>
       <div class="subtitle">Integrated Complaint Management Portal &nbsp;|&nbsp; Telangana Police</div>
     </div>
   </div>
@@ -650,7 +699,14 @@
   <a class="nav-home" href="index.html">🏠 Home</a>
   <ul class="nav-links">
     <li><a href="#how-it-works">How It Works</a></li>
-    <li><a href="#portals">Access Portals</a></li>
+    <li class="nav-dropdown">
+      <a href="#portals" aria-haspopup="true" aria-expanded="false">Access Portals</a>
+      <ul class="nav-dropdown-menu" aria-label="Access portal login options">
+        <li><a href="booth-dashboard.html">Booth Login</a></li>
+        <li><a href="sub-dashboard.html">Commissionerate Login</a></li>
+        <li><a href="admin-dashboard.html">Admin Login</a></li>
+      </ul>
+    </li>
     <li><a href="#wsw">Women Safety Wing</a></li>
     <li><a href="#leadership">Leadership</a></li>
     <li><a href="#contact">Contact</a></li>
